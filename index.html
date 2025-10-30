@@ -1,160 +1,269 @@
-<!-- 🪶 Cali Yang 名片模块（带玻璃流光效果） -->
-<section class="business-card">
-  <div class="card-content">
-    <div class="avatar">
-      <img src="https://calibg.github.io/assets/avatar.png" alt="Cali Yang Avatar">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cali Yang | Portfolio</title>
+  <link rel="icon" href="https://calibg.github.io/assets/avatar.png" type="image/png" />
+  <script src="https://kit.fontawesome.com/a2d9d5e24b.js" crossorigin="anonymous"></script>
+  <style>
+    /* ====== 全局风格 ====== */
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #f2f2f2;
+      font-family: "Helvetica Neue", "Noto Sans SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ====== 自我介绍 ====== */
+    .about {
+      width: 100%;
+      background: linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      left: -30%;
+      width: 160%;
+      height: 160%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.07), transparent 60%);
+      filter: blur(60px);
+    }
+
+    .about-content {
+      max-width: 800px;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-content h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .about-content .name {
+      background: linear-gradient(90deg, #ffffff, #999999);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: nameGlow 3s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes nameGlow {
+      0% { opacity: 0; filter: blur(8px); }
+      60% { opacity: 1; filter: blur(0); }
+      100% { opacity: 1; text-shadow: 0 0 12px rgba(255,255,255,0.3); }
+    }
+
+    .about-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin: 10px 0;
+      color: #ccc;
+      animation: textFade 1.2s ease both;
+      animation-delay: 2.3s;
+    }
+
+    @keyframes textFade {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .about { padding: 80px 15px; }
+      .about-content h1 { font-size: 1.5rem; }
+      .about-content p { font-size: 1rem; }
+    }
+
+    /* ====== 名片模块 ====== */
+    .business-card {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
+      padding: 80px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .business-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.15),
+        rgba(255,255,255,0.05)
+      );
+      animation: spin 12s linear infinite;
+      filter: blur(60px);
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .card-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 90%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+
+    .card-content::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.05) 100%);
+      transform: skewX(-15deg);
+      animation: shimmer 8s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% { left: -150%; }
+      100% { left: 150%; }
+    }
+
+    .avatar img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      object-fit: cover;
+      z-index: 1;
+      position: relative;
+    }
+
+    .info {
+      flex: 1;
+      margin: 0 40px;
+      color: #f5f5f5;
+      z-index: 1;
+    }
+
+    .info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .info .title {
+      color: #a0a0a0;
+      margin-bottom: 20px;
+    }
+
+    .contact p {
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+
+    .contact i {
+      margin-right: 8px;
+      color: #999;
+    }
+
+    .qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .qr img {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      margin-bottom: 8px;
+      object-fit: cover;
+    }
+
+    .qr p {
+      color: #ccc;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .card-content { flex-direction: column; text-align: center; padding: 30px; }
+      .info { margin: 20px 0; }
+      .qr { flex-direction: row; gap: 20px; }
+      .qr p { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎨 自我介绍 -->
+  <section class="about">
+    <div class="about-content">
+      <h1>Hey there! 我是 <span class="name">Cali Yang</span></h1>
+      <p>一个热爱画画、喝冰美式、熬夜想点子的美术生。</p>
+      <p>我相信艺术不是高冷的展览，而是生活中被放大的温度。</p>
+      <p>有时候我画画，有时候我发呆——两者的界限其实很模糊。</p>
+      <p>如果你在找一个认真做梦的人，那大概就是我。</p>
     </div>
-    <div class="info">
-      <h2>Cali Yang</h2>
-      <p class="title">美术学院在读大学生</p>
-      <div class="contact">
-        <p><i class="fa-solid fa-phone"></i> 190-9815-0693</p>
-        <p><i class="fa-solid fa-envelope"></i> yzs13968803946@qq.com</p>
-        <p><i class="fa-solid fa-globe"></i> calibg.github.io</p>
+  </section>
+
+  <!-- 💎 名片模块 -->
+  <section class="business-card">
+    <div class="card-content">
+      <div class="avatar">
+        <img src="https://calibg.github.io/assets/avatar.png" alt="Cali Yang Avatar">
+      </div>
+      <div class="info">
+        <h2>Cali Yang</h2>
+        <p class="title">美术学院在读大学生</p>
+        <div class="contact">
+          <p><i class="fa-solid fa-phone"></i> 190-9815-0693</p>
+          <p><i class="fa-solid fa-envelope"></i> yzs13968803946@qq.com</p>
+          <p><i class="fa-solid fa-globe"></i> calibg.github.io</p>
+        </div>
+      </div>
+      <div class="qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://calibg.github.io" alt="Website QR Code">
+        <p>网站二维码</p>
+        <img src="https://calibg.github.io/assets/xiaohongshu_qr.png" alt="Xiaohongshu QR Code">
+        <p>小红书二维码</p>
       </div>
     </div>
-    <div class="qr">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://calibg.github.io" alt="QR Code">
-      <p>@CALIYANG0693</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<style>
-.business-card {
-  position: relative;
-  width: 100%;
-  background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
-  padding: 80px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* 背景流光 */
-.business-card::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255,255,255,0.05),
-    rgba(255,255,255,0.15),
-    rgba(255,255,255,0.05)
-  );
-  animation: spin 12s linear infinite;
-  filter: blur(60px);
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.card-content {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  width: 90%;
-  max-width: 900px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 24px;
-  padding: 40px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-}
-
-/* 玻璃表面微光效果 */
-.card-content::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.05) 100%);
-  transform: skewX(-15deg);
-  animation: shimmer 8s infinite linear;
-}
-
-@keyframes shimmer {
-  0% { left: -150%; }
-  100% { left: 150%; }
-}
-
-.avatar img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
-  object-fit: cover;
-  z-index: 1;
-  position: relative;
-}
-
-.info {
-  flex: 1;
-  margin: 0 40px;
-  color: #f5f5f5;
-  z-index: 1;
-}
-
-.info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-
-.info .title {
-  color: #a0a0a0;
-  margin-bottom: 20px;
-}
-
-.contact p {
-  margin: 8px 0;
-  font-size: 0.95rem;
-}
-
-.contact i {
-  margin-right: 8px;
-  color: #999;
-}
-
-.qr {
-  text-align: center;
-  z-index: 1;
-}
-
-.qr img {
-  width: 120px;
-  height: 120px;
-  border-radius: 16px;
-  margin-bottom: 8px;
-}
-
-.qr p {
-  color: #ccc;
-  font-size: 0.85rem;
-}
-
-@media (max-width: 768px) {
-  .card-content {
-    flex-direction: column;
-    text-align: center;
-    padding: 30px;
-  }
-  .info {
-    margin: 20px 0;
-  }
-}
-</style>
-
-<script src="https://kit.fontawesome.com/a2d9d5e24b.js" crossorigin="anonymous"></script>
+</body>
+</html>
