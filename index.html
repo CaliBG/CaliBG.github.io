@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yet Zero Sense</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 </head>
 <body class="bg-black text-white font-sans">
   <!-- Header -->
@@ -19,7 +21,7 @@
   </header>
 
   <!-- Hero Banner -->
-  <section id="hero" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
+  <section id="hero" data-aos="fade-up" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
     <h1 class="text-6xl font-bold tracking-tight text-white mb-6">Yet Zero Sense</h1>
     <p class="text-lg max-w-2xl text-gray-300 leading-relaxed">
       在感知过剩的时代，重获零感。我们拒绝标签，只留下思考的痕迹。
@@ -28,7 +30,7 @@
   </section>
 
   <!-- Personal Bio -->
-  <section id="bio" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
+  <section id="bio" data-aos="fade-up" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
     <p class="text-lg leading-relaxed text-gray-300">
       我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。
       我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。
@@ -38,7 +40,7 @@
   </section>
 
   <!-- Philosophy Section -->
-  <section id="philosophy" class="max-w-4xl mx-auto mt-32 px-6 text-center">
+  <section id="philosophy" data-aos="fade-up" class="max-w-4xl mx-auto mt-32 px-6 text-center">
     <h2 class="text-3xl font-bold mb-6">YZS · ZERO SENSE PHILOSOPHY</h2>
     <p class="text-gray-300 leading-relaxed text-lg">
       我们拒绝多余的修辞，只谈存在本身。感知仍在，但意义归零。<br />
@@ -48,7 +50,7 @@
   </section>
 
   <!-- Works -->
-  <section id="works" class="max-w-6xl mx-auto mt-32 px-6">
+  <section id="works" data-aos="fade-up" class="max-w-6xl mx-auto mt-32 px-6">
     <h2 class="text-3xl font-bold text-center mb-12">Works</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -68,6 +70,7 @@
   <footer class="w-full text-center py-10 mt-32 text-gray-500">
     © 2025 Yet Zero Sense — All Rights Reserved
   </footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });</script>
 </body>
 </html>
-
