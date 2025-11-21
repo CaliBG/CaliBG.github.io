@@ -7,28 +7,49 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- AOS Animation Library -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<style>body{padding-top:100px;}</style>
 </head>
 <body class="bg-black text-white font-sans">
   <!-- Header -->
   <header class="w-full flex justify-between items-center px-8 py-6 fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md">
-    <h1 class="text-2xl font-bold tracking-wide">YZS</h1>
-    <img src="/mnt/data/未标题-1.png" alt="YZS Logo" class="h-10 w-auto opacity-90" />
-    <nav class="space-x-6 text-gray-300">
-      <a href="#hero" class="hover:text-white">Home</a>
-      <a href="#bio" class="hover:text-white">About</a>
-@@ -54,15 +54,15 @@
+    <img src="网页左上角yzslogo.png" alt="YZS Logo" class="h-12 w-auto opacity-95 fixed top-4 left-6 z-[999] pointer-events-auto" />
+    
+  </header>
+
+  <!-- Hero Banner -->
+  <section id="hero" data-aos="fade-up" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
+    <h1 class="text-6xl font-bold tracking-tight text-white mb-6">Yet Zero Sense</h1>
+    <p class="text-lg max-w-2xl text-gray-300 leading-relaxed">
+      在感知过剩的时代，重获零感。我们拒绝标签，只留下思考的痕迹。
+      YZS 是年轻灵魂的留白区，一个探索「无我」与「存在」边界的视觉品牌。
+    </p>
+  </section>
+
+  <!-- Personal Bio -->
+  <section id="bio" data-aos="fade-up" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
+    <p class="text-lg leading-relaxed text-gray-300">
+      我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。
+      我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。
+      有时候我在创作，有时候我在沉思——两者的界限其实很模糊。
+      如果你在寻找一个认真做梦的人，那大概就是我。
+    </p>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section id="philosophy" data-aos="fade-up" class="max-w-4xl mx-auto mt-32 px-6 text-center">
+    <h2 class="text-3xl font-bold mb-6">YZS · ZERO SENSE PHILOSOPHY</h2>
+    <p class="text-gray-300 leading-relaxed text-lg">
+      我们拒绝多余的修辞，只谈存在本身。感知仍在，但意义归零。<br />
+      在被算法放大的情绪与不断加深的符号化世界里，YZS 不提供答案，只提供空白。<br />
+      我们设计物，也设计「无物」。让生活回到「零感」——一个一切重新开始的地方。
+    </p>
+  </section>
+
+  <!-- Works -->
+  <section id="works" data-aos="fade-up" class="max-w-6xl mx-auto mt-32 px-6">
     <h2 class="text-3xl font-bold text-center mb-12">Works</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="bg-white/5 p-6 rounded-2xl backdrop-blur-md">
-        <p class="text-gray-300">作品预留展示区 01</p>
-      </div>
-      <div class="bg-white/5 p-6 rounded-2xl backdrop-blur-md">
-        <p class="text-gray-300">作品预留展示区 02</p>
-      </div>
-      <div class="bg-white/5 p-6 rounded-2xl backdrop-blur-md">
-        <p class="text-gray-300">作品预留展示区 03</p>
-      </div>
       <a href="work1.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
   <p class="text-gray-300">作品预留展示区 01</p>
 </a>
@@ -41,158 +62,11 @@
     </div>
   </section>
 
-@@ -76,154 +76,77 @@
-</html>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>#01 43+1 — Work Detail</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <style>
-    body { background: #000; color: #fff; }
-  </style>
-</head>
-<body class="font-sans"> 
-  <!-- Header -->
-  <header class="w-full flex justify-between items-center px-8 py-6 fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md">
-    <a href="index.html" class="text-2xl font-bold tracking-wide">YZS</a>
-  </header>
-
-  <!-- Fullscreen Hero -->
-  <section class="w-full h-screen flex items-center justify-center relative select-none" data-aos="fade-up">
-    <img src="YOUR_IMAGE_HERE.jpg" alt="#01 43+1" class="w-full h-full object-cover opacity-70" />
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-      <h1 class="text-6xl font-bold mb-4 tracking-tight">#01 43+1</h1>
-      <p class="text-gray-300">2025 / 10 / 26</p>
-    </div>
-  </section>
-
-  <!-- Immersive Apple-style Narrative Sections -->
-  <section class="max-w-4xl mx-auto px-6 mt-32" data-aos="fade-up" data-aos-delay="150">
-    <h2 class="text-4xl font-semibold mb-6">力量 · 悬停 · 平衡</h2>
-    <p class="text-gray-300 text-lg leading-relaxed">
-      我的灵感来自于一个关于「力量与平衡」的身体瞬间。当我看到一只手高高举起榔头、即将敲下的一刻，我感受到身体内部的张力——那是一种在行动与克制之间的悬停。
-    </p>
-  </section>
-
-  <section class="max-w-5xl mx-auto mt-32 px-6" data-aos="fade-up" data-aos-delay="200">
-    <div class="w-full h-[70vh] bg-white/5 rounded-2xl backdrop-blur-xl flex items-center justify-center">
-      <p class="text-gray-400">（此处可放作品局部 / 过程图）</p>
-    </div>
-    <p class="text-lg text-gray-300 mt-10 leading-relaxed">
-      我想捕捉这种「力量被凝固」的瞬间，于是选择用榔头与钉子来构建这个立体结构。榔头本应是主导的工具，但在这里，它却被定格在钉子的世界中——它失去了攻击性，反而被钉子们支撑着、包围着。
-    </p>
-  </section>
-
-  <section class="max-w-5xl mx-auto mt-32 px-6" data-aos="fade-up" data-aos-delay="250">
-    <p class="text-lg text-gray-300 leading-relaxed">
-      我将所有物件喷涂成统一的奶白色，是想消解它们原本的功能属性，让它们从「工具」变成「形体」。那些亮橙色的细节——钉头与榔头的一面——像是残余的能量痕迹，是力的轨迹、温度的提示。
-    </p>
-  </section>
-
-  <section class="max-w-5xl mx-auto mt-32 px-6" data-aos="fade-up" data-aos-delay="300">
-    <div class="w-full h-[70vh] bg-white/5 rounded-2xl backdrop-blur-xl flex items-center justify-center">
-      <p class="text-gray-400">（此处可放作品展示图）</p>
-    </div>
-    <p class="text-lg text-gray-300 mt-10 leading-relaxed">
-      整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又稳固的平衡感。这像是身体与理性之间的关系：既有冲动，又有克制；既有重量，又有支撑。
-    </p>
-  </section>
-
-  <section class="max-w-5xl mx-auto mt-32 px-6 mb-40" data-aos="fade-up" data-aos-delay="350">
-    <h2 class="text-3xl font-semibold mb-6">暂停的力量</h2>
-    <p class="text-lg text-gray-300 leading-relaxed">
-      在这件作品里，我呈现的不是一个动作，而是力量在时间中被暂停的状态。
-    </p>
-  </section>
-
   <!-- Footer -->
-  <footer class="w-full text-center py-10 text-gray-500">
+  <footer class="w-full text-center py-10 mt-32 text-gray-500">
     © 2025 Yet Zero Sense — All Rights Reserved
   </footer>
-
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Work #02 – Memory of the Flesh</title>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      background:#0e0e0f;
-      color:#e5e5e5;
-      font-family:"Inter",sans-serif;
-      overflow-x:hidden;
-    }
-    header{
-      position:fixed;top:0;left:0;width:100%;padding:22px 40px;
-      display:flex;justify-content:space-between;align-items:center;
-      backdrop-filter:blur(14px);
-      background:rgba(20,20,20,0.35);
-      z-index:1000;
-    }
-    .logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;}
-    nav a{margin-left:26px;color:#bdbdbd;text-decoration:none;font-size:15px;transition:0.3s;}nav a:hover{color:#fff;}
-    .hero{height:100vh;width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding-top:120px;}
-    .hero img{width:100%;max-height:78vh;object-fit:cover;border-radius:14px;}
-    .hero-title{margin-top:38px;font-size:38px;font-weight:600;letter-spacing:1px;}
-    .content-section{max-width:900px;margin:120px auto;padding:0 20px;line-height:1.85;font-size:18px;color:#d0d0d0;}
-    .section-title{font-size:32px;font-weight:600;margin-bottom:25px;color:#fff;}
-    .full-width-image{width:100%;margin:90px 0;border-radius:14px;overflow:hidden;}
-    footer{text-align:center;padding:80px 0;color:#777;font-size:14px;letter-spacing:.5px;}
-  </style>
-</head>
-<body>
-  <header data-aos="fade-down" data-aos-duration="800">
-    <div class="logo">
-      <img src="logo.png" height="32" />
-      Yet Zero Sense
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="#works">Works</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <img src="YOUR_WORK2_HERO.jpg" alt="Hero Image" data-aos="fade-up" data-aos-duration="1200" />
-    <div class="hero-title" data-aos="fade-up" data-aos-delay="200">#02 — Memory of the Flesh (2025/11/13)</div>
-  </section>
-
-  <section class="content-section" data-aos="fade-up" data-aos-duration="1200">
-    <div class="section-title">Concept · 作品阐述</div>
-    <p>
-      《皮囊记忆 #02 / Memory of the Flesh #02》延续了“皮囊”与“记忆”这一主题，以极简的形式探讨身体、时间与自我意识的关系。镜面被框入洁白的边界中，像一张被档案化的证据页。观者在镜中看到的倒影，与文字——“皮肤替我记得一切，时间在皮囊下沉睡。”——重叠在一起，形成一种被动的对视关系。
-    </p><br/>
-
-    <p>
-      画框象征“被社会规训的目光”，而镜面是“自我反思的现场”。当观众靠近镜面时，他们既成为观看者，也成为被观看者。文字以冷静的黑体呈现，如科学记录，却在含义上充满感性：皮肤不再只是生理的界面，而是一层储存疼痛、温度与时间的“活体记忆”。
-    </p><br/>
-
-    <p>
-      作品编号“#2”与日期“2025/11/13”，让整件作品带有档案、记录与实验的意味——仿佛是一段关于“身体记忆”的研究样本，也是一份艺术家在特定时间留下的存在证据。
-    </p>
-  </section>
-
-  <div class="full-width-image" data-aos="fade-up" data-aos-duration="1200">
-    <img src="YOUR_WORK2_DETAIL.jpg" style="width:100%;" />
-  </div>
-
-  <footer>© 2025 Yet Zero Sense — All Rights Reserved</footer>
-
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });</script>
 </body>
 </html>
