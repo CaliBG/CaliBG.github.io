@@ -1,77 +1,85 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yet Zero Sense</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AOS Animation Library -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yet Zero Sense</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- AOS Animation Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<style>body{padding-top:100px;}</style>
 </head>
 <body class="bg-black text-white font-sans">
-  <!-- Header -->
-  <header class="w-full flex justify-between items-center px-8 py-6 fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md">
-   <img src="网页左上角yzslogo.png" alt="YZS Logo" class="h-10 w-auto opacity-90">
-    <nav class="space-x-6 text-gray-300">
-      <a href="#hero" class="hover:text-white">Home</a>
-      <a href="#bio" class="hover:text-white">About</a>
-      <a href="#philosophy" class="hover:text-white">Philosophy</a>
-      <a href="#works" class="hover:text-white">Works</a>
-    </nav>
-  </header>
+<!-- Header -->
+<header class="w-full flex justify-between items-center px-8 py-6 fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md pointer-events-none">
+<img src="网页左上角yzslogo.png" alt="YZS Log src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACAAAAAJyCAYAAABQPSC0AAAAAXNSR0IArs4c6QAAIABJREFUeF7s3Qe0LEd59f29e85VFsEkf5hg"+
+"" alt="YZS Logo" class="h-10 w-auto opacity-90" />
+<nav class="space-x-6 text-gray-300">
+<a href="#hero" class="hover:text-white">Home</a>
+<a href="#bio" class="hover:text-white">About</a>
+<a href="#philosophy" class="hover:text-white">Philosophy</a>
+<a href="#works" class="hover:text-white">Works</a>
+</nav>
+</header>
 
-  <!-- Hero Banner -->
-  <section id="hero" data-aos="fade-up" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
-    <h1 class="text-6xl font-bold tracking-tight text-white mb-6">Yet Zero Sense</h1>
-    <p class="text-lg max-w-2xl text-gray-300 leading-relaxed">
-      在感知过剩的时代，重获零感。我们拒绝标签，只留下思考的痕迹。
-      YZS 是年轻灵魂的留白区，一个探索「无我」与「存在」边界的视觉品牌。
-    </p>
-  </section>
 
-  <!-- Personal Bio -->
-  <section id="bio" data-aos="fade-up" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
-    <p class="text-lg leading-relaxed text-gray-300">
-      我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。
-      我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。
-      有时候我在创作，有时候我在沉思——两者的界限其实很模糊。
-      如果你在寻找一个认真做梦的人，那大概就是我。
-    </p>
-  </section>
+<!-- Hero Banner -->
+<section id="heros="fade-up" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
+<h1 class="text-6xl font-bold tracking-tight text-white mb-6">Yet Zero Sense</h1>
+<p class="text-lg max-w-2xl text-gray-300 leading-relaxed">
+在感知过剩的时代，重获零感。我们拒绝标签，只留下思考的痕迹。
+YZS 是年轻灵魂的留白区，一个探索「无我」与「存在」边界的视觉品牌。
+</p>
+</section>
 
-  <!-- Philosophy Section -->
-  <section id="philosophy" data-aos="fade-up" class="max-w-4xl mx-auto mt-32 px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6">YZS · ZERO SENSE PHILOSOPHY</h2>
-    <p class="text-gray-300 leading-relaxed text-lg">
-      我们拒绝多余的修辞，只谈存在本身。感知仍在，但意义归零。<br />
-      在被算法放大的情绪与不断加深的符号化世界里，YZS 不提供答案，只提供空白。<br />
-      我们设计物，也设计「无物」。让生活回到「零感」——一个一切重新开始的地方。
-    </p>
-  </section>
 
-  <!-- Works -->
-  <section id="works" data-aos="fade-up" class="max-w-6xl mx-auto mt-32 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Works</h2>
+<!-- Personal Bio -->
+<section id="bio" data-aos="fade-up" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
+<p class="text-lg leading-relaxed text-gray-300">
+我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。
+我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。
+有时候我在创作，有时候我在沉思——两者的界限其实很模糊。
+如果你在寻找一个认真做梦的人，那大概就是我。
+</p>
+</section>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <a href="work1.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 01</p>
+
+<!-- Philosophy Section -->
+<section id="philosophy" data-aos="fade-up" class="max-w-4xl mx-auto mt-32 px-6 text-center">
+<h2 class="text-3xl font-bold mb-6">YZS · ZERO SENSE PHILOSOPHY</h2>
+<p class="text-gray-300 leading-relaxed text-lg">
+我们拒绝多余的修辞，只谈存在本身。感知仍在，但意义归零。<br />
+在被算法放大的情绪与不断加深的符号化世界里，YZS 不提供答案，只提供空白。<br />
+我们设计物，也设计「无物」。让生活回到「零感」——一个一切重新开始的地方。
+</p>
+</section>
+
+
+<!-- Works -->
+<section id="works" data-aos="fade-up" class="max-w-6xl mx-auto mt-32 px-6">
+<h2 class="text-3xl font-bold text-center mb-12">Works</h2>
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<a href="work1.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
+<p class="text-gray-300">作品预留展示区 01</p>
 </a>
-      <a href="work2.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 02</p>
+<a href="work2.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
+<p class="text-gray-300">作品预留展示区 02</p>
 </a>
-      <a href="work3.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 03</p>
+<a href="work3.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
+<p class="text-gray-300">作品预留展示区 03</p>
 </a>
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- Footer -->
-  <footer class="w-full text-center py-10 mt-32 text-gray-500">
-    © 2025 Yet Zero Sense — All Rights Reserved
-  </footer>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });</script>
+
+<!-- Footer -->
+<footer class="w-full text-center py-10 mt-32 text-gray-500">
+© 2025 Yet Zero Sense — All Rights Reserved
+</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });</script>
 </body>
 </html>
 <!DOCTYPE html>
