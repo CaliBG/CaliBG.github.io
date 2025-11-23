@@ -1,72 +1,210 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yet Zero Sense</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AOS Animation Library -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-<style>body{padding-top:100px;}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人作品集 - Dark Mode 简约风</title>
+    <!-- 加载 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 使用 Inter 字体，符合简约风格 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* 自定义 CSS 确保 Inter 字体应用 */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* 暗黑模式背景 */
+            background-color: #0d1117; 
+            color: #c9d1d9;
+            min-height: 100vh;
+        }
+
+        /* 顶部模糊渐变背景区域的容器 */
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none; /* 确保背景不影响鼠标交互 */
+        }
+
+        /* 模拟 GitHub 截图中的模糊渐变效果 */
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            /* 使用径向渐变模拟深色背景上的光斑和渐变 */
+            background: radial-gradient(circle at 70% 30%, rgba(20, 100, 50, 0.4), transparent 60%),
+                        radial-gradient(circle at 30% 80%, rgba(40, 20, 150, 0.5), transparent 60%),
+                        radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.1), transparent 80%);
+            /* 应用模糊效果，增强 Apple 风格的深度感 */
+            filter: blur(100px);
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        /* 确保内容在渐变背景之上 */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
 </head>
-<body class="bg-black text-white font-sans">
-  <!-- Header -->
-  <header class="w-full flex justify-between items-center px-8 py-6 fixed top-0 left-0 z-50 bg-black/40 backdrop-blur-md">
-    <img src="网页左上角yzslogo.png" alt="YZS Logo" class="h-12 w-auto opacity-95 fixed top-4 left-6 z-[999] pointer-events-auto" />
-    
-  </header>
+<body class="selection:bg-green-700 selection:text-white">
 
-  <!-- Hero Banner -->
-  <section id="hero" data-aos="fade-up" class="w-full h-[90vh] flex flex-col items-center justify-center text-center px-6">
-    <h1 class="text-6xl font-bold tracking-tight text-white mb-6">Yet Zero Sense</h1>
-    <p class="text-lg max-w-2xl text-gray-300 leading-relaxed">
-      在感知过剩的时代，重获零感。我们拒绝标签，只留下思考的痕迹。
-      YZS 是年轻灵魂的留白区，一个探索「无我」与「存在」边界的视觉品牌。
-    </p>
-  </section>
+    <!-- 固定的顶部导航栏 (Navbar) -->
+    <nav class="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Site Title (左上角) -->
+                <a href="#" class="flex items-center space-x-3">
+                    <!-- 使用用户上传的 Logo 占位符 (Base64 编码) -->
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAuSURBVHgB7cEBDQAAAMKg9W+z9E4ggAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAhMAAAE+VvYyAAAAAElFTkSuQmCC" 
+                         alt="yzs Logo" class="h-6 w-6 filter invert">
+                    <span class="text-xl font-bold text-white tracking-wider">Y.Z.S. Portfolio</span>
+                </a>
 
-  <!-- Personal Bio -->
-  <section id="bio" data-aos="fade-up" class="w-full max-w-3xl mx-auto text-center mt-20 px-6 opacity-90">
-    <p class="text-lg leading-relaxed text-gray-300">
-      我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。
-      我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。
-      有时候我在创作，有时候我在沉思——两者的界限其实很模糊。
-      如果你在寻找一个认真做梦的人，那大概就是我。
-    </p>
-  </section>
+                <!-- 导航链接 (右侧) -->
+                <div class="flex items-center space-x-6">
+                    <a href="#about" class="text-gray-400 hover:text-white transition duration-200 text-sm font-medium">个人简介</a>
+                    <a href="#projects" class="text-gray-400 hover:text-white transition duration-200 text-sm font-medium">作品集</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition duration-200 text-sm font-medium">联系方式</a>
+                    
+                    <!-- 搜索按钮 (仿 GitHub 风格) -->
+                    <button class="text-gray-400 hover:text-white transition duration-200 p-1.5 rounded-full hover:bg-gray-700/50">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Philosophy Section -->
-  <section id="philosophy" data-aos="fade-up" class="max-w-4xl mx-auto mt-32 px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6">YZS · ZERO SENSE PHILOSOPHY</h2>
-    <p class="text-gray-300 leading-relaxed text-lg">
-      我们拒绝多余的修辞，只谈存在本身。感知仍在，但意义归零。<br />
-      在被算法放大的情绪与不断加深的符号化世界里，YZS 不提供答案，只提供空白。<br />
-      我们设计物，也设计「无物」。让生活回到「零感」——一个一切重新开始的地方。
-    </p>
-  </section>
+    <!-- Hero 主展示区域 - 仿 GitHub 大标题风格 -->
+    <header class="relative pt-24 pb-48 overflow-hidden">
+        <!-- 模糊渐变背景容器 -->
+        <div class="hero-background"></div>
 
-  <!-- Works -->
-  <section id="works" data-aos="fade-up" class="max-w-6xl mx-auto mt-32 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Works</h2>
+        <!-- Hero 内容 -->
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <!-- 引导标签/小标题 -->
+            <p class="mb-4 inline-block px-3 py-1 text-xs font-semibold tracking-wider bg-gray-800 text-teal-400 rounded-full border border-teal-500/30">
+                Y.Z.S. DESIGN STUDIO
+            </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <a href="work1.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 01</p>
-</a>
-      <a href="work2.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 02</p>
-</a>
-      <a href="work3.html" class="block bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition">
-  <p class="text-gray-300">作品预留展示区 03</p>
-</a>
-    </div>
-  </section>
+            <!-- 主标题 - 突出且醒目 (仿 GitHub 的 Experience Git without the struggle) -->
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight text-white">
+                将创意转化为<br class="hidden sm:inline">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-500">数字现实</span>
+            </h1>
 
-  <!-- Footer -->
-  <footer class="w-full text-center py-10 mt-32 text-gray-500">
-    © 2025 Yet Zero Sense — All Rights Reserved
-  </footer>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true });</script>
+            <!-- 副标题/简介 -->
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto mb-10">
+                专注于用户体验、现代设计和高效开发。探索我在前端工程、UI/UX设计和全栈项目中的精选作品。
+            </p>
+
+            <!-- CTA 按钮组 -->
+            <div class="flex justify-center space-x-4">
+                <a href="#projects" class="bg-white text-gray-900 font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-0.5">
+                    查看我的作品
+                </a>
+                <a href="#contact" class="border border-gray-600 text-white font-semibold py-3 px-8 rounded-xl bg-gray-800/50 hover:bg-gray-700/50 transition duration-300 ease-in-out">
+                    联系我
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 (占位符，待您填充) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- 个人简介区 (About Me) -->
+        <section id="about" class="mb-20">
+            <h2 class="text-4xl font-bold text-white mb-8 border-b border-gray-800 pb-4">
+                01. 个人简介 (About Me)
+            </h2>
+            <div class="bg-gray-900 p-8 rounded-2xl shadow-xl border border-gray-800">
+                <p class="text-lg text-gray-300">
+                    <!-- 稍后您可以在这里填充您的详细个人简介和技能树 -->
+                    [占位符：请在此处添加您的个人简介、专业技能和设计理念。]
+                </p>
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-3 bg-gray-800 rounded-lg text-teal-400 text-sm font-medium">前端开发</div>
+                    <div class="p-3 bg-gray-800 rounded-lg text-teal-400 text-sm font-medium">UI/UX 设计</div>
+                    <div class="p-3 bg-gray-800 rounded-lg text-teal-400 text-sm font-medium">响应式设计</div>
+                    <div class="p-3 bg-gray-800 rounded-lg text-teal-400 text-sm font-medium">全栈项目</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品集区 (Projects) -->
+        <section id="projects" class="mb-20">
+            <h2 class="text-4xl font-bold text-white mb-8 border-b border-gray-800 pb-4">
+                02. 作品集 (Featured Projects)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 作品卡片 1 -->
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-teal-500 transition duration-300 transform hover:-translate-y-1 shadow-lg">
+                    <h3 class="text-xl font-semibold text-white mb-2">项目名称 A</h3>
+                    <p class="text-gray-400 mb-4">这是一个关于前端工程的复杂项目，使用了 React 和 TypeScript。</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-medium px-2 py-0.5 bg-teal-900/50 text-teal-300 rounded-full">React</span>
+                        <span class="text-xs font-medium px-2 py-0.5 bg-indigo-900/50 text-indigo-300 rounded-full">TypeScript</span>
+                    </div>
+                    <a href="#" class="mt-4 inline-block text-teal-400 hover:text-teal-300 font-medium">查看详情 →</a>
+                </div>
+
+                <!-- 作品卡片 2 -->
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-teal-500 transition duration-300 transform hover:-translate-y-1 shadow-lg">
+                    <h3 class="text-xl font-semibold text-white mb-2">UI/UX 设计项目 B</h3>
+                    <p class="text-gray-400 mb-4">为移动应用设计的全套界面和用户体验流程。</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-medium px-2 py-0.5 bg-pink-900/50 text-pink-300 rounded-full">Figma</span>
+                        <span class="text-xs font-medium px-2 py-0.5 bg-yellow-900/50 text-yellow-300 rounded-full">Prototyping</span>
+                    </div>
+                    <a href="#" class="mt-4 inline-block text-teal-400 hover:text-teal-300 font-medium">查看详情 →</a>
+                </div>
+
+                <!-- 作品卡片 3 -->
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-teal-500 transition duration-300 transform hover:-translate-y-1 shadow-lg">
+                    <h3 class="text-xl font-semibold text-white mb-2">全栈应用 C</h3>
+                    <p class="text-gray-400 mb-4">一个带后端 API 和数据库的完整应用项目。</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-medium px-2 py-0.5 bg-red-900/50 text-red-300 rounded-full">Node.js</span>
+                        <span class="text-xs font-medium px-2 py-0.5 bg-blue-900/50 text-blue-300 rounded-full">MongoDB</span>
+                    </div>
+                    <a href="#" class="mt-4 inline-block text-teal-400 hover:text-teal-300 font-medium">查看详情 →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系方式区 (Contact) -->
+        <section id="contact" class="text-center py-12 bg-gray-900/50 rounded-2xl border border-gray-800">
+            <h2 class="text-4xl font-bold text-white mb-4">
+                03. 联系我
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-8">
+                如果您有任何合作机会、项目咨询或只是想聊聊技术，随时欢迎与我联系！
+            </p>
+            <a href="mailto:your.email@example.com" class="inline-flex items-center bg-teal-500 text-gray-900 font-bold py-3 px-10 rounded-xl shadow-teal-500/50 shadow-md hover:bg-teal-400 transition duration-300">
+                发送邮件
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- 底部 (Footer) -->
+    <footer class="mt-16 border-t border-gray-900 py-8 text-center text-gray-500 text-sm">
+        <p>Copyright &copy; 2025 Y.Z.S. Portfolio. All rights reserved.</p>
+        <p>设计灵感来自 GitHub 和 Apple 简约风格。</p>
+    </footer>
+
 </body>
 </html>
