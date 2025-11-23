@@ -97,6 +97,74 @@
             width: 100%;
         }
 
+        /* Modals */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+            backdrop-filter: blur(8px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal.open {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: #161b22;
+            margin: auto;
+            padding: 2.5rem; /* Equivalent to p-10 */
+            border-radius: 1rem; /* Equivalent to rounded-2xl */
+            border: 1px solid #30363d; /* Equivalent to border-gray-800 */
+            width: 90%;
+            max-width: 900px; /* Max width for content */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 90vh; /* Limit height to 90% of viewport height */
+            overflow-y: auto; /* Enable scrolling for modal content */
+        }
+        .modal.open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 2.5rem; /* Equivalent to text-4xl */
+            font-weight: bold;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        /* 隐藏滚动条但保留滚动功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-indigo-500 selection:text-white">
@@ -182,7 +250,7 @@
                     
                     <div class="relative z-10">
                         
-                        <!-- 1. 个人简介 (Personal Bio - NEW) -->
+                        <!-- 1. 个人简介 (Personal Bio) -->
                         <div class="pb-8 mb-8 border-b border-gray-800/50">
                             <h3 class="text-xl font-bold text-white mb-4">个人寄语</h3>
                             <p class="text-lg md:text-xl text-gray-300 leading-relaxed font-light italic max-w-2xl mx-auto">
@@ -242,37 +310,37 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 作品卡片 1 -->
-                    <div class="reveal-up delay-100 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
+                    <!-- 作品卡片 1: 榔头与钉子 -->
+                    <div class="reveal-up delay-100 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center overflow-hidden">
                             <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">Project Image Placeholder</span>
                         </div>
                         <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">作品名称 #1</h3>
-                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">品牌视觉识别设计项目。</p>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">《榔头与钉子：暂停的张力》</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">力量与平衡的身体瞬间，探寻行动与克制。</p>
                             <div class="flex items-center justify-center gap-4 text-sm text-gray-500">
-                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-yellow-500"></div> Design</span>
+                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-yellow-500"></div> 装置艺术</span>
                                 <span>2025</span>
                             </div>
                         </div>
                     </div>
 
-                     <!-- 作品卡片 2 -->
-                     <div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
+                    <!-- 作品卡片 2: 皮囊记忆 #2 -->
+                    <div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Project Image Placeholder</span>
                         </div>
                         <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">作品名称 #2</h3>
-                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">极简主义风格的网页界面设计。</p>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">《皮囊记忆 #2》</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">镜面、文字与极简形式，探讨身体、时间与自我意识。</p>
                             <div class="flex items-center justify-center gap-4 text-sm text-gray-500">
-                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-blue-500"></div> UI/UX</span>
+                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-blue-500"></div> 概念艺术</span>
                                 <span>2025</span>
                             </div>
                         </div>
                     </div>
 
-                     <!-- 作品卡片 3 -->
+                     <!-- 作品卡片 3 (保持不变) -->
                      <div class="reveal-up delay-300 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Project Image Placeholder</span>
@@ -326,6 +394,81 @@
         </div>
     </footer>
 
+    <!-- Modals -->
+    <!-- Modal 1: 榔头与钉子 -->
+    <div id="projectModal1" class="modal">
+        <div class="modal-content relative">
+            <span class="close-button" onclick="closeModal('projectModal1')">&times;</span>
+            <h3 class="text-3xl font-bold text-white mb-6 text-center">《榔头与钉子：暂停的张力》</h3>
+            
+            <!-- Image Placeholder -->
+            <div class="w-full h-64 bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <span class="text-gray-500 text-lg">作品图片占位符</span>
+            </div>
+
+            <div class="text-lg text-gray-300 leading-relaxed space-y-6">
+                <p>
+                    这件作品的灵感来自于一个关于“力量与平衡”的身体瞬间。当我看到一只手高高举起榔头、即将敲下的一刻，我感受到身体内部的张力——那是一种在行动与克制之间的悬停。
+                </p>
+                <p>
+                    我想捕捉这种“力量被凝固”的瞬间，于是选择用榔头与钉子来构建这个立体结构。榔头本应是主导的工具，但在这里，它却被定格在钉子的世界中——它失去了攻击性，反而被钉子们支撑着、包围着。
+                </p>
+                <p>
+                    我将所有物件喷涂成统一的<strong class="text-white">奶白色</strong>，是想消解它们原本的功能属性，让它们从“工具”变成“形体”；而那些<strong class="text-orange-400">亮橙色</strong>的细节——钉头与榔头的一面——则像是残余的能量痕迹，是力的轨迹、温度的提示。
+                </p>
+                <p>
+                    整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又<strong class="text-white">稳固的平衡感</strong>。这对我来说，像是身体与理性之间的关系：既有冲动，又有克制；既有重量，又有支撑。
+                </p>
+                <p class="italic text-gray-400">
+                    在这件作品里，我想呈现的不是一个动作，而是力量在时间中被暂停的状态。
+                </p>
+            </div>
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <span class="px-3 py-1 text-xs font-medium text-yellow-300 bg-yellow-900/20 border border-yellow-800 rounded-full">装置艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-purple-300 bg-purple-900/20 border border-purple-800 rounded-full">雕塑</span>
+                <span class="px-3 py-1 text-xs font-medium text-pink-300 bg-pink-900/20 border border-pink-800 rounded-full">概念艺术</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: 皮囊记忆 #2 (NEW) -->
+    <div id="projectModal2" class="modal">
+        <div class="modal-content relative">
+            <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
+            <h3 class="text-3xl font-bold text-white mb-6 text-center">《皮囊记忆 #2》</h3>
+            
+            <!-- Image Placeholder -->
+            <div class="w-full h-64 bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <span class="text-gray-500 text-lg">作品图片占位符</span>
+            </div>
+
+            <div class="text-lg text-gray-300 leading-relaxed space-y-6">
+                <p>
+                    《皮囊记忆 #2》延续了“皮囊”与“记忆”这一主题，以极简的形式探讨<strong class="text-white">身体、时间与自我意识</strong>的关系。镜面被框入洁白的边界中，像一张被档案化的证据页。
+                </p>
+                <p>
+                    观者在镜中看到的倒影，与文字——<em class="text-indigo-400">“皮肤替我记得一切，时间在皮囊下沉睡。”</em>——重叠在一起，形成一种被动的对视关系。
+                </p>
+                <ul class="list-disc list-inside space-y-2 ml-4 text-gray-400">
+                    <li><strong class="text-white">画框</strong>象征“被社会规训的目光”，</li>
+                    <li><strong class="text-white">镜面</strong>是“自我反思的现场”。</li>
+                </ul>
+                <p>
+                    当观众靠近镜面时，他们既成为观看者，也成为被观看者。文字以冷静的黑体呈现，如科学记录，却在含义上充满感性：皮肤不再只是生理的界面，而是一层储存疼痛、温度与时间的“活体记忆”。
+                </p>
+                <p class="italic text-gray-400 border-l-4 border-gray-700 pl-4 py-1">
+                    作品编号“#2”与日期标注“2025/11/13”，让这件作品带有档案与实验的意味—仿佛是一段关于“身体记忆”的研究样本，也是一份艺术家在特定时间留下的存在证据。
+                </p>
+            </div>
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <span class="px-3 py-1 text-xs font-medium text-blue-300 bg-blue-900/20 border border-blue-800 rounded-full">概念艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-pink-300 bg-pink-900/20 border border-pink-800 rounded-full">极简主义</span>
+                <span class="px-3 py-1 text-xs font-medium text-green-300 bg-green-900/20 border border-green-800 rounded-full">身体哲学</span>
+            </div>
+        </div>
+    </div>
+
+
     <!-- 滚动动画脚本 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -347,6 +490,40 @@
             const elementsToAnimate = document.querySelectorAll('.reveal-up');
             elementsToAnimate.forEach(el => observer.observe(el));
         });
+
+        // Modals JavaScript
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent body scrolling
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('open');
+            document.body.style.overflow = ''; // Restore body scrolling
+        }
+
+        // Close modal if clicked outside of content
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Close modal on escape key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const openModals = document.querySelectorAll('.modal.open');
+                openModals.forEach(modal => {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+
     </script>
 
 </body>
