@@ -170,94 +170,14 @@
             aspect-ratio: 16 / 9; /* 保持一个合理的图片比例 */
             background-color: #24292e; /* 较深的背景色以突出白色物体 */
             overflow: hidden;
+            display: flex; /* Added for centering image */
+            align-items: center; /* Added for centering image */
+            justify-content: center; /* Added for centering image */
         }
         .image-container img {
             width: 100%;
             height: 100%;
             object-fit: contain; /* 确保图片完整显示在容器内 */
-        }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 0.5rem; /* rounded-lg */
-            margin-bottom: 2rem; /* mb-8 */
-            background-color: #24292e;
-            aspect-ratio: 16 / 9; /* Ensure responsive aspect ratio for images */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-slide {
-            width: 100%;
-            height: 100%;
-            display: none; /* Hide all slides by default */
-            object-fit: contain; /* Ensure images fit within container */
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0;
-            position: absolute; /* Position for fade effect */
-            top: 0;
-            left: 0;
-        }
-
-        .carousel-slide.active {
-            display: block; /* Show active slide */
-            opacity: 1;
-            position: relative; /* Bring active slide to front for interaction */
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
-            z-index: 10;
-        }
-
-        .carousel-button:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .carousel-button.prev {
-            left: 1rem;
-        }
-
-        .carousel-button.next {
-            right: 1rem;
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 10;
-        }
-
-        .carousel-dot {
-            width: 0.75rem;
-            height: 0.75rem;
-            background-color: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .carousel-dot.active {
-            background-color: white;
-            transform: scale(1.2);
         }
 
     </style>
@@ -431,10 +351,13 @@
                     </div>
 
                     
-<!-- Project Card 2: 皮囊记忆 #2 -->
+<!-- Project Card 2: 皮囊记忆 #2 - 已修改为显示单个图片 -->
 <div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
-                            <span class="text-gray-500 text-sm">Project Image Placeholder</span>
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center overflow-hidden">
+                            <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">
+                                <!-- 使用皮囊记忆1.jpg 作为预览图 -->
+<img src="皮囊记忆1.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </span>
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">《皮囊记忆 #2》</h3>
@@ -537,32 +460,15 @@
         </div>
     </div>
 
-    <!-- Project Modal 2: 皮囊记忆 #2 -->
+    <!-- Project Modal 2: 皮囊记忆 #2 - 已修改为单图展示 -->
 <div id="projectModal2" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《皮囊记忆 #2》</h3>
             
-            <!-- Carousel for multiple images -->
-<div class="carousel-container">
-                
-<!-- Slides: Confirmed the filename '皮囊记忆3.jpg' as provided by the user's upload. -->
-<img src="皮囊记忆1.jpg" class="carousel-slide active" alt="皮囊记忆 #2 作品图 1">
-                <img src="皮囊记忆2.jpg" class="carousel-slide" alt="皮囊记忆 #2 作品图 2">
-                <img src="皮囊记忆3.jpg" class="carousel-slide" alt="皮囊记忆 #2 作品图 3">
-                
-                
-<!-- Navigation Buttons -->
-<button class="carousel-button prev" onclick="changeSlide('projectModal2', -1)">&#10094;</button>
-                <button class="carousel-button next" onclick="changeSlide('projectModal2', 1)">&#10095;</button>
-
-                
-<!-- Dots for navigation -->
-<div class="carousel-dots">
-                    <span class="carousel-dot active" onclick="currentSlide('projectModal2', 0)"></span>
-                    <span class="carousel-dot" onclick="currentSlide('projectModal2', 1)"></span>
-                    <span class="carousel-dot" onclick="currentSlide('projectModal2', 2)"></span>
-                </div>
+            <!-- Image Area (Uses 皮囊记忆1.jpg for main display) -->
+<div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <img src="皮囊记忆1.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg">
             </div>
 
             <div class="text-lg text-gray-300 leading-relaxed space-y-6">
@@ -590,17 +496,13 @@
         </div>
     </div>
     
-    <!-- JavaScript for Modals and Carousel & Scroll Animation -->
+    <!-- JavaScript for Modals and Scroll Animation (Carousel logic removed) -->
     <script>
         // --- Modals Logic ---
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('open');
-                // Ensure initial slide setup for the carousel inside the modal
-                if (modalId === 'projectModal2') {
-                    showSlide(modalId, 0); // Show the first slide of the carousel when opening
-                }
             }
         }
 
@@ -621,46 +523,6 @@
             });
         }
         
-        // --- Carousel Logic ---
-        let slideIndices = {}; // To store the current index for each carousel
-
-        function showSlide(modalId, n) {
-            const slides = document.getElementById(modalId).querySelectorAll('.carousel-slide');
-            const dots = document.getElementById(modalId).querySelectorAll('.carousel-dot');
-            
-            if (!slides.length) return;
-
-            let index = slideIndices[modalId] !== undefined ? slideIndices[modalId] : 0;
-            
-            // Calculate new index
-            index = (n + slides.length) % slides.length;
-            
-            // Hide all slides and remove active class from all dots
-            slides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-            dots.forEach(dot => {
-                dot.classList.remove('active');
-            });
-
-            // Show the new slide and set active dot
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            
-            // Update the index storage
-            slideIndices[modalId] = index;
-        }
-
-        function changeSlide(modalId, n) {
-            let current = slideIndices[modalId] !== undefined ? slideIndices[modalId] : 0;
-            showSlide(modalId, current + n);
-        }
-        
-        function currentSlide(modalId, n) {
-            showSlide(modalId, n);
-        }
-
-
         // --- Scroll Reveal Animation ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
