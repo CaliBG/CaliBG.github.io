@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Y.Z.S. Portfolio - 个人作品集</title>
-    <!-- 加载 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 使用 Inter 字体，符合 Apple 简约风格 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+    
+<script src="https://cdn.tailwindcss.com"></script>
+    
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* 全局样式设置 */
         body {
@@ -165,26 +165,121 @@
             scrollbar-width: none;  /* Firefox */
         }
 
+        /* 专门用于图片展示的容器 */
+        .image-container {
+            aspect-ratio: 16 / 9; /* 保持一个合理的图片比例 */
+            background-color: #24292e; /* 较深的背景色以突出白色物体 */
+            overflow: hidden;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 确保图片完整显示在容器内 */
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+            margin-bottom: 2rem; /* mb-8 */
+            background-color: #24292e;
+            aspect-ratio: 16 / 9; /* Ensure responsive aspect ratio for images */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 100%;
+            display: none; /* Hide all slides by default */
+            object-fit: contain; /* Ensure images fit within container */
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            position: absolute; /* Position for fade effect */
+            top: 0;
+            left: 0;
+        }
+
+        .carousel-slide.active {
+            display: block; /* Show active slide */
+            opacity: 1;
+            position: relative; /* Bring active slide to front for interaction */
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-button.prev {
+            left: 1rem;
+        }
+
+        .carousel-button.next {
+            right: 1rem;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- 导航栏 (Fixed Navbar) -->
-    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+    
+<nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- 左上角 Logo 区域 -->
-                <a href="#" class="flex items-center gap-3 group shrink-0">
-                    <!-- Logo 图片 -->
-                    <img src="网页左上角yzslogo.png" 
+                
+<a href="#" class="flex items-center gap-3 group shrink-0">
+                    
+<img src="网页左上角yzslogo.png" 
                          alt="Y.Z.S. Logo" 
                          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
                     <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-white">Y.Z.S.</span>
                 </a>
 
-                <!-- 右侧导航链接 -->
-                <div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
+                
+<div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
                     <a href="#about" class="nav-link text-xs md:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
                         01. 关于我
                     </a>
@@ -199,14 +294,14 @@
         </div>
     </nav>
 
-    <!-- Hero 区域 (Header) -->
-    <header class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 lg:pb-32 overflow-hidden">
+    
+<header class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 lg:pb-32 overflow-hidden">
         <div class="hero-glow"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
-            <!-- Portfolio 2025 标签 -->
-            <div class="reveal-up inline-block mb-6 px-4 py-1.5 rounded-full border border-gray-700 bg-gray-800/50 backdrop-blur-sm">
+            
+<div class="reveal-up inline-block mb-6 px-4 py-1.5 rounded-full border border-gray-700 bg-gray-800/50 backdrop-blur-sm">
                 <span class="text-xs font-semibold text-indigo-400 tracking-widest uppercase">Portfolio 2025</span>
             </div>
             
@@ -230,11 +325,11 @@
         </div>
     </header>
 
-    <!-- 主要内容区 -->
-    <main class="relative z-10 bg-[#0d1117]">
+    
+<main class="relative z-10 bg-[#0d1117]">
         
-        <!-- 01. 关于我 (About Me) -->
-        <section id="about" class="py-28 border-t border-gray-800">
+        
+<section id="about" class="py-28 border-t border-gray-800">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">01. 关于我</h2>
@@ -242,24 +337,24 @@
                     <p class="mt-4 text-gray-500">Philosophy & Mindset</p>
                 </div>
                 
-                <!-- 个人简介卡片 - 包含了个人简介和品牌宣言 -->
-                <div class="reveal-up delay-100 bg-[#161b22] border border-gray-800 rounded-2xl p-10 md:p-16 shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 transition-colors duration-300 text-center">
+                
+<div class="reveal-up delay-100 bg-[#161b22] border border-gray-800 rounded-2xl p-10 md:p-16 shadow-2xl relative overflow-hidden group hover:border-indigo-500/30 transition-colors duration-300 text-center">
                     
-                    <!-- 装饰性背景字 -->
-                    <div class="absolute -top-10 -left-10 text-9xl font-black text-gray-800/30 pointer-events-none select-none rotate-12">YZS</div>
+                    
+<div class="absolute -top-10 -left-10 text-9xl font-black text-gray-800/30 pointer-events-none select-none rotate-12">YZS</div>
                     
                     <div class="relative z-10">
                         
-                        <!-- 1. 个人简介 (Personal Bio) -->
-                        <div class="pb-8 mb-8 border-b border-gray-800/50">
+                        
+<div class="pb-8 mb-8 border-b border-gray-800/50">
                             <h3 class="text-xl font-bold text-white mb-4">个人寄语</h3>
                             <p class="text-lg md:text-xl text-gray-300 leading-relaxed font-light italic max-w-2xl mx-auto">
                                 我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。有时候我在创作，有时候我在沉思——两者的界限其实很模糊。如果你在寻找一个认真做梦的人，那大概就是我。
                             </p>
                         </div>
 
-                        <!-- 2. 品牌定义 (Brand Definition) -->
-                        <div class="space-y-4 mb-10">
+                        
+<div class="space-y-4 mb-10">
                             <p class="text-lg md:text-xl text-gray-400 leading-relaxed font-light">
                                 我们拒绝多余的修辞，只谈存在本身。<br>
                                 <strong class="text-white font-semibold">YZS</strong> 是年轻灵魂的留白区，<br class="hidden md:block">
@@ -268,8 +363,8 @@
                             <p class="text-gray-500 italic text-sm">我们拒绝标签，只留下思考的痕迹。</p>
                         </div>
 
-                        <!-- 3. 核心宣言 (Core Declaration) -->
-                        <div class="py-6 border-t border-gray-800/50 border-b border-gray-800/50 mb-10">
+                        
+<div class="py-6 border-t border-gray-800/50 border-b border-gray-800/50 mb-10">
                             <h3 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400 tracking-widest uppercase mb-3">
                                 Yet Zero Sense
                             </h3>
@@ -279,8 +374,8 @@
                             <p class="text-sm text-gray-500 mt-1 tracking-wide">感知仍在，但意义归零。</p>
                         </div>
 
-                        <!-- 4. 时代背景与解决方案 (Context & Solution) -->
-                        <div class="space-y-6">
+                        
+<div class="space-y-6">
                             <p class="text-gray-400 leading-relaxed max-w-2xl mx-auto">
                                 我们生活在一个“过度感知”的时代。<br>
                                 情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<br>
@@ -300,8 +395,8 @@
             </div>
         </section>
 
-        <!-- 02. 作品展示 (Featured Projects) -->
-        <section id="projects" class="py-28 border-t border-gray-800 bg-[#0d1117]">
+        
+<section id="projects" class="py-28 border-t border-gray-800 bg-[#0d1117]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 作品展示</h2>
@@ -310,10 +405,13 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 作品卡片 1: 榔头与钉子 -->
-                    <div class="reveal-up delay-100 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
+                    
+<div class="reveal-up delay-100 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center overflow-hidden">
-                            <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">Project Image Placeholder</span>
+                            <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">
+                                
+<img src="43+1.jpg" alt="榔头与钉子作品预览" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </span>
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">《榔头与钉子：暂停的张力》</h3>
@@ -325,8 +423,8 @@
                         </div>
                     </div>
 
-                    <!-- 作品卡片 2: 皮囊记忆 #2 -->
-                    <div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
+                    
+<div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Project Image Placeholder</span>
                         </div>
@@ -340,8 +438,8 @@
                         </div>
                     </div>
 
-                     <!-- 作品卡片 3 (保持不变) -->
-                     <div class="reveal-up delay-300 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
+                     
+<div class="reveal-up delay-300 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Project Image Placeholder</span>
                         </div>
@@ -362,8 +460,8 @@
             </div>
         </section>
 
-        <!-- 03. 联系我 (Contact) -->
-        <section id="contact" class="reveal-up py-28 border-t border-gray-800">
+        
+<section id="contact" class="reveal-up py-28 border-t border-gray-800">
             <div class="max-w-2xl mx-auto px-4 text-center">
                 <div class="mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">03. 联系我</h2>
@@ -382,8 +480,8 @@
 
     </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-[#0d1117] border-t border-gray-800 py-12">
+    
+<footer class="bg-[#0d1117] border-t border-gray-800 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0 flex items-center gap-2">
                 <span class="text-2xl font-bold text-white tracking-tight">Y.Z.S.</span>
@@ -394,16 +492,15 @@
         </div>
     </footer>
 
-    <!-- Modals -->
-    <!-- Modal 1: 榔头与钉子 -->
-    <div id="projectModal1" class="modal">
+    
+<div id="projectModal1" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal1')">&times;</span>
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《榔头与钉子：暂停的张力》</h3>
             
-            <!-- Image Placeholder -->
-            <div class="w-full h-64 bg-gray-800 flex items-center justify-center rounded-lg mb-8">
-                <span class="text-gray-500 text-lg">作品图片占位符</span>
+            
+<div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <img src="43+1.jpg" alt="榔头与钉子作品实物图" class="rounded-lg">
             </div>
 
             <div class="text-lg text-gray-300 leading-relaxed space-y-6">
@@ -431,78 +528,97 @@
         </div>
     </div>
 
-    <!-- Modal 2: 皮囊记忆 #2 (NEW) -->
-    <div id="projectModal2" class="modal">
+    
+<div id="projectModal2" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《皮囊记忆 #2》</h3>
             
-            <!-- Image Placeholder -->
-            <div class="w-full h-64 bg-gray-800 flex items-center justify-center rounded-lg mb-8">
-                <span class="text-gray-500 text-lg">作品图片占位符</span>
+            
+<div class="carousel-container">
+                <!-- 轮播图图片列表 -->
+                <img src="皮囊记忆1.jpg" class="carousel-slide active" alt="皮囊记忆 #2 作品图 1">
+                <img src="皮囊记忆2.jpg" class="carousel-slide" alt="皮囊记忆 #2 作品图 2">
+                <img src="皮囊记忆3.jpg" class="carousel-slide" alt="皮囊记忆 #2 作品图 3">
+                
+                <!-- 左右切换按钮 -->
+                <button class="carousel-button prev" onclick="changeSlide('projectModal2', -1)">&#10094;</button>
+                <button class="carousel-button next" onclick="changeSlide('projectModal2', 1)">&#10095;</button>
+
+                <!-- 底部指示点 -->
+                <div class="carousel-dots">
+                    <span class="carousel-dot active" onclick="currentSlide('projectModal2', 0)"></span>
+                    <span class="carousel-dot" onclick="currentSlide('projectModal2', 1)"></span>
+                    <span class="carousel-dot" onclick="currentSlide('projectModal2', 2)"></span>
+                </div>
             </div>
 
             <div class="text-lg text-gray-300 leading-relaxed space-y-6">
                 <p>
-                    《皮囊记忆 #2》延续了“皮囊”与“记忆”这一主题，以极简的形式探讨<strong class="text-white">身体、时间与自我意识</strong>的关系。镜面被框入洁白的边界中，像一张被档案化的证据页。
+                    这件作品旨在探讨<strong class="text-white">身体、时间与自我意识</strong>的复杂关系。我使用了一面镜子作为主体，并将其放置于户外的公共空间中，反射周遭的环境和短暂的行人。
                 </p>
                 <p>
-                    观者在镜中看到的倒影，与文字——<em class="text-indigo-400">“皮肤替我记得一切，时间在皮囊下沉睡。”</em>——重叠在一起，形成一种被动的对视关系。
+                    镜子表面印刻着文字：“皮囊替我们记得一切，时间在皮囊下沉睡”。这行字将观众的注意力从外部反射带回内部，思考皮肤作为记忆载体的概念。当我们凝视镜子时，我们不仅看到了自己，也看到了文字与背景的叠加，形成一种<strong class="text-white">被动对视</strong>。
                 </p>
-                <ul class="list-disc list-inside space-y-2 ml-4 text-gray-400">
-                    <li><strong class="text-white">画框</strong>象征“被社会规训的目光”，</li>
-                    <li><strong class="text-white">镜面</strong>是“自我反思的现场”。</li>
-                </ul>
                 <p>
-                    当观众靠近镜面时，他们既成为观看者，也成为被观看者。文字以冷静的黑体呈现，如科学记录，却在含义上充满感性：皮肤不再只是生理的界面，而是一层储存疼痛、温度与时间的“活体记忆”。
+                    作品的视觉效果是多层次的：镜面反射的<strong class="text-indigo-400">实时环境</strong>、印刻在表面的<strong class="text-indigo-400">哲学文字</strong>、以及镜中反射出的<strong class="text-indigo-400">自我形象</strong>。每一层都代表着不同的时间维度和感知深度。
                 </p>
-                <p class="italic text-gray-400 border-l-4 border-gray-700 pl-4 py-1">
-                    作品编号“#2”与日期标注“2025/11/13”，让这件作品带有档案与实验的意味—仿佛是一段关于“身体记忆”的研究样本，也是一份艺术家在特定时间留下的存在证据。
+                <p>
+                    这件作品是**《皮囊记忆》系列**的第二件，延续了对身体在现代语境下被感知、被记录的思考。它挑战了传统观看经验，邀请观众参与到创作的“瞬间”中，因为镜中的画面永远是独特的、不可复制的、且即时流逝的。
+                </p>
+                <p class="italic text-gray-400">
+                    媒介：镜面、文字印刷、户外介入。
                 </p>
             </div>
             <div class="mt-8 flex flex-wrap justify-center gap-3">
                 <span class="px-3 py-1 text-xs font-medium text-blue-300 bg-blue-900/20 border border-blue-800 rounded-full">概念艺术</span>
-                <span class="px-3 py-1 text-xs font-medium text-pink-300 bg-pink-900/20 border border-pink-800 rounded-full">极简主义</span>
-                <span class="px-3 py-1 text-xs font-medium text-green-300 bg-green-900/20 border border-green-800 rounded-full">身体哲学</span>
+                <span class="px-3 py-1 text-xs font-medium text-pink-300 bg-pink-900/20 border border-pink-800 rounded-full">镜面装置</span>
+                <span class="px-3 py-1 text-xs font-medium text-green-300 bg-green-900/20 border border-green-800 rounded-full">公共艺术</span>
             </div>
         </div>
     </div>
 
-
-    <!-- 滚动动画脚本 -->
+    <!-- JavaScript for Modal and Carousel -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+        // --- 滚动动画逻辑 ---
+        const revealElements = document.querySelectorAll('.reveal-up');
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            const elementsToAnimate = document.querySelectorAll('.reveal-up');
-            elementsToAnimate.forEach(el => observer.observe(el));
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: '0px',
+            threshold: 0.1 // 当元素可见度达到10%时触发
         });
 
-        // Modals JavaScript
+        revealElements.forEach(el => observer.observe(el));
+
+        // --- 模态框逻辑 ---
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('open');
-            document.body.style.overflow = 'hidden'; // Prevent body scrolling
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+                // Reset carousel to first slide when opening
+                if (modalId === 'projectModal2') {
+                    showSlides(modal, 0); 
+                }
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('open');
-            document.body.style.overflow = ''; // Restore body scrolling
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = ''; // Restore background scrolling
+            }
         }
 
-        // Close modal if clicked outside of content
+        // Close modal when clicking outside of it
         window.onclick = function(event) {
             const modals = document.querySelectorAll('.modal');
             modals.forEach(modal => {
@@ -512,19 +628,56 @@
                 }
             });
         }
+        
+        // --- 轮播图逻辑 (Carousel Logic) ---
+        function showSlides(modal, slideIndex) {
+            const slides = modal.querySelectorAll('.carousel-slide');
+            const dots = modal.querySelectorAll('.carousel-dot');
+            
+            if (slides.length === 0) return;
 
-        // Close modal on escape key press
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const openModals = document.querySelectorAll('.modal.open');
-                openModals.forEach(modal => {
-                    modal.classList.remove('open');
-                    document.body.style.overflow = '';
-                });
-            }
+            let currentSlideIndex = slideIndex;
+            
+            // Handle wrap-around
+            if (slideIndex >= slides.length) { currentSlideIndex = 0; }
+            if (slideIndex < 0) { currentSlideIndex = slides.length - 1; }
+
+            // Hide all slides and remove active class
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+
+            // Show the current slide and activate the dot
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+
+            // Store current index on the modal element for tracking
+            modal.dataset.currentSlide = currentSlideIndex;
+        }
+
+        function changeSlide(modalId, n) {
+            const modal = document.getElementById(modalId);
+            const currentSlideIndex = parseInt(modal.dataset.currentSlide || 0);
+            showSlides(modal, currentSlideIndex + n);
+        }
+
+        function currentSlide(modalId, n) {
+            const modal = document.getElementById(modalId);
+            showSlides(modal, n);
+        }
+
+        // Initialize carousel state for all modals that have one
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (modal.querySelector('.carousel-slide')) {
+                    modal.dataset.currentSlide = 0;
+                }
+            });
         });
 
     </script>
-
 </body>
 </html>
