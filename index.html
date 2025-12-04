@@ -179,6 +179,10 @@
             height: 100%;
             object-fit: contain; /* 确保图片完整显示在容器内 */
         }
+        /* 确保页面主体能滚动的最小高度 */
+        main {
+            min-height: calc(100vh - 64px); /* 减去导航栏高度 */
+        }
 
     </style>
 </head>
@@ -216,12 +220,12 @@
         </div>
     </nav>
 
-    <!-- Header / Hero Section -->
-<header class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 lg:pb-32 overflow-hidden">
+    <!-- Header / Hero Section (Full Screen Height) -->
+<header class="relative min-h-screen pt-16 flex items-center justify-center overflow-hidden">
         <div class="hero-glow"></div>
         
         <!-- Content -->
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8 pb-16"> <!-- Added padding for visual offset from navigation -->
             
             <!-- Tagline -->
 <div class="reveal-up inline-block mb-6 px-4 py-1.5 rounded-full border border-gray-700 bg-gray-800/50 backdrop-blur-sm">
