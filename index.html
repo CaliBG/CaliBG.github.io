@@ -43,7 +43,7 @@
             left: 0;
             display: block;
             z-index: 1; 
-            pointer-events: none; 
+            /* 移除 pointer-events: none; 以允许用户通过鼠标或触摸手势与 Spline 场景进行互动 */
         }
         
         /* Overlay 容器 */
@@ -57,7 +57,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
-            pointer-events: none; 
+            pointer-events: none; /* 确保覆盖层不会阻止对导航栏和下面内容的点击 */
         }
         
         /* 玻璃拟态导航栏 - 更新为纯黑基底 */
@@ -261,14 +261,14 @@
     <!-- Spline Full-Screen Homepage Section -->
 <section id="spline-home" class="spline-hero-container">
         
-        <!-- Spline 3D Embed - **已更新为新的链接** -->
+        <!-- Spline 3D Embed - 用户现在可以与之互动 -->
         <iframe 
             src='https://my.spline.design/auraofbalance-fp9fB3xnDaCzGCIKh9O7tkEI/' 
             frameborder='0'>
         </iframe>
         
         <!-- Overlay for Seamless Scroll Transition -->
-        <div class="spline-overlay pointer-events-none">
+        <div class="spline-overlay">
             <!-- Seamless transition to the pure black background -->
             <div class="h-24 bg-gradient-to-t from-black to-transparent w-full relative z-20"></div>
         </div>
@@ -479,7 +479,7 @@
                 <p class="mt-4 text-white mb-6">我的数字名片</p>
                 <!-- Shadow 颜色调整为新蓝色 -->
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30">
-                    <img src="名片最终版.png" 
+                    <img src="磨砂玻璃质感名片源文件二改后.png" 
                          alt="William Yang 数字名片" 
                          class="w-full h-auto rounded-xl"
                          onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
