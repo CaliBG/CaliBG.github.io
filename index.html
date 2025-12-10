@@ -12,7 +12,7 @@
         /* 全局样式设置 */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* GitHub Dark Dimmed 背景色 */
+            background-color: #000000; /* 改为纯黑色背景 */
             color: #e6edf3;
             overflow-x: hidden;
         }
@@ -20,12 +20,11 @@
         /* 顶部 Spline 全屏容器样式 */
         .spline-hero-container {
             position: relative;
-            /* 确保它刚好占满视口 */
             height: 100vh; 
             width: 100%;
             padding-top: 0; 
             overflow: hidden;
-            background-color: #0d1117; 
+            background-color: #000000; /* 纯黑背景 */
         }
 
         .spline-hero-container iframe {
@@ -36,10 +35,11 @@
             left: 0;
             display: block;
             z-index: 1; 
-            /* 移除了 pointer-events: none; 以启用交互 */
+            /* 关键修改：禁用所有指针事件，让用户无法控制 3D 场景 */
+            pointer-events: none; 
         }
         
-        /* Overlay 容器现在只用于确保内容（如果有的话）在 Z 轴上位于动画之上 */
+        /* Overlay 容器 */
         .spline-overlay {
             position: absolute; 
             width: 100%;
@@ -50,12 +50,12 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
-            pointer-events: none; /* 保持 overlay 容器不可交互，避免干扰导航栏 */
+            pointer-events: none; 
         }
         
-        /* 玻璃拟态导航栏 - 固定在顶部 */
+        /* 玻璃拟态导航栏 - 更新为纯黑基底 */
         .glass-nav {
-            background: rgba(13, 17, 23, 0.85);
+            background: rgba(0, 0, 0, 0.85); /* 纯黑半透明 */
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -85,7 +85,7 @@
         /* 导航栏链接 Hover 效果 */
         .nav-link {
             position: relative;
-            white-space: nowrap; /* 防止文字换行 */
+            white-space: nowrap; 
         }
         .nav-link::after {
             content: '';
@@ -94,25 +94,25 @@
             height: 1px;
             bottom: -2px;
             left: 0;
-            background-color: #818cf8; /* Indigo-400 */
+            background-color: #818cf8; 
             transition: width 0.3s ease;
         }
         .nav-link:hover::after {
             width: 100%;
         }
 
-        /* Modals */
+        /* Modals - 更新为纯黑风格 */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
-            backdrop-filter: blur(8px); /* Frosted glass effect */
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.9); /* 更深的遮罩 */
+            backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
@@ -124,19 +124,19 @@
             opacity: 1;
         }
         .modal-content {
-            background-color: #161b22;
+            background-color: #000000; /* 纯黑背景 */
             margin: auto;
-            padding: 2.5rem; /* Equivalent to p-10 */
-            border-radius: 1rem; /* Equivalent to rounded-2xl */
-            border: 1px solid #30363d; /* Equivalent to border-gray-800 */
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            border: 1px solid #333; /*稍微亮一点的边框以区分纯黑 */
             width: 90%;
-            max-width: 900px; /* Max width for content */
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            max-width: 900px; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
             transform: translateY(20px);
             opacity: 0;
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 90vh; /* Limit height to 90% of viewport height */
-            overflow-y: auto; /* Enable scrolling for modal content */
+            max-height: 90vh; 
+            overflow-y: auto; 
         }
         .modal.open .modal-content {
             transform: translateY(0);
@@ -145,7 +145,7 @@
         .close-button {
             color: #aaa;
             float: right;
-            font-size: 2.5rem; /* Equivalent to text-4xl */
+            font-size: 2.5rem; 
             font-weight: bold;
             position: absolute;
             top: 1rem;
@@ -165,23 +165,23 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none; 
         }
 
         /* 专门用于图片展示的容器 */
         .image-container {
-            aspect-ratio: 16 / 9; /* 保持一个合理的图片比例 */
-            background-color: #24292e; /* 较深的背景色以突出白色物体 */
+            aspect-ratio: 16 / 9; 
+            background-color: #111; /* 图片背景稍微亮一点点，避免与纯黑融为一体 */
             overflow: hidden;
-            display: flex; /* Added for centering image */
-            align-items: center; /* Added for centering image */
-            justify-content: center; /* Added for centering image */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
         }
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 确保图片完整显示在容器内 */
+            object-fit: contain; 
         }
 
         /* Scroll Down Arrow Animation */
@@ -209,10 +209,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 
-                <!-- Logo & Name -->
-                <a href="#" class="flex items-center gap-3 group shrink-0">
+<!-- Logo & Name -->
+<a href="#" class="flex items-center gap-3 group shrink-0">
                     
-                    <img src="网页左上角yzslogo.png" 
+<img src="网页左上角yzslogo.png" 
                          alt="Y.Z.S. Logo" 
                          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
@@ -220,8 +220,8 @@
                 </a>
 
                 
-                <!-- Navigation Links -->
-                <div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
+<!-- Navigation Links -->
+<div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
                     <a href="#about" class="nav-link text-xs md:text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200">
                         01. 关于我
                     </a>
@@ -236,36 +236,32 @@
         </div>
     </nav>
 
-    <!-- Spline Full-Screen Homepage Section - NO TEXT CONTENT -->
+    <!-- Spline Full-Screen Homepage Section -->
 <section id="spline-home" class="spline-hero-container">
         
         <!-- 
              Spline 3D Embed 
-             配置: 
-             1. 响应式全屏: 通过 CSS 实现了 width: 100%; height: 100vh;
-             2. 禁用缩放: 通过 URL 参数 '?disable-spline-mouse-zoom=true' 实现。
-             3. 启用旋转/平移: 移除了 pointer-events: none;
+             Added 'pointer-events: none;' in CSS to iframe to disable ALL mouse/touch interaction.
+             The scene will autoplay but users cannot rotate/zoom/pan.
         -->
         <iframe 
-            src='https://my.spline.design/retrofuturismbganimation-UbdfueJM2tfGUKJ1Z9KXjXFJ/?disable-spline-mouse-zoom=true' 
+            src='https://my.spline.design/retrofuturismbganimation-UbdfueJM2tfGUKJ1Z9KXjXFJ/' 
             frameborder='0'>
         </iframe>
         
         <!-- Overlay for Seamless Scroll Transition -->
         <div class="spline-overlay pointer-events-none">
-            
-            <!-- Seamless transition to the next section - placed at the absolute bottom -->
-            <div class="h-24 bg-gradient-to-t from-[#0d1117] to-transparent w-full relative z-20"></div>
-
+            <!-- Seamless transition to the pure black background -->
+            <div class="h-24 bg-gradient-to-t from-black to-transparent w-full relative z-20"></div>
         </div>
     </section>
 
     <!-- Main Content Starts Here -->
-    <!-- Added mt-[-4rem] to shift content up visually since the spline section is full height -->
-<main class="relative z-10 bg-[#0d1117]">
+    <!-- Updated background to bg-black -->
+<main class="relative z-10 bg-black">
         
         <!-- Section: Video Documentation -->
-<section id="videos" class="py-20 bg-[#0d1117]">
+<section id="videos" class="py-20 bg-black">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Title Block -->
                 <div class="reveal-up text-center mb-10">
@@ -276,10 +272,10 @@
                 <!-- Links Container (2-column layout) -->
                 <div class="reveal-up delay-100 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- YouTube Link Card -->
-                    <a href="https://youtu.be/JdcreejWb8Y?si=yKv7OTZb-1KNvZdk" target="_blank" class="block p-6 bg-[#161b22] border border-gray-800 rounded-xl hover:border-red-600/50 hover:bg-red-900/10 transition-all duration-300 group shadow-lg">
+                    <!-- YouTube Link Card (Updated bg to black/dark gray) -->
+                    <a href="https://youtu.be/JdcreejWb8Y?si=yKv7OTZb-1KNvZdk" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-red-600/50 hover:bg-red-900/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
-                            <!-- YouTube Icon (SVG for quality) -->
+                            <!-- YouTube Icon -->
                             <svg class="w-8 h-8 text-red-500 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M21.543 6.495c-.234-.858-.934-1.558-1.792-1.792C18.23 4.24 12 4.24 12 4.24s-6.23 0-7.751.463c-.858.234-1.558.934-1.792 1.792C2.46 8.016 2.46 12 2.46 12s0 3.984.463 5.465c.234.858.934 1.558 1.792 1.792C5.77 19.76 12 19.76 12 19.76s6.23 0 7.751-.463c.858-.234 1.558-.934 1.792-1.792C21.54 15.984 21.54 12 21.54 12s0-3.984-.463-5.465zM9.546 14.857V8.923L15.385 12l-5.839 2.857z"/>
                             </svg>
@@ -290,10 +286,10 @@
                         </div>
                     </a>
 
-                    <!-- Bilibili Link Card -->
-                    <a href="https://www.bilibili.com/video/BV13d2CBoENm/?spm_id_from=333.1387.homepage.video_card.click&vd_source=7a7e02c4cb61d40d2eefc91ccea2fe6e" target="_blank" class="block p-6 bg-[#161b22] border border-gray-800 rounded-xl hover:border-blue-600/50 hover:bg-blue-900/10 transition-all duration-300 group shadow-lg">
+                    <!-- Bilibili Link Card (Updated bg to black/dark gray) -->
+                    <a href="https://www.bilibili.com/video/BV13d2CBoENm/?spm_id_from=333.1387.homepage.video_card.click&vd_source=7a7e02c4cb61d40d2eefc91ccea2fe6e" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-blue-600/50 hover:bg-blue-900/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
-                            <!-- Bilibili Icon (Using a video play icon as a simplified Bilibili proxy) -->
+                            <!-- Bilibili Icon -->
                             <svg class="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6.28l-2.07-2.07a.75.75 0 00-1.06 1.06l3.374 3.373a.75.75 0 001.06 0l3.374-3.373a.75.75 0 00-1.06-1.06l-2.07 2.07V6z" clip-rule="evenodd" />
                             </svg>
@@ -308,7 +304,7 @@
             </div>
         </section>
 
-        <!-- Section: About Me -->
+        <!-- Section: About Me (Pure Black) -->
 <section id="about" class="py-28 border-t border-gray-800">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
@@ -317,8 +313,8 @@
                     <p class="mt-4 text-gray-500">Philosophy & Mindset</p>
                 </div>
                 
-                <!-- Content Card: YZS -->
-                <div class="reveal-up delay-100 bg-[#161b22] border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl hover:border-indigo-500/30 transition-colors duration-300 relative">
+                <!-- Content Card: Updated to blend with pure black -->
+                <div class="reveal-up delay-100 bg-[#111] border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl hover:border-indigo-500/30 transition-colors duration-300 relative">
                     <div class="relative z-10 space-y-8"> 
                         
                         <!-- 1. 个人寄语 -->
@@ -354,8 +350,8 @@
             </div>
         </section>
 
-        <!-- Section: Projects -->
-<section id="projects" class="py-28 border-t border-gray-800 bg-[#0d1117]">
+        <!-- Section: Projects (Pure Black) -->
+<section id="projects" class="py-28 border-t border-gray-800 bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 作品展示</h2>
@@ -366,7 +362,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
                     <!-- Project Card 1 -->
-                    <div class="reveal-up delay-100 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
+                    <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center overflow-hidden">
                             <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">
                                 
@@ -385,7 +381,7 @@
 
                     
                     <!-- Project Card 2 -->
-                    <div class="reveal-up delay-200 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
+                    <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center overflow-hidden">
                             <span class="text-gray-500 text-sm group-hover:scale-110 transition-transform duration-500">
                                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -403,7 +399,7 @@
 
                      
                     <!-- Project Card 3 -->
-                    <div class="reveal-up delay-300 group relative bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
+                    <div class="reveal-up delay-300 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-gray-500 text-sm">Project Image Placeholder</span>
                         </div>
@@ -424,7 +420,7 @@
             </div>
         </section>
 
-        <!-- Section: Contact -->
+        <!-- Section: Contact (Pure Black) -->
 <section id="contact" class="reveal-up py-28 border-t border-gray-800">
             <div class="max-w-2xl mx-auto px-4 text-center">
                 <div class="mb-12">
@@ -435,7 +431,7 @@
                 
                 <!-- Digital Business Card Image -->
                 <p class="mt-4 text-gray-500 mb-6">我的数字名片</p>
-                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#161b22] border border-gray-800 rounded-2xl shadow-2xl shadow-indigo-500/10 transition-shadow duration-300 hover:shadow-indigo-500/30">
+                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-indigo-500/10 transition-shadow duration-300 hover:shadow-indigo-500/30">
                     <img src="磨砂玻璃质感名片源文件二改后.png" 
                          alt="William Yang 数字名片" 
                          class="w-full h-auto rounded-xl"
@@ -457,7 +453,7 @@
     </main>
 
     <!-- Footer -->
-<footer class="bg-[#0d1117] border-t border-gray-800 py-12">
+<footer class="bg-black border-t border-gray-800 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0 flex items-center gap-2">
                 <span class="text-2xl font-bold text-white tracking-tight">Y.Z.S.</span>
