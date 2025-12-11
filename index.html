@@ -43,7 +43,7 @@
             left: 0;
             display: block;
             z-index: 1; 
-            /* 移除 pointer-events: none; 以允许用户通过鼠标或触摸手势与 Spline 场景进行互动 */
+            /* 允许用户通过鼠标或触摸手势与 Spline 场景进行互动 */
         }
         
         /* Overlay 容器 */
@@ -185,11 +185,14 @@
             align-items: center; 
             justify-content: center; 
         }
+        
+        /* --- 关键更改在这里：让图片适应边框，不留白 --- */
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; 
+            object-fit: cover; /* 确保图片覆盖整个容器，并裁剪超出部分 */
         }
+        /* --- 更改结束 --- */
 
         /* Scroll Down Arrow Animation */
         .scroll-down {
@@ -479,7 +482,7 @@
                 <p class="mt-4 text-white mb-6">我的数字名片</p>
                 <!-- Shadow 颜色调整为新蓝色 -->
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30">
-                    <img src="名片最终版.png" 
+                    <img src="磨砂玻璃质感名片源文件二改后.png" 
                          alt="William Yang 数字名片" 
                          class="w-full h-auto rounded-xl"
                          onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
@@ -523,6 +526,7 @@
             
             <!-- Image Area -->
             <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <!-- 注意：这里的图片如果原始比例与容器不符，将被裁剪以填满容器 -->
                 <img src="43+1.jpg" alt="43+1作品实物图" class="rounded-lg">
             </div>
 
@@ -562,6 +566,7 @@
             
             <!-- Image Area -->
             <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8">
+                <!-- 注意：这里的图片如果原始比例与容器不符，将被裁剪以填满容器 -->
                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg">
             </div>
 
