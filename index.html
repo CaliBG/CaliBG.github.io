@@ -222,14 +222,14 @@
 <body class="antialiased selection:bg-[#3666FA] selection:text-white">
 
     <!-- Navigation Bar -->
-<nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 
-<!-- Logo & Name -->
-<a href="#" class="flex items-center gap-3 group shrink-0">
+                <!-- Logo & Name -->
+                <a href="#" class="flex items-center gap-3 group shrink-0">
                     
-<img src="网页左上角yzslogo.png" 
+                    <img src="网页左上角yzslogo.png" 
                          alt="Y.Z.S. Logo" 
                          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
@@ -238,20 +238,21 @@
                 </a>
 
                 
-<!-- Navigation Links - 链接文字颜色调整为白色，Hover 下划线颜色调整为新蓝色 -->
-<div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
-                    <!-- 导航链接已调整为指向实际内容 -->
+                <!-- Navigation Links -->
+                <!-- 更新: 增加了右侧内边距 pr-4，调整了间距 space-x-3 (mobile) / md:space-x-8 (desktop) -->
+                <div class="flex items-center space-x-3 md:space-x-8 overflow-x-auto no-scrollbar ml-2 pr-4">
+                    <!-- 导航链接: 使用 span class="hidden sm:inline" 在小屏幕上隐藏编号 -->
                     <a href="#videos" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        #01 作品影像记录
+                        <span class="hidden sm:inline">01 </span>作品影像记录
                     </a>
                     <a href="#about" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        02. 关于我
+                        <span class="hidden sm:inline">02 </span>关于我
                     </a>
                     <a href="#projects" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        03. 作品展示
+                        <span class="hidden sm:inline">03 </span>作品展示
                     </a>
                     <a href="#contact" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        04. 联系我
+                        <span class="hidden sm:inline">04 </span>联系我
                     </a>
                 </div>
             </div>
@@ -280,7 +281,7 @@
                 <!-- Title Block -->
                 <div class="reveal-up text-center mb-10">
                     <!-- Title: 保持颜色 -->
-                    <h3 class="text-2xl font-bold text-white mb-2">#01 作品影像记录</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2">01 作品影像记录</h3>
                     <!-- 文本统一为白色 -->
                     <p class="text-sm">View Project Introductions</p>
                 </div>
@@ -356,7 +357,7 @@
                             <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">YZS 品牌简介</h4>
                             <!-- 文本统一为白色 -->
                             <p class="text-base text-white leading-relaxed max-w-3xl">
-                                我们拒绝多余的修辞，只谈存在本身。Yet Zero Sense是年轻灵魂的留白区，一个探索“无我”与“存在”边界的青年视觉品牌。我们在感知过剩的时代，重获零感。
+                                我们拒绝多余的修辞，只谈存在本身。 <em class="font-bold">Yet Zero Sense</em>是年轻灵魂的留白区，一个探索“无我”与“存在”边界的青年视觉品牌。我们在感知过剩的时代，重获零感。
                             </p>
                         </div>
 
@@ -618,7 +619,9 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     // Unobserve after visibility is set for non-header elements
-                    observer.unobserve(entry.target);
+                    if (!entry.target.closest('section#spline-home')) {
+                         observer.unobserve(entry.target);
+                    }
                 }
             });
         }, { threshold: 0.1 });
