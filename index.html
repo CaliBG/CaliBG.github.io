@@ -8,10 +8,14 @@
 <script src="https://cdn.tailwindcss.com"></script>
     
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- 引入 Spline Viewer 脚本 -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.95/build/spline-viewer.js"></script>
+
     <style>
         /* 定义新的主题色 */
         :root {
-            --accent-color: #3666FA; /* 统一的跳转/标签/强调色 - 更新为新蓝色 */
+            --accent-color: #3666FA; /* 统一的跳转/标签/强调色 - 新蓝色 */
             --white-text: #FFFFFF;  /* 统一的普通文本颜色 */
             --bg-black: #000000;
             --bg-dark-gray: #111111;
@@ -25,9 +29,13 @@
             overflow-x: hidden;
         }
 
+        /* ---------------------------------------------------- */
+        /* --- 3D Spline 相关的样式 --- */
+        /* ---------------------------------------------------- */
         /* 顶部 Spline 全屏容器样式 */
         .spline-hero-container {
             position: relative;
+            /* 保持全屏高度，确保 3D 动画作为 Hero Section */
             height: 100vh; 
             width: 100%;
             padding-top: 0; 
@@ -35,18 +43,20 @@
             background-color: var(--bg-black); 
         }
 
-        .spline-hero-container iframe {
+        /* 重点：Spline 3D 嵌入组件，设置为绝对定位以填充容器 */
+        .spline-hero-container spline-viewer {
             position: absolute;
-            width: 100%;
+            width: 100%; 
             height: 100%;
             top: 0;
             left: 0;
             display: block;
             z-index: 1; 
-            /* 允许用户通过鼠标或触摸手势与 Spline 场景进行互动 */
+            /* 默认不应用缩放和平移，以保证新模型正常居中显示 */
+            transform: none; 
         }
         
-        /* Overlay 容器 */
+        /* Overlay 容器，用于底部渐变过渡 */
         .spline-overlay {
             position: absolute; 
             width: 100%;
@@ -57,10 +67,10 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
-            pointer-events: none; /* 确保覆盖层不会阻止对导航栏和下面内容的点击 */
+            pointer-events: none; /* 确保覆盖层不会阻止对导航栏的点击 */
         }
         
-        /* 玻璃拟态导航栏 - 更新为纯黑基底 */
+        /* 玻璃拟态导航栏 - 纯黑基底 */
         .glass-nav {
             background: rgba(0, 0, 0, 0.85); /* 纯黑半透明 */
             backdrop-filter: blur(12px);
@@ -186,30 +196,13 @@
             justify-content: center; 
         }
         
-        /* --- 关键更改在这里：让图片适应边框，不留白 --- */
+        /* 让图片适应边框，不留白 */
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 确保图片覆盖整个容器，并裁剪超出部分 */
+            object-fit: cover; 
         }
-        /* --- 更改结束 --- */
 
-        /* Scroll Down Arrow Animation */
-        .scroll-down {
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-8px);
-            }
-            60% {
-                transform: translateY(-4px);
-            }
-        }
-        
         /* 针对 Tailwind 类名无法覆盖的问题，直接在 CSS 中强制所有非标题文本为白色 */
         p, span, a.nav-link, em {
             color: var(--white-text) !important;
@@ -225,7 +218,7 @@
 
     </style>
 </head>
-<!-- 统一选择框颜色 - 更新为新蓝色 -->
+<!-- 统一选择框颜色 - 新蓝色 -->
 <body class="antialiased selection:bg-[#3666FA] selection:text-white">
 
     <!-- Navigation Bar -->
@@ -233,28 +226,32 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 
-<!-- Logo & Name (Logo and Name are titles, keep them as they are) -->
+<!-- Logo & Name -->
 <a href="#" class="flex items-center gap-3 group shrink-0">
                     
 <img src="网页左上角yzslogo.png" 
                          alt="Y.Z.S. Logo" 
                          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
-                    <!-- 保持 Logo Fallback 文本颜色 -->
+                    <!-- Logo Fallback 文本颜色 -->
                     <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-white">Y.Z.S.</span>
                 </a>
 
                 
 <!-- Navigation Links - 链接文字颜色调整为白色，Hover 下划线颜色调整为新蓝色 -->
 <div class="flex items-center space-x-4 md:space-x-8 overflow-x-auto no-scrollbar">
+                    <!-- 导航链接已调整为指向实际内容 -->
+                    <a href="#videos" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
+                        #01 作品影像记录
+                    </a>
                     <a href="#about" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        01. 关于我
+                        02. 关于我
                     </a>
                     <a href="#projects" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        02. 作品展示
+                        03. 作品展示
                     </a>
                     <a href="#contact" class="nav-link text-xs md:text-sm font-medium hover:text-white transition-colors duration-200">
-                        03. 联系我
+                        04. 联系我
                     </a>
                 </div>
             </div>
@@ -264,11 +261,8 @@
     <!-- Spline Full-Screen Homepage Section -->
 <section id="spline-home" class="spline-hero-container">
         
-        <!-- Spline 3D Embed - 用户现在可以与之互动 -->
-        <iframe 
-            src='https://my.spline.design/auraofbalance-fp9fB3xnDaCzGCIKh9O7tkEI/' 
-            frameborder='0'>
-        </iframe>
+        <!-- Spline 3D Embed - 使用提供的 .splinecode URL -->
+        <spline-viewer url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'></spline-viewer>
         
         <!-- Overlay for Seamless Scroll Transition -->
         <div class="spline-overlay">
@@ -286,7 +280,7 @@
                 <!-- Title Block -->
                 <div class="reveal-up text-center mb-10">
                     <!-- Title: 保持颜色 -->
-                    <h3 class="text-2xl font-bold text-white mb-2">作品影像记录</h3>
+                    <h3 class="text-2xl font-bold text-white mb-2">#01 作品影像记录</h3>
                     <!-- 文本统一为白色 -->
                     <p class="text-sm">View Project Introductions</p>
                 </div>
@@ -333,7 +327,7 @@
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
                     <!-- Title: 保持颜色 -->
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">01. 关于我</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 关于我</h2>
                     <!-- 分隔线颜色调整为新蓝色 -->
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
                     <!-- 文本统一为白色 -->
@@ -388,7 +382,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
                     <!-- Title: 保持颜色 -->
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 作品展示</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">03. 作品展示</h2>
                     <!-- 分隔线颜色调整为新蓝色 -->
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
                     <!-- 文本统一为白色 -->
@@ -471,7 +465,7 @@
             <div class="max-w-2xl mx-auto px-4 text-center">
                 <div class="mb-12">
                     <!-- Title: 保持颜色 -->
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">03. 联系我</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">04. 联系我</h2>
                     <!-- 分隔线颜色调整为新蓝色 -->
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
                     <!-- 文本统一为白色 -->
@@ -482,7 +476,7 @@
                 <p class="mt-4 text-white mb-6">我的数字名片</p>
                 <!-- Shadow 颜色调整为新蓝色 -->
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30">
-                    <img src="名片最终版.png" 
+                    <img src="磨砂玻璃质感名片源文件二改后.png" 
                          alt="William Yang 数字名片" 
                          class="w-full h-auto rounded-xl"
                          onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
@@ -624,9 +618,7 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     // Unobserve after visibility is set for non-header elements
-                    if (!entry.target.closest('section#spline-home')) {
-                         observer.unobserve(entry.target);
-                    }
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
