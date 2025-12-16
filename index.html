@@ -238,37 +238,6 @@
             background-color: #5A85FF; /* Slightly lighter shade for hover */
         }
         
-        /* --- Skeleton Animation (骨架屏动画) --- */
-        @keyframes pulse-bg {
-            0% {
-                background-color: #1a1a1a; /* Darker start */
-            }
-            50% {
-                background-color: #2a2a2a; /* Slightly lighter pulse */
-            }
-            100% {
-                background-color: #1a1a1a; /* Back to darker */
-            }
-        }
-
-        .skeleton-loading {
-            /* 基准颜色 */
-            background-color: #1a1a1a !important; 
-            /* 应用动画 */
-            animation: pulse-bg 1.5s infinite ease-in-out;
-        }
-
-        /* 图片未加载时隐藏，让骨架屏可见 */
-        .skeleton-loading img {
-            transition: opacity 0.5s ease;
-            opacity: 0;
-        }
-
-        /* 图片加载完成后显示 */
-        .skeleton-loading.loaded img {
-            opacity: 1;
-        }
-
         /* --- 视差滚动容器的样式 --- */
         /* 添加 will-change 优化 GPU 渲染 */
         .parallax-container {
@@ -410,7 +379,7 @@
                         <div>
                             <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">核心理念</h4>
                             <p class="text-base text-white opacity-80 leading-relaxed max-w-3xl">
-                                我们生活在一个“过度感知”的时代。情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<span class="text-[#3666FA]">YZS</span>不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
+                                我们生活在一个“过度感知”的时代。情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<span class="text-white opacity-80">YZS</span>不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
                             </p>
                         </div>
 
@@ -430,9 +399,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
                     <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal1')">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading parallax-container" id="skeleton-p1">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover parallax-target" onload="imageLoaded(this, 'skeleton-p1')">
+                                <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -447,9 +416,9 @@
 
                     
                     <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal2')">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading parallax-container" id="skeleton-p2">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover parallax-target" onload="imageLoaded(this, 'skeleton-p2')">
+                                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -494,12 +463,11 @@
                 
                 <p class="mt-4 text-white opacity-60 mb-6">我的数字名片</p>
                 
-                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30 skeleton-loading" id="skeleton-contact">
+                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30" id="skeleton-contact">
                     <img src="名片最终版.png" 
                                 alt="William Yang 数字名片" 
                                 class="w-full h-auto rounded-xl"
-                                onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null; imageLoaded(this, 'skeleton-contact')"
-                                onload="imageLoaded(this, 'skeleton-contact')">
+                                onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
                 </div>
                 
                 <p class="text-white opacity-80 text-lg mb-8">
@@ -536,8 +504,8 @@
             <span class="close-button" onclick="closeModal('projectModal1')">&times;</span>
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《#01 43+1》</h3>
             
-            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8 skeleton-loading" id="skeleton-modal-p1">
-                <img src="43+1.jpg" alt="43+1作品实物图" class="rounded-lg" onload="imageLoaded(this, 'skeleton-modal-p1')">
+            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p1">
+                <img src="43+1.jpg" alt="43+1作品实物图" class="rounded-lg">
             </div>
 
             <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
@@ -570,8 +538,8 @@
             <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《#02 沉睡于皮下的记忆》</h3>
             
-            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8 skeleton-loading" id="skeleton-modal-p2">
-                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg" onload="imageLoaded(this, 'skeleton-modal-p2')">
+            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p2">
+                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg">
             </div>
 
             <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
@@ -594,13 +562,6 @@
     </div>
     
     <script>
-        // Function to remove skeleton loading class after image loads
-        function imageLoaded(imgElement, containerId) {
-            const container = document.getElementById(containerId);
-            container.classList.remove('skeleton-loading');
-            container.classList.add('loaded'); // Add loaded class to show image
-        }
-
         // --- Modals Logic ---
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('open');
@@ -676,16 +637,13 @@
             });
         });
         
-        // --- 【新增】图片视差滚动逻辑 (Parallax Scroll) ---
+        // --- 图片视差滚动逻辑 (Parallax Scroll) ---
         
         // 获取所有视差目标元素 (即作品卡片内的图片或文字)
         const parallaxTargets = document.querySelectorAll('.parallax-target');
         
         // 视差滚动处理器函数，性能优化：使用 requestAnimationFrame
         function handleParallax() {
-            // 获取当前滚动位置
-            const scrollY = window.scrollY || window.pageYOffset;
-            
             // 视口高度
             const windowHeight = window.innerHeight;
             
@@ -699,29 +657,15 @@
 
                 const rect = container.getBoundingClientRect();
                 
-                // 计算元素相对于视口中心点的偏移量
-                // 当元素在视口底部时，ratio 约为 -0.5
-                // 当元素在视口顶部时，ratio 约为 0.5
-                const elementCenter = rect.top + rect.height / 2;
-                const viewportCenter = windowHeight / 2;
-                const offsetFromCenter = elementCenter - viewportCenter;
-                
-                // 确保只有当元素在视口附近时才计算视差 (可选，但有助于性能)
+                // 确保只有当元素在视口附近时才计算视差
                 if (rect.top > windowHeight || rect.bottom < 0) {
                     return;
                 }
 
-                // 计算视差位移
-                // 目标：当向下滚动时，图片应向上(负值)移动，但速度低于页面主体。
-                // 这里的公式旨在让元素越靠近视口中心，移动速度越慢（越接近 0 视差）。
-                // 简单起见，我们直接使用滚动偏移量进行计算：
-                
                 // 元素中心在视口中轴线上的相对位置
                 const relativePos = rect.top / windowHeight; 
                 
-                // 视差距离：这里使用一个简单的基于视口位置的计算
-                // 当 relativePos 接近 0.5 时，元素在视口中心，视差位移接近 0
-                // 当 relativePos 接近 1 (底部) 时，位移向上移动 (负值)
+                // 视差距离：基于视口位置的简单计算
                 const parallaxDistance = (relativePos - 0.5) * windowHeight * PARALLAX_INTENSITY;
 
                 // 应用变换
