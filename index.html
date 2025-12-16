@@ -9,14 +9,13 @@
     
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
     
-    <!-- 引入 Spline Viewer 脚本 -->
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.95/build/spline-viewer.js"></script>
 
     <style>
         /* 定义新的主题色 */
         :root {
             --accent-color: #3666FA; /* 统一的跳转/标签/强调色 - 新蓝色 */
-            --white-text: #FFFFFF;  /* 统一的普通文本颜色 */
+            --white-text: #FFFFFF; /* 统一的普通文本颜色 */
             --bg-black: #000000;
             --bg-dark-gray: #111111;
         }
@@ -182,7 +181,7 @@
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  
+            -ms-overflow-style: none; 
             scrollbar-width: none; 
         }
 
@@ -270,29 +269,22 @@
 
     </style>
 </head>
-<!-- 统一选择框颜色 - 新蓝色 -->
 <body class="antialiased selection:bg-[#3666FA] selection:text-white">
 
-    <!-- Navigation Bar -->
     <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- 增加了 relative 以便绝对定位渐变遮罩 -->
             <div class="flex justify-between items-center h-16 relative">
                 
-                <!-- Logo & Name -->
                 <a href="#" class="flex items-center gap-3 group shrink-0">
                     
                     <img src="网页左上角yzslogo.png" 
-                         alt="Y.Z.S. Logo" 
-                         class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                         onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
-                    <!-- Logo Fallback (标题层级: opacity-100) -->
+                            alt="Y.Z.S. Logo" 
+                            class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                            onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
                     <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-white">Y.Z.S.</span>
                 </a>
 
                 
-                <!-- Navigation Links (辅助信息层级: opacity-60) -->
-                <!-- 导航链接本身视为辅助信息，hover时变为 opacity-100 -->
                 <div class="flex items-center space-x-3 md:space-x-8 overflow-x-auto no-scrollbar ml-2 pr-4 relative">
                     <a href="#videos" class="nav-link text-xs md:text-sm font-medium text-white opacity-60 hover:opacity-100 transition-colors duration-200">
                         <span class="hidden sm:inline">01 </span>作品影像记录
@@ -308,68 +300,51 @@
                     </a>
                 </div>
 
-                <!-- 移动端渐变遮罩 (Mobile Gradient Mask) -->
                 <div class="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-black via-black/50 to-transparent pointer-events-none md:hidden"></div>
 
             </div>
         </div>
     </nav>
 
-    <!-- Spline Full-Screen Homepage Section -->
     <section id="spline-home" class="spline-hero-container">
         
-        <!-- Spline 3D Embed - 使用提供的 .splinecode URL -->
         <spline-viewer url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'></spline-viewer>
         
-        <!-- Overlay for Seamless Scroll Transition -->
         <div class="spline-overlay">
-            <!-- Seamless transition to the pure black background -->
             <div class="h-24 bg-gradient-to-t from-black to-transparent w-full relative z-20"></div>
         </div>
     </section>
 
-    <!-- Main Content Starts Here -->
     <main class="relative z-10 bg-black">
         
-        <!-- Section: Video Documentation -->
         <section id="videos" class="py-20 bg-black">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Title Block -->
                 <div class="reveal-up text-center mb-10">
-                    <!-- Title (标题层级: opacity-100) -->
                     <h3 class="text-2xl font-bold text-white mb-2">01 作品影像记录</h3>
-                    <!-- Subtitle (辅助信息层级: opacity-60) -->
                     <p class="text-sm text-white opacity-60">View Project Introductions</p>
                 </div>
 
-                <!-- Links Container -->
                 <div class="reveal-up delay-100 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- YouTube Link Card -->
                     <a href="https://youtu.be/JdcreejWb8Y?si=yKv7OTZb-1KNvZdk" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-[#3666FA]/50 hover:bg-[#3666FA]/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
                             <svg class="w-8 h-8 text-red-500 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M21.543 6.495c-.234-.858-.934-1.558-1.792-1.792C18.23 4.24 12 4.24 12 4.24s-6.23 0-7.751.463c-.858.234-1.558.934-1.792 1.792C2.46 8.016 2.46 12 2.46 12s0 3.984.463 5.465c.234.858.934 1.558 1.792 1.792C5.77 19.76 12 19.76 12 19.76s6.23 0 7.751-.463c.858-.234 1.558-.934 1.792-1.792C21.54 15.984 21.54 12 21.54 12s0-3.984-.463-5.465zM9.546 14.857V8.923L15.385 12l-5.839 2.857z"/>
                             </svg>
                             <div>
-                                <!-- Title (标题层级: opacity-100) -->
                                 <p class="font-semibold text-lg text-white">YouTube 平台</p>
-                                <!-- Subtext (辅助信息层级: opacity-60) -->
                                 <p class="text-sm text-white opacity-60 group-hover:text-[#3666FA] transition-colors">观看高清作品介绍视频</p>
                             </div>
                         </div>
                     </a>
 
-                    <!-- Bilibili Link Card -->
                     <a href="https://www.bilibili.com/video/BV13d2CBoENm/?spm_id_from=333.1387.homepage.video_card.click&vd_source=7a7e02c4cb61d40d2eefc91ccea2fe6e" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-[#3666FA]/50 hover:bg-[#3666FA]/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
                             <svg class="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6.28l-2.07-2.07a.75.75 0 00-1.06 1.06l3.374 3.373a.75.75 0 001.06 0l3.374-3.373a.75.75 0 00-1.06-1.06l-2.07 2.07V6z" clip-rule="evenodd" />
                             </svg>
                             <div>
-                                <!-- Title (标题层级: opacity-100) -->
                                 <p class="font-semibold text-lg text-white">Bilibili 平台</p>
-                                <!-- Subtext (辅助信息层级: opacity-60) -->
                                 <p class="text-sm text-white opacity-60 group-hover:text-[#3666FA] transition-colors">国内友好访问通道</p>
                             </div>
                         </div>
@@ -379,26 +354,19 @@
             </div>
         </section>
 
-        <!-- Section: About Me -->
         <section id="about" class="py-28 border-t border-gray-800">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
-                    <!-- Title (标题层级: opacity-100) -->
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 关于我</h2>
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <!-- Subtitle (辅助信息层级: opacity-60) -->
                     <p class="mt-4 text-white opacity-60">Philosophy & Mindset</p>
                 </div>
                 
-                <!-- Content Card -->
                 <div class="reveal-up delay-100 bg-[#111] border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl hover:border-[#3666FA]/30 transition-colors duration-300 relative">
                     <div class="relative z-10 space-y-8"> 
                         
-                        <!-- 1. 个人寄语 -->
                         <div>
-                            <!-- Sub-Title (标题层级: opacity-100) -->
                             <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">个人寄语</h4>
-                            <!-- Body Text (正文层级: opacity-80) -->
                             <p class="text-base text-white opacity-80 leading-relaxed font-light max-w-3xl">
                                 我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。有时候我在创作，有时候我在沉思——两者的界限其实很模糊。如果你在寻找一个认真做梦的人，那大概就是我。
                             </p>
@@ -406,11 +374,8 @@
 
                         <div class="h-px bg-gray-800"></div>
 
-                        <!-- 2. YZS 品牌简介 -->
                         <div>
-                            <!-- Sub-Title (标题层级: opacity-100) -->
                             <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">YZS 品牌简介</h4>
-                            <!-- Body Text (正文层级: opacity-80) -->
                             <p class="text-base text-white opacity-80 leading-relaxed max-w-3xl">
                                 我们拒绝多余的修辞，只谈存在本身。Yet Zero Sense是年轻灵魂的留白区，一个探索“无我”与“存在”边界的青年视觉品牌。我们在感知过剩的时代，重获零感。
                             </p>
@@ -418,11 +383,8 @@
 
                         <div class="h-px bg-gray-800"></div>
 
-                        <!-- 3. 核心理念 -->
                         <div>
-                            <!-- Sub-Title (标题层级: opacity-100) -->
                             <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">核心理念</h4>
-                            <!-- Body Text (正文层级: opacity-80) -->
                             <p class="text-base text-white opacity-80 leading-relaxed max-w-3xl">
                                 我们生活在一个“过度感知”的时代。情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<span class="text-[#3666FA]">YZS</span>不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
                             </p>
@@ -433,34 +395,25 @@
             </div>
         </section>
 
-        <!-- Section: Projects -->
         <section id="projects" class="py-28 border-t border-gray-800 bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
-                    <!-- Title (标题层级: opacity-100) -->
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">03. 作品展示</h2>
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <!-- Subtitle (辅助信息层级: opacity-60) -->
                     <p class="mt-4 text-white opacity-60">Recent Creative Works & Designs</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <!-- Project Card 1 -->
                     <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
-                        <!-- Image Container with Skeleton -->
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading" id="skeleton-p1">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <!-- Image with onload event to remove skeleton class -->
                                 <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover" onload="imageLoaded(this, 'skeleton-p1')">
                             </span>
                         </div>
                         <div class="p-6 text-center">
-                            <!-- Title (标题层级: opacity-100) -->
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">《#01 43+1》</h3>
-                            <!-- Description (正文层级: opacity-80) -->
                             <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">力量与平衡的身体瞬间，探寻行动与克制。</p>
-                            <!-- Tags/Date (辅助信息层级: opacity-60) -->
                             <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
                                 <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> 装置艺术</span>
                                 <span>2025</span>
@@ -469,21 +422,15 @@
                     </div>
 
                     
-                    <!-- Project Card 2 -->
                     <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
-                        <!-- Image Container with Skeleton -->
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading" id="skeleton-p2">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <!-- Image with onload event to remove skeleton class -->
                                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover" onload="imageLoaded(this, 'skeleton-p2')">
                             </span>
                         </div>
                         <div class="p-6 text-center">
-                            <!-- Title (标题层级: opacity-100) -->
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">《#02 沉睡于皮下的记忆》</h3>
-                            <!-- Description (正文层级: opacity-80) -->
                             <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">镜面、文字与极简形式，探讨身体、时间与自我意识。</p>
-                            <!-- Tags/Date (辅助信息层级: opacity-60) -->
                             <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
                                 <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> 概念艺术</span>
                                 <span>2025</span>
@@ -491,19 +438,14 @@
                         </div>
                     </div>
 
-                     
-                    <!-- Project Card 3 (Placeholder - no image to load) -->
+                    
                     <div class="reveal-up delay-300 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
-                        <!-- This section is just a placeholder, no image load logic needed -->
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
                             <span class="text-white text-sm opacity-80">Project Image Placeholder</span>
                         </div>
                         <div class="p-6 text-center">
-                            <!-- Title (标题层级: opacity-100) -->
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">作品名称 #3</h3>
-                            <!-- Description (正文层级: opacity-80) -->
                             <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">手绘插画系列作品。</p>
-                            <!-- Tags/Date (辅助信息层级: opacity-60) -->
                             <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
                                 <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> Art</span>
                                 <span>2024</span>
@@ -512,43 +454,34 @@
                     </div>
                 </div>
                 
-                <!-- Link (辅助信息层级: opacity-60) -->
                 <div class="text-center mt-12">
                     <a href="#" class="inline-block text-[#3666FA] opacity-60 hover:opacity-100 text-sm font-medium border-b border-[#3666FA] hover:border-white pb-0.5 transition-colors">查看全部作品 -></a>
                 </div>
             </div>
         </section>
 
-        <!-- Section: Contact -->
         <section id="contact" class="reveal-up py-28 border-t border-gray-800">
             <div class="max-w-2xl mx-auto px-4 text-center">
                 <div class="mb-12">
-                    <!-- Title (标题层级: opacity-100) -->
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">04. 联系我</h2>
                     <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <!-- Subtitle (辅助信息层级: opacity-60) -->
                     <p class="mt-4 text-white opacity-60">Get In Touch</p>
                 </div>
                 
-                <!-- Digital Business Card Image -->
-                <!-- Text (辅助信息层级: opacity-60) -->
                 <p class="mt-4 text-white opacity-60 mb-6">我的数字名片</p>
                 
-                <!-- Contact Image Container with Skeleton -->
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30 skeleton-loading" id="skeleton-contact">
                     <img src="名片最终版.png" 
-                         alt="William Yang 数字名片" 
-                         class="w-full h-auto rounded-xl"
-                         onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null; imageLoaded(this, 'skeleton-contact')"
-                         onload="imageLoaded(this, 'skeleton-contact')">
+                            alt="William Yang 数字名片" 
+                            class="w-full h-auto rounded-xl"
+                            onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null; imageLoaded(this, 'skeleton-contact')"
+                            onload="imageLoaded(this, 'skeleton-contact')">
                 </div>
                 
-                <!-- Introductory Text (正文层级: opacity-80) -->
                 <p class="text-white opacity-80 text-lg mb-8">
                     欢迎通过上方名片中的信息（电话、邮件、Instagram）与我联系。期待您的合作邀约或艺术交流。
                 </p>
                 
-                <!-- CTA Button (标题层级: opacity-100) -->
                 <a href="mailto:yzs13968803946@qq.com" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-[#3666FA] rounded-full hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 shadow-lg shadow-[#3666FA]/30">
                     或直接发送邮件
                 </a>
@@ -557,41 +490,32 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-black border-t border-gray-800 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0 flex items-center gap-2">
-                <!-- Title (标题层级: opacity-100) -->
                 <span class="text-2xl font-bold text-white tracking-tight">Y.Z.S.</span>
             </div>
-            <!-- Copyright (辅助信息层级: opacity-60) -->
             <div class="text-white opacity-60 text-sm">
                 &copy; 2025 Y.Z.S. Design. All rights reserved.
             </div>
         </div>
     </footer>
     
-    <!-- 回到顶部按钮 -->
     <button id="backToTop" aria-label="回到顶部">
-        <!-- SVG 向上箭头图标 -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
     </button>
 
-    <!-- Project Modal 1 -->
     <div id="projectModal1" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal1')">&times;</span>
-            <!-- Title (标题层级: opacity-100) -->
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《#01 43+1》</h3>
             
-            <!-- Image Area with Skeleton -->
             <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8 skeleton-loading" id="skeleton-modal-p1">
                 <img src="43+1.jpg" alt="43+1作品实物图" class="rounded-lg" onload="imageLoaded(this, 'skeleton-modal-p1')">
             </div>
 
-            <!-- Body Text (正文层级: opacity-80) -->
             <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
                 <p>
                     这件名为《#01 43+1》的作品，灵感来自于一个关于“力量与平衡”的身体瞬间。它捕捉了一只手高高举起榔头、即将敲下的一刻，我感受到身体内部的张力——那是一种在行动与克制之间的悬停。
@@ -609,7 +533,6 @@
                     在这件作品里，我想呈现的不是一个动作，而是力量在时间中被暂停的状态。
                 </p>
             </div>
-            <!-- Tags (辅助信息层级: opacity-60) -->
             <div class="mt-8 flex flex-wrap justify-center gap-3">
                 <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">装置艺术</span>
                 <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">雕塑</span>
@@ -618,19 +541,15 @@
         </div>
     </div>
 
-    <!-- Project Modal 2 -->
     <div id="projectModal2" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
-            <!-- Title (标题层级: opacity-100) -->
             <h3 class="text-3xl font-bold text-white mb-6 text-center">《#02 沉睡于皮下的记忆》</h3>
             
-            <!-- Image Area with Skeleton -->
             <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8 skeleton-loading" id="skeleton-modal-p2">
                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg" onload="imageLoaded(this, 'skeleton-modal-p2')">
             </div>
 
-            <!-- Body Text (正文层级: opacity-80) -->
             <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
                 <p>
                     《皮囊记忆 #2》，镜面被框入洁白的边界中，像一张被档案化的证据页。观者在镜中看到的倒影，与现实重叠在一起，形成一种被动的对视关系。
@@ -642,7 +561,6 @@
                     作品编号“#2”与日期标注“2025/11/13”，让这件作品带有档案与实验的意味——仿佛是一段关于“身体记忆”的研究样本，也是一份艺术家在特定时间留下的存在证据。
                 </p>
             </div>
-            <!-- Tags (辅助信息层级: opacity-60) -->
             <div class="mt-8 flex flex-wrap justify-center gap-3">
                 <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">概念艺术</span>
                 <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">装置</span>
@@ -651,58 +569,50 @@
         </div>
     </div>
     
-    <!-- JavaScript for Modals and Scroll Animation -->
     <script>
         // Function to remove skeleton loading class after image loads
         function imageLoaded(imgElement, containerId) {
             const container = document.getElementById(containerId);
-            if (container) {
-                // 1. Add 'loaded' class to set opacity: 1 on the image
-                container.classList.add('loaded'); 
-                // 2. Remove the skeleton animation class after a short delay for smooth transition
-                setTimeout(() => {
-                    container.classList.remove('skeleton-loading');
-                }, 500); 
-            }
+            container.classList.remove('skeleton-loading');
+            container.classList.add('loaded'); // Add loaded class to show image
         }
-        
+
         // --- Modals Logic ---
         function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('open');
-            }
+            document.getElementById(modalId).classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on body
         }
 
         function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('open');
-            }
+            document.getElementById(modalId).classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling on body
         }
 
-        // Close modal when clicking outside of the content
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(event) {
                 if (event.target === modal) {
                     closeModal(modal.id);
                 }
             });
-        }
-        
-        // --- Scroll Reveal Animation ---
-        const observer = new IntersectionObserver((entries) => {
+        });
+
+
+        // --- Scroll Reveal Logic (Intersection Observer) ---
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Unobserve after visibility is set for non-header elements
-                    if (!entry.target.closest('section#spline-home')) {
-                         observer.unobserve(entry.target);
-                    }
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
         document.querySelectorAll('.reveal-up').forEach(element => {
             observer.observe(element);
@@ -710,37 +620,36 @@
 
         // --- Back to Top Button Logic ---
         const backToTopButton = document.getElementById('backToTop');
-        
-        // Function to handle scroll event
-        function handleScroll() {
-            // Get the height of the viewport
-            const viewportHeight = window.innerHeight;
-            // Get the current scroll position
-            const scrollY = window.scrollY;
 
-            // Show button if scrolled past one viewport height
-            if (scrollY > viewportHeight) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) { // Show button after scrolling 500px down
                 backToTopButton.style.opacity = '1';
                 backToTopButton.style.transform = 'translateY(0)';
             } else {
-                // Hide button
                 backToTopButton.style.opacity = '0';
-                backToTopButton.style.transform = 'translateY(20px)'; // Move slightly off screen when hidden
+                backToTopButton.style.transform = 'translateY(20px)';
             }
-        }
+        });
 
-        // Function to scroll smoothly to the top
-        function scrollToTop() {
-            // Since we set scroll-behavior: smooth in CSS, this works
+        backToTopButton.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth' 
+                behavior: 'smooth'
             });
-        }
+        });
+        
+        // --- 【新增】强制页面加载时滚动到顶部解决刷新定位问题 ---
+        // 确保浏览器在加载页面时不会记住上次的滚动位置，尤其是在刷新或返回时。
+        // 使用 DOMContentLoaded 确保在 DOM 结构准备就绪时立即执行。
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0); 
+        });
 
-        // Add event listeners
-        window.addEventListener('scroll', handleScroll);
-        backToTopButton.addEventListener('click', scrollToTop);
+        // 为了更保险，使用 window.onload 在所有资源（包括 3D 模型）加载完成后再次确认
+        window.onload = function() {
+            window.scrollTo(0, 0); 
+        };
+        
     </script>
 </body>
 </html>
