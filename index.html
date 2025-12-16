@@ -239,16 +239,15 @@
         }
         
         /* --- 视差滚动容器的样式 --- */
-        /* 添加 will-change 优化 GPU 渲染 */
         .parallax-container {
             overflow: hidden; 
         }
         
         .parallax-target {
-            /* 确保初始状态没有视差，并将过渡设为 none，否则滚动时会卡顿 */
-            transform: translateY(0); 
+            /* 关键修改：图片默认放大 10%，为视差移动提供冗余空间 */
+            transform: scale(1.1); 
             transition: none;
-            will-change: transform; /* 关键优化 */
+            will-change: transform;
         }
 
         /* 作品卡片 hover 效果优化：抬升和阴影 */
@@ -659,6 +658,8 @@
                 
                 // 确保只有当元素在视口附近时才计算视差
                 if (rect.top > windowHeight || rect.bottom < 0) {
+                    // 当元素不在视口附近时，确保它被正确地缩放但没有移动
+                    target.style.transform = `scale(1.1) translate3d(0, 0, 0)`;
                     return;
                 }
 
@@ -668,8 +669,9 @@
                 // 视差距离：基于视口位置的简单计算
                 const parallaxDistance = (relativePos - 0.5) * windowHeight * PARALLAX_INTENSITY;
 
-                // 应用变换
-                target.style.transform = `translate3d(0, ${parallaxDistance}px, 0)`;
+                // 应用变换：同时应用 scale(1.1) 和 translate3d
+                // scale(1.1) 确保图片放大，translate3d 确保移动效果
+                target.style.transform = `scale(1.1) translate3d(0, ${parallaxDistance}px, 0)`;
             });
         }
         
