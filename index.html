@@ -18,6 +18,8 @@
             --white-text: #FFFFFF; /* 统一的普通文本颜色 */
             --bg-black: #000000;
             --bg-dark-gray: #111111;
+            /* 视差强度变量 */
+            --parallax-intensity: 0.1; 
         }
 
         /* 全局样式设置 */
@@ -267,6 +269,28 @@
             opacity: 1;
         }
 
+        /* --- 视差滚动容器的样式 --- */
+        /* 添加 will-change 优化 GPU 渲染 */
+        .parallax-container {
+            overflow: hidden; 
+        }
+        
+        .parallax-target {
+            /* 确保初始状态没有视差，并将过渡设为 none，否则滚动时会卡顿 */
+            transform: translateY(0); 
+            transition: none;
+            will-change: transform; /* 关键优化 */
+        }
+
+        /* 作品卡片 hover 效果优化：抬升和阴影 */
+        .project-card:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 20px rgba(54, 102, 250, 0.3); 
+        }
+        .project-card {
+             transition: all 0.3s ease; /* 确保 hover 效果过渡平滑 */
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-[#3666FA] selection:text-white">
@@ -278,9 +302,9 @@
                 <a href="#" class="flex items-center gap-3 group shrink-0">
                     
                     <img src="网页左上角yzslogo.png" 
-                            alt="Y.Z.S. Logo" 
-                            class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                            onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+                                alt="Y.Z.S. Logo" 
+                                class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
                     <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-white">Y.Z.S.</span>
                 </a>
 
@@ -405,10 +429,10 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal1')">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading" id="skeleton-p1">
+                    <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal1')">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading parallax-container" id="skeleton-p1">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover" onload="imageLoaded(this, 'skeleton-p1')">
+                                <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover parallax-target" onload="imageLoaded(this, 'skeleton-p1')">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -422,10 +446,10 @@
                     </div>
 
                     
-                    <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 cursor-pointer" onclick="openModal('projectModal2')">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading" id="skeleton-p2">
+                    <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal2')">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden skeleton-loading parallax-container" id="skeleton-p2">
                             <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
-                                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover" onload="imageLoaded(this, 'skeleton-p2')">
+                                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover parallax-target" onload="imageLoaded(this, 'skeleton-p2')">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -439,9 +463,9 @@
                     </div>
 
                     
-                    <div class="reveal-up delay-300 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300">
-                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center">
-                            <span class="text-white text-sm opacity-80">Project Image Placeholder</span>
+                    <div class="reveal-up delay-300 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 project-card">
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800 group-hover:bg-gray-700 transition-colors flex items-center justify-center parallax-container">
+                            <span class="text-white text-sm opacity-80 parallax-target">Project Image Placeholder</span>
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">作品名称 #3</h3>
@@ -472,10 +496,10 @@
                 
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30 skeleton-loading" id="skeleton-contact">
                     <img src="名片最终版.png" 
-                            alt="William Yang 数字名片" 
-                            class="w-full h-auto rounded-xl"
-                            onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null; imageLoaded(this, 'skeleton-contact')"
-                            onload="imageLoaded(this, 'skeleton-contact')">
+                                alt="William Yang 数字名片" 
+                                class="w-full h-auto rounded-xl"
+                                onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null; imageLoaded(this, 'skeleton-contact')"
+                                onload="imageLoaded(this, 'skeleton-contact')">
                 </div>
                 
                 <p class="text-white opacity-80 text-lg mb-8">
@@ -609,7 +633,10 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+                    // 只取消对 reveal-up 的观察，不取消对视差元素的观察
+                    if (entry.target.classList.contains('reveal-up')) {
+                         observer.unobserve(entry.target);
+                    }
                 }
             });
         }, observerOptions);
@@ -618,17 +645,28 @@
             observer.observe(element);
         });
 
-        // --- Back to Top Button Logic ---
+        // --- Back to Top Button Logic (Throttled for performance) ---
         const backToTopButton = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) { // Show button after scrolling 500px down
+        
+        function toggleBackToTop() {
+             if (window.scrollY > 500) { // Show button after scrolling 500px down
                 backToTopButton.style.opacity = '1';
                 backToTopButton.style.transform = 'translateY(0)';
             } else {
                 backToTopButton.style.opacity = '0';
                 backToTopButton.style.transform = 'translateY(20px)';
             }
+        }
+
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+             // Throttling: 只在等待结束后执行一次切换逻辑
+             if (!scrollTimeout) {
+                 scrollTimeout = setTimeout(() => {
+                     toggleBackToTop();
+                     scrollTimeout = null;
+                 }, 100); // 100ms 检查一次
+             }
         });
 
         backToTopButton.addEventListener('click', () => {
@@ -638,17 +676,87 @@
             });
         });
         
-        // --- 【新增】强制页面加载时滚动到顶部解决刷新定位问题 ---
-        // 确保浏览器在加载页面时不会记住上次的滚动位置，尤其是在刷新或返回时。
-        // 使用 DOMContentLoaded 确保在 DOM 结构准备就绪时立即执行。
-        document.addEventListener('DOMContentLoaded', () => {
-            window.scrollTo(0, 0); 
-        });
+        // --- 【新增】图片视差滚动逻辑 (Parallax Scroll) ---
+        
+        // 获取所有视差目标元素 (即作品卡片内的图片或文字)
+        const parallaxTargets = document.querySelectorAll('.parallax-target');
+        
+        // 视差滚动处理器函数，性能优化：使用 requestAnimationFrame
+        function handleParallax() {
+            // 获取当前滚动位置
+            const scrollY = window.scrollY || window.pageYOffset;
+            
+            // 视口高度
+            const windowHeight = window.innerHeight;
+            
+            // 视差强度 (从 CSS 变量中读取)
+            const PARALLAX_INTENSITY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax-intensity'));
 
+            parallaxTargets.forEach(target => {
+                // 获取图片容器的顶部位置 (相对于视口)
+                const container = target.closest('.parallax-container');
+                if (!container) return;
+
+                const rect = container.getBoundingClientRect();
+                
+                // 计算元素相对于视口中心点的偏移量
+                // 当元素在视口底部时，ratio 约为 -0.5
+                // 当元素在视口顶部时，ratio 约为 0.5
+                const elementCenter = rect.top + rect.height / 2;
+                const viewportCenter = windowHeight / 2;
+                const offsetFromCenter = elementCenter - viewportCenter;
+                
+                // 确保只有当元素在视口附近时才计算视差 (可选，但有助于性能)
+                if (rect.top > windowHeight || rect.bottom < 0) {
+                    return;
+                }
+
+                // 计算视差位移
+                // 目标：当向下滚动时，图片应向上(负值)移动，但速度低于页面主体。
+                // 这里的公式旨在让元素越靠近视口中心，移动速度越慢（越接近 0 视差）。
+                // 简单起见，我们直接使用滚动偏移量进行计算：
+                
+                // 元素中心在视口中轴线上的相对位置
+                const relativePos = rect.top / windowHeight; 
+                
+                // 视差距离：这里使用一个简单的基于视口位置的计算
+                // 当 relativePos 接近 0.5 时，元素在视口中心，视差位移接近 0
+                // 当 relativePos 接近 1 (底部) 时，位移向上移动 (负值)
+                const parallaxDistance = (relativePos - 0.5) * windowHeight * PARALLAX_INTENSITY;
+
+                // 应用变换
+                target.style.transform = `translate3d(0, ${parallaxDistance}px, 0)`;
+            });
+        }
+        
+        // 使用 requestAnimationFrame 来平滑处理视差滚动
+        let rAFRunning = false;
+        function updateParallax() {
+            if (!rAFRunning) {
+                rAFRunning = true;
+                requestAnimationFrame(() => {
+                    handleParallax();
+                    rAFRunning = false;
+                });
+            }
+        }
+        
+        // 监听滚动和窗口大小变化
+        window.addEventListener('scroll', updateParallax);
+        window.addEventListener('resize', updateParallax);
+        
+        // 初始运行一次，确保页面加载时视差正确
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0); // 强制回顶部
+            updateParallax();
+        });
+        
         // 为了更保险，使用 window.onload 在所有资源（包括 3D 模型）加载完成后再次确认
         window.onload = function() {
             window.scrollTo(0, 0); 
+            updateParallax();
         };
+
         
     </script>
 </body>
