@@ -76,37 +76,15 @@
             overflow: hidden;
             background-color: var(--bg-primary); 
         }
-        
-        /* Base style for both 3D elements (Spline Viewer and Iframe) */
-        .spline-hero-container .theme-spline {
+        .spline-hero-container spline-viewer {
             position: absolute;
             width: 100%; 
             height: 100%;
             top: 0;
             left: 0;
             z-index: 1; 
-            transition: opacity 0.5s ease; /* Smooth transition */
-            border: none; /* For iframe */
+            transform: none; 
         }
-
-        /* Dark Mode Spline (Original URL: Visible by default) */
-        .dark-mode-spline {
-            opacity: 1;
-        }
-        /* Light Mode Spline (New URL/iframe: Hidden by default) */
-        .light-mode-spline {
-            opacity: 0;
-        }
-
-        /* Light Mode Overrides: Switch visibility */
-        .light-mode .dark-mode-spline {
-            opacity: 0; /* Hide dark mode spline */
-        }
-        .light-mode .light-mode-spline {
-            opacity: 1; /* Show light mode iframe */
-        }
-
-
         .spline-overlay {
             position: absolute; 
             width: 100%;
@@ -287,7 +265,7 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
         
-        /* 回到顶部按钮保持强调色 (圆形样式) */
+        /* 回到顶部按钮保持强调色 (更新为圆形) */
         #backToTop {
             position: fixed; /* 确保它始终浮动在右下角 */
             width: 56px; /* 固定的宽度 */
@@ -366,20 +344,8 @@
     </nav>
 
     <section id="spline-home" class="spline-hero-container">
-        <!-- 1. Deep Mode Background (Original URL: Visible by default) -->
-        <spline-viewer 
-            id="dark-spline"
-            url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'
-            class="theme-spline dark-mode-spline"
-        ></spline-viewer>
-
-        <!-- 2. Light Mode Background (New URL/iframe: Hidden by default, visible in .light-mode) -->
-        <iframe 
-            id="light-spline"
-            src='https://my.spline.design/logoanimation-fvINXe9ii7X6RB01oyEZEMvh/' 
-            frameborder='0' 
-            class="theme-spline light-mode-spline"
-        ></iframe>
+        <!--  -->
+        <spline-viewer url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'></spline-viewer>
 
         <!-- 3D 互动提示胶囊 -->
         <div id="splineTipPill" onclick="openSplineModal()">
@@ -530,7 +496,7 @@
                     <div class="reveal-up delay-100 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal1')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
                             <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
-                                
+                                <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -547,7 +513,7 @@
                     <div class="reveal-up delay-200 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal2')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
                             <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
-                                
+                                <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
@@ -564,7 +530,7 @@
                     <div class="reveal-up delay-300 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal3')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
                             <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
-                                
+                                <img src="微信图片_20251216103209_82_508.jpg" alt="《痛》作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
