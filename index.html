@@ -119,9 +119,11 @@
             width: 100%;
         }
 
-        /* Modals */
+        /* ---------------------------------------------------- */
+        /* --- Modals & Tips (核心动画修改) --- */
+        /* ---------------------------------------------------- */
         .modal {
-            display: none; 
+            /* Critical: Set default display to fixed but control visibility via opacity and pointer-events */
             position: fixed; 
             z-index: 1000; 
             left: 0;
@@ -129,17 +131,26 @@
             width: 100%; 
             height: 100%; 
             overflow: auto; 
-            background-color: rgba(0,0,0,0.9); 
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px);
+            background-color: rgba(0,0,0,0.0); /* 初始透明 */
+            backdrop-filter: blur(0px); 
+            -webkit-backdrop-filter: blur(0px);
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            pointer-events: none; /* New: Prevent clicks when hidden */
+            display: none; /* New: Controlled by JS on open/close for smooth transition */
+
+            /* 关键点 2: 统一的关闭动画时长 */
+            transition: opacity 0.35s ease-in-out, background-color 0.35s ease-in-out, backdrop-filter 0.35s ease-in-out;
+            will-change: opacity, background-color, backdrop-filter;
         }
         .modal.open {
-            display: flex;
+            display: flex; /* 打开时显示 */
             opacity: 1;
+            background-color: rgba(0,0,0,0.9); /* 打开时变黑 */
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            pointer-events: auto; /* 允许点击 */
         }
         .modal-content {
             background-color: var(--bg-black); 
@@ -148,15 +159,20 @@
             border-radius: 1rem; 
             border: 1px solid #333; 
             width: 90%;
-            max-width: 900px; 
+            max-width: 500px; 
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            
+            /* 初始状态：下方偏移 + 透明 */
             transform: translateY(20px);
             opacity: 0;
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+            /* 关键点 3: 内容动画时长 */
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
             max-height: 90vh; 
             overflow-y: auto; 
         }
         .modal.open .modal-content {
+            /* 结束状态：归位 + 显现 */
             transform: translateY(0);
             opacity: 1;
         }
@@ -176,6 +192,69 @@
             color: var(--white-text);
             text-decoration: none;
             cursor: pointer;
+        }
+        
+        /* ---------------------------------------------------- */
+        /* --- 3D 互动提示胶囊样式及动画 --- */
+        /* ---------------------------------------------------- */
+
+        /* 出场动画: 调整以包含水平居中的 -50% 偏移 */
+        @keyframes pop-in {
+            /* Start slightly below the final position (30px offset) */
+            0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.9); }
+            /* Bounce slightly above the final position (5px offset) */
+            80% { opacity: 1; transform: translateX(-50%) translateY(-5px) scale(1.02); } 
+            /* Final centered position */
+            100% { opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+
+        #splineTipPill {
+            position: fixed;
+            /* 关键修改：改为固定底部位置 */
+            bottom: 5rem; /* 距离底部 5rem (约 80px) */
+            top: auto; /* 取消顶部设置 */
+            left: 50%;
+            transform: translateX(-50%); /* 仅水平居中 */
+            z-index: 50; 
+            cursor: pointer;
+            background: rgba(54, 102, 250, 0.9); /* 主题色半透明 */
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white-text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* 胶囊形状 */
+            box-shadow: 0 4px 12px rgba(54, 102, 250, 0.4);
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); /* 调整过渡时间 */
+            display: flex;
+            align-items: center;
+            /* 应用出场动画 (仅在初始加载时运行一次) */
+            animation: pop-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            opacity: 0; /* 初始隐藏，让动画控制显示 */
+        }
+        
+        #splineTipPill:hover {
+            /* 保持居中，向上微抬，并放大 */
+            transform: translateX(-50%) translateY(-3px) scale(1.05); 
+            box-shadow: 0 6px 15px rgba(54, 102, 250, 0.6);
+        }
+
+        /* 隐藏和消失动画 Class */
+        .is-hidden {
+            opacity: 0 !important;
+            transform: translateX(-50%) translateY(50px) !important; /* Slide down and fade out */
+            pointer-events: none; /* Make it unclickable when hidden */
+        }
+        
+        /* 胶囊内的关闭按钮 */
+        #pillCloseBtn {
+            margin-left: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+        
+        #pillCloseBtn:hover {
+            transform: rotate(90deg);
         }
         
         /* 隐藏滚动条但保留滚动功能 */
@@ -302,52 +381,59 @@
         
         <spline-viewer url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'></spline-viewer>
 
-        <!-- 新增：3D 模型互动提示弹窗 -->
-        <div id="splineTipModal" class="absolute inset-0 flex items-center justify-center z-40 p-4 transition-opacity duration-500" style="opacity: 0;">
-            <div id="tipContent" class="bg-black/70 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-2xl relative max-w-sm md:max-w-md w-full transition-all duration-300">
-                <!-- 关闭按钮 -->
-                <button onclick="closeSplineTip()" class="absolute top-2 right-2 text-white/70 hover:text-white transition-colors p-2 rounded-full focus:outline-none" aria-label="关闭提示">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+        <!-- 阶段一：小巧的互动提示胶囊（默认显示，带动画，已调整至靠下） -->
+        <div id="splineTipPill" onclick="openSplineModal()">
+            <span class="text-sm font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                3D 互动提示 - 点击查看操作
+            </span>
+        </div>
+        
+        <!-- 阶段二：详细的图文说明弹窗（默认隐藏） -->
+        <!-- 注意：JS 会在打开时设置 display: flex，在关闭动画结束后设置 display: none -->
+        <div id="splineTipModal" class="modal">
+            <div class="modal-content relative">
+                <!-- 关闭按钮 (关闭后两个提示都消失) -->
+                <button onclick="closeSplineTip()" class="close-button" aria-label="关闭提示">&times;</button>
 
-                <h4 class="text-xl font-bold text-white mb-4 border-b border-white/20 pb-2">3D 模型互动指南</h4>
+                <h4 class="text-2xl font-bold text-white mb-6 text-center">3D 模型互动指南</h4>
                 
-                <div class="space-y-4">
+                <div class="space-y-6">
                     <!-- 桌面端提示 -->
-                    <div class="flex items-center space-x-4 bg-white/5 p-3 rounded-lg">
+                    <div class="flex items-start space-x-4 bg-white/5 p-4 rounded-lg">
                         <!-- 鼠标图标 SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <rect x="5" y="4" width="14" height="16" rx="6" ry="6" />
                             <line x1="12" y1="6" x2="12" y2="10" stroke-linecap="round" />
                         </svg>
                         <div>
-                            <p class="font-semibold text-white">桌面端操作</p>
-                            <p class="text-sm text-white/70">
-                                **鼠标左键或右键** 拖动，即可旋转模型视角。
+                            <p class="font-semibold text-white text-lg">桌面端操作 (PC / Mac)</p>
+                            <p class="text-sm text-white/80 mt-1">
+                                使用**鼠标左键或右键**拖动，即可旋转和探索模型视角。
                             </p>
                         </div>
                     </div>
 
                     <!-- 移动端提示 -->
-                    <div class="flex items-center space-x-4 bg-white/5 p-3 rounded-lg">
+                    <div class="flex items-start space-x-4 bg-white/5 p-4 rounded-lg">
                         <!-- 触摸图标 SVG (简化的双指) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 20v-2m0 0a1 1 0 100-2 1 1 0 000 2zM18 18h2m-2 0a1 1 0 100-2 1 1 0 000 2zM6 18h2m-2 0a1 1 0 100-2 1 1 0 000 2zM12 12v-2m0 0a1 1 0 100-2 1 1 0 000 2zM18 12h2m-2 0a1 1 0 100-2 1 1 0 000 2zM6 12h2m-2 0a1 1 0 100-2 1 1 0 000 2z" />
                             <rect x="3" y="2" width="18" height="20" rx="3" ry="3" stroke="currentColor" fill="none" />
                         </svg>
                         <div>
-                            <p class="font-semibold text-white">移动端操作</p>
-                            <p class="text-sm text-white/70">
-                                **双指或三指捏合拖动**，可旋转和缩放模型。
+                            <p class="font-semibold text-white text-lg">移动端操作 (手机 / 平板)</p>
+                            <p class="text-sm text-white/80 mt-1">
+                                使用**双指或三指捏合拖动**，可旋转模型；**双指捏合缩放**可以推近或拉远视角。
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- 结束：3D 模型互动提示弹窗 -->
+        <!-- 结束：3D 模型互动提示 -->
         
         <div class="spline-overlay">
             <div class="h-24 bg-gradient-to-t from-black to-transparent w-full relative z-20"></div>
@@ -512,7 +598,7 @@
                 <p class="mt-4 text-white opacity-60 mb-6">我的数字名片</p>
                 
                 <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30" id="skeleton-contact">
-                    <img src="名片最最最终版本.png" 
+                    <img src="名片最终版.png" 
                                 alt="William Yang 数字名片" 
                                 class="w-full h-auto rounded-xl"
                                 onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
@@ -642,45 +728,193 @@
     </div>
     
     <script>
-        // --- Modals Logic ---
+        // --- Modals Logic (for Project Modals) ---
+        // 设置所有 modal 的动画时长为 350ms
+        const MODAL_ANIMATION_DURATION = 350; 
+
+        /**
+         * 打开项目详情弹窗 (Project Modals)
+         * - 立即设置 display: flex
+         * - 使用 requestAnimationFrame 确保 display 生效后，添加 .open 类触发 CSS 动画
+         */
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('open');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling on body
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            
+            document.body.style.overflow = 'hidden'; 
+            modal.style.display = 'flex'; // 1. 立即显示 Modal 容器
+            
+            // 2. 使用 requestAnimationFrame 确保 display: flex 已经应用，然后添加 open 类
+            requestAnimationFrame(() => {
+                modal.classList.add('open'); // 触发 CSS 动画 (opacity 0 -> 1)
+            });
         }
 
+        /**
+         * 关闭项目详情弹窗 (Project Modals)
+         * - 移除 .open 类触发 CSS 动画
+         * - 动画结束后隐藏 display: none 并恢复滚动
+         */
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('open');
-            document.body.style.overflow = ''; // Restore scrolling on body
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            modal.classList.remove('open'); // 1. 触发 CSS 动画 (opacity 1 -> 0)
+            
+            // 2. 延时隐藏 display: none 并恢复滚动
+            setTimeout(() => {
+                // 确保在等待期间没有被重新打开
+                if (!modal.classList.contains('open')) { 
+                     modal.style.display = 'none'; // 隐藏 Modal 容器
+                }
+                
+                // 仅在没有其他打开的 modal 时才恢复滚动
+                const anyOpen = document.querySelectorAll('.modal.open').length > 0;
+                if (!anyOpen) {
+                    document.body.style.overflow = '';
+                }
+            }, MODAL_ANIMATION_DURATION + 50); // 稍微延长 50ms 确保动画结束
         }
 
-        // Close modal when clicking outside
+        // 点击背景关闭逻辑
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(event) {
                 if (event.target === modal) {
-                    closeModal(modal.id);
+                    // 对于 Spline 提示弹窗，使用专门的关闭函数
+                    if (modal.id === 'splineTipModal') {
+                        closeSplineTip(true); // 视为滚动/背景关闭，不永久记录
+                    } else {
+                        closeModal(modal.id);
+                    }
                 }
             });
         });
 
-        // --- Spline Tip Modal Logic ---
-        function closeSplineTip() {
-            const modal = document.getElementById('splineTipModal');
-            if (modal) {
-                modal.style.opacity = '0';
-                // 使用 setTimeout 等待过渡完成后隐藏元素，以释放点击事件
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 500); 
+        // --- Spline Tip Two-Stage & Visibility Logic ---
+        const splineTipPill = document.getElementById('splineTipPill');
+        const splineTipModal = document.getElementById('splineTipModal');
+        const splineHome = document.getElementById('spline-home');
+        
+        // 胶囊动画时长
+        const PILL_ANIMATION_DURATION = 400; 
+
+        // 使用 localStorage 检查用户是否已经永久关闭过提示
+        let splineTipDismissed = localStorage.getItem('splineTipDismissed') === 'true';
+        
+        // 初始设置胶囊状态
+        if (splineTipPill && splineTipDismissed) {
+             splineTipPill.style.display = 'none';
+        }
+
+        /**
+         * 阶段一：打开详细提示弹窗 (更新为新逻辑)
+         */
+        function openSplineModal() {
+            // 弹窗打开时，胶囊应立即触发隐藏动画
+            if (splineTipPill) splineTipPill.classList.add('is-hidden'); 
+            
+            if (splineTipModal) {
+                document.body.style.overflow = 'hidden'; // 阻止背景滚动
+                splineTipModal.style.display = 'flex'; // 1. 立即显示 Modal 容器
                 
-                // 将状态保存到 localStorage，下次访问时不再显示
-                try {
-                    localStorage.setItem('splineTipClosed', 'true');
-                } catch (e) {
-                    console.error("Local storage not available:", e);
-                }
+                requestAnimationFrame(() => {
+                    splineTipModal.classList.add('open'); // 触发 CSS 动画 (opacity 0 -> 1)
+                });
             }
         }
 
+        /**
+         * 统一关闭逻辑：关闭弹窗并（可选）永久隐藏胶囊
+         * @param {boolean} isScrolling true 表示由 IntersectionObserver 或背景点击触发
+         */
+        function closeSplineTip(isScrolling = false) {
+            
+            // 1. 关闭 Modal (如果开启)
+            let wasModalOpen = false;
+            if (splineTipModal && splineTipModal.classList.contains('open')) {
+                wasModalOpen = true;
+                splineTipModal.classList.remove('open'); // 触发 fade-out 动画 (0.35s)
+            } else if (!isScrolling) {
+                // 如果 modal 没开，但用户点击了胶囊的关闭按钮 (视为永久关闭)
+                isScrolling = false; 
+            }
+            
+            // 2. 永久关闭标记
+            if (!isScrolling) {
+                splineTipDismissed = true;
+                localStorage.setItem('splineTipDismissed', 'true');
+            }
+            
+            // 3. 隐藏胶囊
+            if (splineTipPill) {
+                splineTipPill.classList.add('is-hidden');
+            }
+            
+            // 4. 延时隐藏 display: none 并恢复滚动
+            // 延迟时间取 Modal 动画和 Pill 动画的最长时间
+            const totalDelay = Math.max(MODAL_ANIMATION_DURATION, PILL_ANIMATION_DURATION) + 50; 
+
+            setTimeout(() => {
+                // 隐藏 Modal 容器
+                if (splineTipModal && !splineTipModal.classList.contains('open')) {
+                     splineTipModal.style.display = 'none'; 
+                }
+                
+                // 隐藏胶囊 display: none
+                if (splineTipPill && splineTipPill.classList.contains('is-hidden')) {
+                     splineTipPill.style.display = 'none';
+                }
+                
+                // 仅在没有其他打开的 modal 时才恢复滚动
+                const anyOpen = document.querySelectorAll('.modal.open').length > 0;
+                if (!anyOpen) {
+                    document.body.style.overflow = '';
+                }
+            }, totalDelay);
+        }
+
+        // --- Spline 3D Section 滚动可见性逻辑 (Intersection Observer) ---
+        if (splineHome && splineTipPill) {
+            
+            // Observer 关注 #spline-home 区域
+            const splineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const isVisible = entry.isIntersecting;
+                    
+                    // 只有当 3D 区域可见 且 用户未永久关闭提示时，才显示胶囊
+                    if (isVisible && !splineTipDismissed) {
+                        splineTipPill.style.display = 'flex'; 
+                        requestAnimationFrame(() => {
+                            splineTipPill.classList.remove('is-hidden'); // 移除隐藏 class，触发 pop-in/显示
+                        });
+                    } else {
+                        // 如果 3D 区域滚动出视图 或 已被永久关闭，则隐藏胶囊
+                        splineTipPill.classList.add('is-hidden');
+                        
+                        // 确保在隐藏动画结束后，将 display 设置为 none
+                        setTimeout(() => {
+                            // 仅在仍然是隐藏状态时才设置为 none
+                            if (splineTipPill.classList.contains('is-hidden')) {
+                                splineTipPill.style.display = 'none';
+                            }
+                        }, PILL_ANIMATION_DURATION); 
+                        
+                        // 确保在滚动消失时，弹窗平滑关闭
+                        if (splineTipModal.classList.contains('open')) {
+                            // 使用 closeSplineTip(true) 来触发动画和延迟滚动恢复，但不设永久关闭
+                            closeSplineTip(true); 
+                        }
+                    }
+                });
+            }, { 
+                threshold: 0.01, // 只要有一点点可见就触发
+                rootMargin: '0px 0px 0px 0px' 
+            }); 
+
+            splineObserver.observe(splineHome);
+        }
+        
+        
         // --- Scroll Reveal Logic (Intersection Observer) ---
         const observerOptions = {
             root: null, // viewport
@@ -737,43 +971,30 @@
         
         // --- 图片视差滚动逻辑 (Parallax Scroll) ---
         
-        // 获取所有视差目标元素 (即作品卡片内的图片或文字)
         const parallaxTargets = document.querySelectorAll('.parallax-target');
         
-        // 视差滚动处理器函数，性能优化：使用 requestAnimationFrame
         function handleParallax() {
-            // 视口高度
             const windowHeight = window.innerHeight;
-            
-            // 视差强度 (从 CSS 变量中读取)
             const PARALLAX_INTENSITY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax-intensity'));
 
             parallaxTargets.forEach(target => {
-                // 获取图片容器的顶部位置 (相对于视口)
                 const container = target.closest('.parallax-container');
                 if (!container) return;
 
                 const rect = container.getBoundingClientRect();
                 
-                // 确保只有当元素在视口附近时才计算视差
                 if (rect.top > windowHeight || rect.bottom < 0) {
-                    // 当元素不在视口附近时，确保它被正确地缩放但没有移动
                     target.style.transform = `scale(1.2) translate3d(0, 0, 0)`;
                     return;
                 }
 
-                // 元素中心在视口中轴线上的相对位置
                 const relativePos = rect.top / windowHeight; 
-                
-                // 视差距离：基于视口位置的简单计算
                 const parallaxDistance = (relativePos - 0.5) * windowHeight * PARALLAX_INTENSITY;
 
-                // 应用变换：同时应用 scale(1.2) 和 translate3d
                 target.style.transform = `scale(1.2) translate3d(0, ${parallaxDistance}px, 0)`;
             });
         }
         
-        // 使用 requestAnimationFrame 来平滑处理视差滚动
         let rAFRunning = false;
         function updateParallax() {
             if (!rAFRunning) {
@@ -785,39 +1006,15 @@
             }
         }
         
-        // 监听滚动和窗口大小变化
         window.addEventListener('scroll', updateParallax);
         window.addEventListener('resize', updateParallax);
         
         // 初始运行一次，确保页面加载时视差正确
         document.addEventListener('DOMContentLoaded', () => {
-            window.scrollTo(0, 0); // 强制回顶部
+            window.scrollTo(0, 0); 
             updateParallax();
-            
-            // 检查 Spline Tip 模态框状态
-            const tipModal = document.getElementById('splineTipModal');
-            if (tipModal) {
-                let isClosed = false;
-                try {
-                    isClosed = localStorage.getItem('splineTipClosed') === 'true';
-                } catch (e) {
-                    // 如果无法访问 localStorage，则警告并默认显示
-                    console.warn("Could not read localStorage for tip state. Displaying modal.");
-                }
-
-                if (isClosed) {
-                    tipModal.style.display = 'none';
-                } else {
-                    // 如果未关闭，延迟显示，产生淡入效果
-                    tipModal.style.display = 'flex'; // 确保在 DOM 中可见，以便计算
-                    setTimeout(() => {
-                        tipModal.style.opacity = '1';
-                    }, 100); // 延迟 100ms
-                }
-            }
         });
         
-        // 为了更保险，使用 window.onload 在所有资源（包括 3D 模型）加载完成后再次确认
         window.onload = function() {
             window.scrollTo(0, 0); 
             updateParallax();
