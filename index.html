@@ -12,52 +12,79 @@
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.95/build/spline-viewer.js"></script>
 
     <style>
-        /* 定义新的主题色 */
+        /* ---------------------------------------------------- */
+        /* --- Theme Variables (Dark Mode Default) --- */
+        /* ---------------------------------------------------- */
         :root {
-            --accent-color: #3666FA; /* 统一的跳转/标签/强调色 - 新蓝色 */
-            --white-text: #FFFFFF; /* 统一的普通文本颜色 */
-            --bg-black: #000000;
-            --bg-dark-gray: #111111;
+            /* 强调色 */
+            --accent-color: #3666FA; 
+            /* 主背景色 (黑) */
+            --bg-primary: #000000;
+            /* 主文本色 (白) */
+            --text-primary: #FFFFFF;
+            /* 次级背景色 / 卡片背景 (深灰 #111) */
+            --bg-secondary: #111111; 
+            /* 边框/分隔线 (暗灰 #333) */
+            --border-color: #333333; 
+            /* 导航背景 (半透明黑) */
+            --nav-bg-color: rgba(0, 0, 0, 0.85); 
+            /* 导航边框 */
+            --nav-border-color: rgba(255, 255, 255, 0.1); 
+            /* 阴影颜色 (用于卡片 hover/modal) */
+            --shadow-color: rgba(54, 102, 250, 0.3);
             /* 视差强度变量 */
             --parallax-intensity: 0.1; 
         }
 
-        /* 全局样式设置 */
+        /* ---------------------------------------------------- */
+        /* --- Light Mode Overrides (Applied when body has .light-mode) --- */
+        /* ---------------------------------------------------- */
+        .light-mode {
+            /* 主背景色 (白) */
+            --bg-primary: #FFFFFF;
+            /* 主文本色 (黑) */
+            --text-primary: #000000;
+            /* 次级背景色 / 卡片背景 (浅灰 #F5F5F5) */
+            --bg-secondary: #F5F5F5; 
+            /* 边框/分隔线 (浅灰 #E0E0E0) */
+            --border-color: #E0E0E0; 
+            /* 导航背景 (半透明白) */
+            --nav-bg-color: rgba(255, 255, 255, 0.85); 
+            /* 导航边框 */
+            --nav-border-color: rgba(0, 0, 0, 0.1); 
+            /* 阴影颜色 (更柔和的黑影) */
+            --shadow-color: rgba(0, 0, 0, 0.15); 
+        }
+
+        /* 全局样式设置 (使用变量) */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-black); 
-            color: var(--white-text); /* 全局文本设为白色, 作为标题的默认颜色 */
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease; /* 平滑切换主题 */
+            scroll-behavior: smooth;
         }
-
+        
         /* ---------------------------------------------------- */
-        /* --- 3D Spline 相关的样式 --- */
+        /* --- Nav & Hero Styles --- */
         /* ---------------------------------------------------- */
-        /* 顶部 Spline 全屏容器样式 */
         .spline-hero-container {
             position: relative;
-            /* 保持全屏高度，确保 3D 动画作为 Hero Section */
             height: 100vh; 
             width: 100%;
-            padding-top: 0; 
             overflow: hidden;
-            background-color: var(--bg-black); 
+            background-color: var(--bg-primary); 
         }
-
-        /* 重点：Spline 3D 嵌入组件，设置为绝对定位以填充容器 */
         .spline-hero-container spline-viewer {
             position: absolute;
             width: 100%; 
             height: 100%;
             top: 0;
             left: 0;
-            display: block;
             z-index: 1; 
-            /* 默认不应用缩放和平移，以保证新模型正常居中显示 */
             transform: none; 
         }
-        
-        /* Overlay 容器，用于底部渐变过渡 */
         .spline-overlay {
             position: absolute; 
             width: 100%;
@@ -65,46 +92,35 @@
             top: 0; 
             left: 0;
             z-index: 10;
+            pointer-events: none;
             display: flex;
             flex-direction: column;
             justify-content: flex-end; 
-            pointer-events: none; /* 确保覆盖层不会阻止对导航栏的点击 */
+        }
+        /* 滚动渐变过渡 (使用变量) */
+        .spline-overlay .bg-gradient-to-t {
+            background: linear-gradient(to top, var(--bg-primary), transparent);
         }
         
-        /* 玻璃拟态导航栏 - 纯黑基底 */
+        /* 玻璃拟态导航栏 (使用变量) */
         .glass-nav {
-            background: rgba(0, 0, 0, 0.85); /* 纯黑半透明 */
+            background: var(--nav-bg-color); 
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--nav-border-color);
+        }
+        .light-mode .glass-nav {
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        /* 平滑滚动 - 关键 */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* --- 滚动上浮动画样式 --- */
-        .reveal-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: opacity, transform;
-        }
-
-        .reveal-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-
-        /* 导航栏链接 Hover 效果 - 统一使用新颜色 */
+        /* 导航栏链接 Hover 效果 */
         .nav-link {
             position: relative;
             white-space: nowrap; 
+            color: var(--text-primary); /* 使用主题色 */
+            opacity: 0.8;
+            transition: opacity 0.3s, color 0.3s;
         }
+        .nav-link:hover { opacity: 1; }
         .nav-link::after {
             content: '';
             position: absolute;
@@ -112,7 +128,7 @@
             height: 1px;
             bottom: -2px;
             left: 0;
-            background-color: var(--accent-color); /* 新主题色 */
+            background-color: var(--accent-color); 
             transition: width 0.3s ease;
         }
         .nav-link:hover::after {
@@ -120,268 +136,209 @@
         }
 
         /* ---------------------------------------------------- */
-        /* --- Modals & Tips (核心动画修改) --- */
+        /* --- Sections & Cards Styles --- */
+        /* ---------------------------------------------------- */
+        .main-section { border-color: var(--border-color); }
+        .bg-secondary { background-color: var(--bg-secondary); }
+        .border-primary { border-color: var(--border-color); }
+        
+        /* 作品卡片 (使用变量) */
+        .project-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease; 
+        }
+        .project-card:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 20px var(--shadow-color); 
+        }
+        
+        /* ---------------------------------------------------- */
+        /* --- Modals & Tips (动画保持不变, 颜色使用变量) --- */
         /* ---------------------------------------------------- */
         .modal {
-            /* Critical: Set default display to fixed but control visibility via opacity and pointer-events */
             position: fixed; 
             z-index: 1000; 
             left: 0;
             top: 0;
             width: 100%; 
             height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.0); /* 初始透明 */
+            background-color: rgba(0,0,0,0.0); 
             backdrop-filter: blur(0px); 
             -webkit-backdrop-filter: blur(0px);
+            opacity: 0;
+            pointer-events: none; 
+            display: none; 
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            pointer-events: none; /* New: Prevent clicks when hidden */
-            display: none; /* New: Controlled by JS on open/close for smooth transition */
-
-            /* 关键点 2: 统一的关闭动画时长 */
             transition: opacity 0.35s ease-in-out, background-color 0.35s ease-in-out, backdrop-filter 0.35s ease-in-out;
-            will-change: opacity, background-color, backdrop-filter;
         }
         .modal.open {
-            display: flex; /* 打开时显示 */
+            display: flex; 
             opacity: 1;
-            background-color: rgba(0,0,0,0.9); /* 打开时变黑 */
+            /* Modal 遮罩始终使用深色半透明背景，无论主题如何 */
+            background-color: rgba(0,0,0,0.9); 
             backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
-            pointer-events: auto; /* 允许点击 */
+            pointer-events: auto; 
         }
         .modal-content {
-            background-color: var(--bg-black); 
-            margin: auto;
+            background-color: var(--bg-primary); /* 内容区使用主题背景色 */
             padding: 2.5rem; 
             border-radius: 1rem; 
-            border: 1px solid #333; 
-            width: 90%;
-            max-width: 500px; 
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-            
-            /* 初始状态：下方偏移 + 透明 */
+            border: 1px solid var(--border-color); /* 边框使用主题边框色 */
+            box-shadow: 0 0 40px var(--shadow-color); /* 阴影使用主题阴影色 */
             transform: translateY(20px);
             opacity: 0;
-
-            /* 关键点 3: 内容动画时长 */
             transition: transform 0.3s ease-out, opacity 0.3s ease-out;
             max-height: 90vh; 
             overflow-y: auto; 
         }
         .modal.open .modal-content {
-            /* 结束状态：归位 + 显现 */
             transform: translateY(0);
             opacity: 1;
         }
         .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 2.5rem; 
-            font-weight: bold;
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            cursor: pointer;
+            color: var(--text-primary); /* 关闭按钮使用主题文本色 */
+            opacity: 0.6;
             transition: color 0.2s ease;
         }
         .close-button:hover,
         .close-button:focus {
-            color: var(--white-text);
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        /* ---------------------------------------------------- */
-        /* --- 3D 互动提示胶囊样式及动画 --- */
-        /* ---------------------------------------------------- */
-
-        /* 出场动画: 调整以包含水平居中的 -50% 偏移 */
-        @keyframes pop-in {
-            /* Start slightly below the final position (30px offset) */
-            0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.9); }
-            /* Bounce slightly above the final position (5px offset) */
-            80% { opacity: 1; transform: translateX(-50%) translateY(-5px) scale(1.02); } 
-            /* Final centered position */
-            100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            opacity: 1;
         }
 
+        /* ---------------------------------------------------- */
+        /* --- 3D 互动提示胶囊 (确保定位和动画) --- */
+        /* ---------------------------------------------------- */
         #splineTipPill {
-            position: fixed;
-            /* 关键修改：改为固定底部位置 */
-            bottom: 5rem; /* 距离底部 5rem (约 80px) */
-            top: auto; /* 取消顶部设置 */
-            left: 50%;
-            transform: translateX(-50%); /* 仅水平居中 */
-            z-index: 50; 
+            /* FIXED POSITIONING: Bottom Center */
+            position: fixed; 
+            bottom: 40px;   /* 底部偏上居中 */
+            left: 50%;      /* 水平居中 */
+            z-index: 50;
             cursor: pointer;
-            background: rgba(54, 102, 250, 0.9); /* 主题色半透明 */
-            backdrop-filter: blur(8px);
+            padding: 0.75rem; 
+            border-radius: 9999px; 
+            /* 胶囊颜色保持不变，始终是强调色 */
+            background: rgba(54, 102, 250, 0.9); 
+            color: #FFFFFF; 
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--white-text);
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px; /* 胶囊形状 */
             box-shadow: 0 4px 12px rgba(54, 102, 250, 0.4);
-            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1); /* 调整过渡时间 */
-            display: flex;
-            align-items: center;
-            /* 应用出场动画 (仅在初始加载时运行一次) */
-            animation: pop-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-            opacity: 0; /* 初始隐藏，让动画控制显示 */
+            
+            /* Animation controls: Initially hidden */
+            opacity: 0;
+            /* 组合 transform：先居中，再向下移动 20px 隐藏 */
+            transform: translateX(-50%) translateY(20px);
+            pointer-events: none; /* 初始不可点击 */
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        /* 当 Intersection Observer 触发可见性时使用此 class */
+        #splineTipPill.is-visible {
+            opacity: 1;
+            /* 组合 transform：居中，不移动 Y 轴 */
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
         }
         
-        #splineTipPill:hover {
-            /* 保持居中，向上微抬，并放大 */
-            transform: translateX(-50%) translateY(-3px) scale(1.05); 
-            box-shadow: 0 6px 15px rgba(54, 102, 250, 0.6);
-        }
-
-        /* 隐藏和消失动画 Class */
-        .is-hidden {
-            opacity: 0 !important;
-            transform: translateX(-50%) translateY(50px) !important; /* Slide down and fade out */
-            pointer-events: none; /* Make it unclickable when hidden */
-        }
+        /* ---------------------------------------------------- */
+        /* --- 其他辅助样式 --- */
+        /* ---------------------------------------------------- */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .image-container { background-color: var(--bg-secondary); }
+        .parallax-target { transform: scale(1.2); transition: none; will-change: transform; }
         
-        /* 胶囊内的关闭按钮 */
-        #pillCloseBtn {
-            margin-left: 1rem;
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.3s ease;
+        /* 动画样式保持不变 */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
         }
+        .reveal-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
         
-        #pillCloseBtn:hover {
-            transform: rotate(90deg);
-        }
-        
-        /* 隐藏滚动条但保留滚动功能 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none; 
-            scrollbar-width: none; 
-        }
-
-        /* 专门用于图片展示的容器 */
-        .image-container {
-            aspect-ratio: 16 / 9; 
-            background-color: var(--bg-dark-gray); 
-            overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        
-        /* 让图片适应边框，不留白 */
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
-
-        /* 强制去除 strong/em 标签的样式，保持中文字体样式一致性 */
-        p, span, a.nav-link, em {
-            font-style: normal !important; /* 取消斜体 */
-            font-weight: 400 !important;   /* 取消加粗 */
-        }
-        strong, em {
-            font-weight: 400 !important;
-            font-style: normal !important;
-        }
-
-        /* 回到顶部按钮的样式 */
+        /* 回到顶部按钮保持强调色 */
         #backToTop {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
             background-color: var(--accent-color);
-            color: var(--white-text);
-            padding: 0.75rem;
-            border-radius: 9999px; /* Full rounded */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Shadow */
+            color: var(--text-primary); /* 按钮图标颜色使用主题文本色，以适应浅色模式 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             opacity: 0;
-            cursor: pointer;
             z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* 调整回到顶部按钮的位置，避免与提示胶囊重叠 */
+            bottom: 24px;   
+            right: 24px;
         }
-
         #backToTop:hover {
             transform: translateY(-3px) scale(1.05);
-            background-color: #5A85FF; /* Slightly lighter shade for hover */
+            background-color: #5A85FF; 
         }
-        
-        /* --- 视差滚动容器的样式 --- */
-        .parallax-container {
-            overflow: hidden; 
-        }
-        
-        .parallax-target {
-            /* 关键修改：图片默认放大 20%，为视差移动提供更充足的冗余空间 */
-            transform: scale(1.2); 
-            transition: none;
-            will-change: transform;
-        }
-
-        /* 作品卡片 hover 效果优化：抬升和阴影 */
-        .project-card:hover {
-            transform: translateY(-3px); 
-            box-shadow: 0 10px 20px rgba(54, 102, 250, 0.3); 
-        }
-        .project-card {
-             transition: all 0.3s ease; /* 确保 hover 效果过渡平滑 */
-        }
-
     </style>
 </head>
-<body class="antialiased selection:bg-[#3666FA] selection:text-white">
+<!-- 初始加载时，主题由 JS 控制 -->
+<body class="antialiased selection:bg-[var(--accent-color)] selection:text-white">
 
     <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 relative">
                 
+                <!-- Logo 区域 (添加 ID 用于主题切换) -->
                 <a href="#" class="flex items-center gap-3 group shrink-0">
-                    
-                    <img src="网页左上角yzslogo.png" 
+                    <!-- 默认是白色 Logo，浅色模式下替换为白底黑标.png -->
+                    <img id="main-logo" 
+                                src="网页左上角yzslogo.png" 
                                 alt="Y.Z.S. Logo" 
                                 class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
-                    <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-white">Y.Z.S.</span>
+                    <span id="logo-fallback" style="display:none;" class="font-bold text-lg text-[var(--text-primary)]">Y.Z.S.</span>
                 </a>
 
                 
                 <div class="flex items-center space-x-3 md:space-x-8 overflow-x-auto no-scrollbar ml-2 pr-4 relative">
-                    <a href="#videos" class="nav-link text-xs md:text-sm font-medium text-white opacity-60 hover:opacity-100 transition-colors duration-200">
+                    <a href="#videos" class="nav-link text-xs md:text-sm font-medium">
                         <span class="hidden sm:inline">01 </span>作品影像记录
                     </a>
-                    <a href="#about" class="nav-link text-xs md:text-sm font-medium text-white opacity-60 hover:opacity-100 transition-colors duration-200">
+                    <a href="#about" class="nav-link text-xs md:text-sm font-medium">
                         <span class="hidden sm:inline">02 </span>关于我
                     </a>
-                    <a href="#projects" class="nav-link text-xs md:text-sm font-medium text-white opacity-60 hover:opacity-100 transition-colors duration-200">
+                    <a href="#projects" class="nav-link text-xs md:text-sm font-medium">
                         <span class="hidden sm:inline">03 </span>作品展示
                     </a>
-                    <a href="#contact" class="nav-link text-xs md:text-sm font-medium text-white opacity-60 hover:opacity-100 transition-colors duration-200">
+                    <a href="#contact" class="nav-link text-xs md:text-sm font-medium">
                         <span class="hidden sm:inline">04 </span>联系我
                     </a>
                 </div>
 
-                <div class="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-black via-black/50 to-transparent pointer-events-none md:hidden"></div>
+                <!-- 右侧操作区：主题切换按钮 -->
+                <button id="theme-toggle" aria-label="切换主题" class="text-[var(--text-primary)] opacity-70 hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-[var(--bg-secondary)]" style="order: 99;">
+                    <!-- SVG for Sun (Light Mode) - Initial state shows Moon (Dark Mode) -->
+                    <svg id="sun-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- SVG for Moon (Dark Mode) -->
+                    <svg id="moon-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
+                <div class="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[var(--bg-primary)] via-[var(--bg-primary)]/50 to-transparent pointer-events-none md:hidden"></div>
 
             </div>
         </div>
     </nav>
 
     <section id="spline-home" class="spline-hero-container">
-        
+        <!--  -->
         <spline-viewer url='https://prod.spline.design/faMvP9JLiA70Vtnn/scene.splinecode'></spline-viewer>
 
-        <!-- 阶段一：小巧的互动提示胶囊（默认显示，带动画，已调整至靠下） -->
+        <!-- 3D 互动提示胶囊 -->
         <div id="splineTipPill" onclick="openSplineModal()">
             <span class="text-sm font-medium flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -391,41 +348,39 @@
             </span>
         </div>
         
-        <!-- 阶段二：详细的图文说明弹窗（默认隐藏） -->
-        <!-- 注意：JS 会在打开时设置 display: flex，在关闭动画结束后设置 display: none -->
+        <!-- 3D 详细提示弹窗 -->
         <div id="splineTipModal" class="modal">
             <div class="modal-content relative">
-                <!-- 关闭按钮 (关闭后两个提示都消失) -->
                 <button onclick="closeSplineTip()" class="close-button" aria-label="关闭提示">&times;</button>
 
-                <h4 class="text-2xl font-bold text-white mb-6 text-center">3D 模型互动指南</h4>
+                <h4 class="text-2xl font-bold text-[var(--text-primary)] mb-6 text-center">3D 模型互动指南</h4>
                 
                 <div class="space-y-6">
                     <!-- 桌面端提示 -->
-                    <div class="flex items-start space-x-4 bg-white/5 p-4 rounded-lg">
-                        <!-- 鼠标图标 SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="flex items-start space-x-4 bg-[var(--bg-secondary)] p-4 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--accent-color)] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h-6v6h6V7z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7L13 17L19 17L19 7L13 7z" />
                             <rect x="5" y="4" width="14" height="16" rx="6" ry="6" />
                             <line x1="12" y1="6" x2="12" y2="10" stroke-linecap="round" />
                         </svg>
                         <div>
-                            <p class="font-semibold text-white text-lg">桌面端操作 (PC / Mac)</p>
-                            <p class="text-sm text-white/80 mt-1">
+                            <p class="font-semibold text-[var(--text-primary)] text-lg">桌面端操作 (PC / Mac)</p>
+                            <p class="text-sm text-[var(--text-primary)] opacity-80 mt-1">
                                 使用**鼠标左键或右键**拖动，即可旋转和探索模型视角。
                             </p>
                         </div>
                     </div>
 
                     <!-- 移动端提示 -->
-                    <div class="flex items-start space-x-4 bg-white/5 p-4 rounded-lg">
-                        <!-- 触摸图标 SVG (简化的双指) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#3666FA] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="flex items-start space-x-4 bg-[var(--bg-secondary)] p-4 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--accent-color)] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 20v-2m0 0a1 1 0 100-2 1 1 0 000 2zM18 18h2m-2 0a1 1 0 100-2 1 1 0 000 2zM6 18h2m-2 0a1 1 0 100-2 1 1 0 000 2zM12 12v-2m0 0a1 1 0 100-2 1 1 0 000 2zM18 12h2m-2 0a1 1 0 100-2 1 1 0 000 2zM6 12h2m-2 0a1 1 0 100-2 1 1 0 000 2z" />
                             <rect x="3" y="2" width="18" height="20" rx="3" ry="3" stroke="currentColor" fill="none" />
                         </svg>
                         <div>
-                            <p class="font-semibold text-white text-lg">移动端操作 (手机 / 平板)</p>
-                            <p class="text-sm text-white/80 mt-1">
+                            <p class="font-semibold text-[var(--text-primary)] text-lg">移动端操作 (手机 / 平板)</p>
+                            <p class="text-sm text-[var(--text-primary)] opacity-80 mt-1">
                                 使用**双指或三指捏合拖动**，可旋转模型；**双指捏合缩放**可以推近或拉远视角。
                             </p>
                         </div>
@@ -433,44 +388,43 @@
                 </div>
             </div>
         </div>
-        <!-- 结束：3D 模型互动提示 -->
         
         <div class="spline-overlay">
             <div class="h-24 bg-gradient-to-t from-black to-transparent w-full relative z-20"></div>
         </div>
     </section>
 
-    <main class="relative z-10 bg-black">
+    <main class="relative z-10">
         
-        <section id="videos" class="py-20 bg-black">
+        <section id="videos" class="py-20">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-10">
-                    <h3 class="text-2xl font-bold text-white mb-2">01 作品影像记录</h3>
-                    <p class="text-sm text-white opacity-60">View Project Introductions</p>
+                    <h3 class="text-2xl font-bold text-[var(--text-primary)] mb-2">01 作品影像记录</h3>
+                    <p class="text-sm text-[var(--text-primary)] opacity-60">View Project Introductions</p>
                 </div>
 
                 <div class="reveal-up delay-100 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <a href="https://youtu.be/JdcreejWb8Y?si=yKv7OTZb-1KNvZdk" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-[#3666FA]/50 hover:bg-[#3666FA]/10 transition-all duration-300 group shadow-lg">
+                    <a href="https://youtu.be/JdcreejWb8Y?si=yKv7OTZb-1KNvZdk" target="_blank" class="block p-6 bg-secondary border border-primary rounded-xl hover:border-[var(--accent-color)]/50 hover:bg-[var(--accent-color)]/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
                             <svg class="w-8 h-8 text-red-500 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M21.543 6.495c-.234-.858-.934-1.558-1.792-1.792C18.23 4.24 12 4.24 12 4.24s-6.23 0-7.751.463c-.858.234-1.558.934-1.792 1.792C2.46 8.016 2.46 12 2.46 12s0 3.984.463 5.465c.234.858.934 1.558 1.792 1.792C5.77 19.76 12 19.76 12 19.76s6.23 0 7.751-.463c.858-.234 1.558-.934 1.792-1.792C21.54 15.984 21.54 12 21.54 12s0-3.984-.463-5.465zM9.546 14.857V8.923L15.385 12l-5.839 2.857z"/>
                             </svg>
                             <div>
-                                <p class="font-semibold text-lg text-white">YouTube 平台</p>
-                                <p class="text-sm text-white opacity-60 group-hover:text-[#3666FA] transition-colors">观看高清作品介绍视频</p>
+                                <p class="font-semibold text-lg text-[var(--text-primary)]">YouTube 平台</p>
+                                <p class="text-sm text-[var(--text-primary)] opacity-60 group-hover:text-[var(--accent-color)] transition-colors">观看高清作品介绍视频</p>
                             </div>
                         </div>
                     </a>
 
-                    <a href="https://www.bilibili.com/video/BV13d2CBoENm/?spm_id_from=333.1387.homepage.video_card.click&vd_source=7a7e02c4cb61d40d2eefc91ccea2fe6e" target="_blank" class="block p-6 bg-[#111] border border-gray-800 rounded-xl hover:border-[#3666FA]/50 hover:bg-[#3666FA]/10 transition-all duration-300 group shadow-lg">
+                    <a href="https://www.bilibili.com/video/BV13d2CBoENm/?spm_id_from=333.1387.homepage.video_card.click&vd_source=7a7e02c4cb61d40d2eefc91ccea2fe6e" target="_blank" class="block p-6 bg-secondary border border-primary rounded-xl hover:border-[var(--accent-color)]/50 hover:bg-[var(--accent-color)]/10 transition-all duration-300 group shadow-lg">
                         <div class="flex items-center space-x-4">
                             <svg class="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6.28l-2.07-2.07a.75.75 0 00-1.06 1.06l3.374 3.373a.75.75 0 001.06 0l3.374-3.373a.75.75 0 00-1.06-1.06l-2.07 2.07V6z" clip-rule="evenodd" />
                             </svg>
                             <div>
-                                <p class="font-semibold text-lg text-white">Bilibili 平台</p>
-                                <p class="text-sm text-white opacity-60 group-hover:text-[#3666FA] transition-colors">国内友好访问通道</p>
+                                <p class="font-semibold text-lg text-[var(--text-primary)]">Bilibili 平台</p>
+                                <p class="text-sm text-[var(--text-primary)] opacity-60 group-hover:text-[var(--accent-color)] transition-colors">国内友好访问通道</p>
                             </div>
                         </div>
                     </a>
@@ -479,39 +433,39 @@
             </div>
         </section>
 
-        <section id="about" class="py-28 border-t border-gray-800">
+        <section id="about" class="py-28 border-t border-primary main-section">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">02. 关于我</h2>
-                    <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <p class="mt-4 text-white opacity-60">Philosophy & Mindset</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">02. 关于我</h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] mx-auto rounded-full"></div>
+                    <p class="mt-4 text-[var(--text-primary)] opacity-60">Philosophy & Mindset</p>
                 </div>
                 
-                <div class="reveal-up delay-100 bg-[#111] border border-gray-800 rounded-2xl p-8 md:p-12 shadow-xl hover:border-[#3666FA]/30 transition-colors duration-300 relative">
+                <div class="reveal-up delay-100 bg-secondary border border-primary rounded-2xl p-8 md:p-12 shadow-xl hover:border-[var(--accent-color)]/30 transition-colors duration-300 relative">
                     <div class="relative z-10 space-y-8"> 
                         
                         <div>
-                            <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">个人寄语</h4>
-                            <p class="text-base text-white opacity-80 leading-relaxed font-light max-w-3xl">
+                            <h4 class="text-lg text-[var(--text-primary)] mb-3 tracking-wider border-l-4 border-[var(--accent-color)] pl-3">个人寄语</h4>
+                            <p class="text-base text-[var(--text-primary)] opacity-80 leading-relaxed font-light max-w-3xl">
                                 我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。有时候我在创作，有时候我在沉思——两者的界限其实很模糊。如果你在寻找一个认真做梦的人，那大概就是我。
                             </p>
                         </div>
 
-                        <div class="h-px bg-gray-800"></div>
+                        <div class="h-px bg-[var(--border-color)]"></div>
 
                         <div>
-                            <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">YZS 品牌简介</h4>
-                            <p class="text-base text-white opacity-80 leading-relaxed max-w-3xl">
+                            <h4 class="text-lg text-[var(--text-primary)] mb-3 tracking-wider border-l-4 border-[var(--accent-color)] pl-3">YZS 品牌简介</h4>
+                            <p class="text-base text-[var(--text-primary)] opacity-80 leading-relaxed max-w-3xl">
                                 我们拒绝多余的修辞，只谈存在本身。Yet Zero Sense是年轻灵魂的留白区，一个探索“无我”与“存在”边界的青年视觉品牌。我们在感知过剩的时代，重获零感。
                             </p>
                         </div>
 
-                        <div class="h-px bg-gray-800"></div>
+                        <div class="h-px bg-[var(--border-color)]"></div>
 
                         <div>
-                            <h4 class="text-lg text-white mb-3 tracking-wider border-l-4 border-[#3666FA] pl-3">核心理念</h4>
-                            <p class="text-base text-white opacity-80 leading-relaxed max-w-3xl">
-                                我们生活在一个“过度感知”的时代。情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<span class="text-white opacity-80">YZS</span>不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
+                            <h4 class="text-lg text-[var(--text-primary)] mb-3 tracking-wider border-l-4 border-[var(--accent-color)] pl-3">核心理念</h4>
+                            <p class="text-base text-[var(--text-primary)] opacity-80 leading-relaxed max-w-3xl">
+                                我们生活在一个“过度感知”的时代。情绪被算法放大，色彩被符号化，连“真实”都被包装成消费品。<span class="text-[var(--text-primary)] opacity-80">YZS</span>不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
                             </p>
                         </div>
 
@@ -520,61 +474,61 @@
             </div>
         </section>
 
-        <section id="projects" class="py-28 border-t border-gray-800 bg-black">
+        <section id="projects" class="py-28 border-t border-primary main-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="reveal-up text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">03. 作品展示</h2>
-                    <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <p class="mt-4 text-white opacity-60">Recent Creative Works & Designs</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">03. 作品展示</h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] mx-auto rounded-full"></div>
+                    <p class="mt-4 text-[var(--text-primary)] opacity-60">Recent Creative Works & Designs</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <div class="reveal-up delay-100 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal1')">
+                    <div class="reveal-up delay-100 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal1')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
-                            <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
+                            <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
                                 <img src="43+1.jpg" alt="43+1作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">《#01 43+1》</h3>
-                            <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">力量与平衡的身体瞬间，探寻行动与克制。</p>
-                            <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
-                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> 装置艺术</span>
+                            <h3 class="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent-color)] transition-colors">《#01 43+1》</h3>
+                            <p class="text-[var(--text-primary)] opacity-80 text-sm mb-4 line-clamp-2">力量与平衡的身体瞬间，探寻行动与克制。</p>
+                            <div class="flex items-center justify-center gap-4 text-sm text-[var(--text-primary)] opacity-60">
+                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[var(--accent-color)]"></div> 装置艺术</span>
                                 <span>2025</span>
                             </div>
                         </div>
                     </div>
 
                     
-                    <div class="reveal-up delay-200 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal2')">
+                    <div class="reveal-up delay-200 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal2')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
-                            <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
+                            <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
                                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">《#02 沉睡于皮下的记忆》</h3>
-                            <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">镜面、文字与极简形式，探讨身体、时间与自我意识。</p>
-                            <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
-                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> 概念艺术</span>
+                            <h3 class="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent-color)] transition-colors">《#02 沉睡于皮下的记忆》</h3>
+                            <p class="text-[var(--text-primary)] opacity-80 text-sm mb-4 line-clamp-2">镜面、文字与极简形式，探讨身体、时间与自我意识。</p>
+                            <div class="flex items-center justify-center gap-4 text-sm text-[var(--text-primary)] opacity-60">
+                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[var(--accent-color)]"></div> 概念艺术</span>
                                 <span>2025</span>
                             </div>
                         </div>
                     </div>
 
                     
-                    <div class="reveal-up delay-300 group relative bg-[#111] border border-gray-800 rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal3')">
+                    <div class="reveal-up delay-300 group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer project-card" onclick="openModal('projectModal3')">
                         <div class="aspect-w-16 aspect-h-9 bg-gray-800 transition-colors flex items-center justify-center overflow-hidden parallax-container">
-                            <span class="text-white text-sm group-hover:scale-110 transition-transform duration-500">
+                            <span class="text-[var(--text-primary)] text-sm group-hover:scale-110 transition-transform duration-500">
                                 <img src="微信图片_20251216103209_82_508.jpg" alt="《痛》作品预览" class="w-full h-full object-cover parallax-target">
                             </span>
                         </div>
                         <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-[#3666FA] transition-colors">《#03 痛》</h3>
-                            <p class="text-white opacity-80 text-sm mb-4 line-clamp-2">以“皮囊”隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
-                            <div class="flex items-center justify-center gap-4 text-sm text-white opacity-60">
-                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#3666FA]"></div> 实验艺术</span>
+                            <h3 class="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent-color)] transition-colors">《#03 痛》</h3>
+                            <p class="text-[var(--text-primary)] opacity-80 text-sm mb-4 line-clamp-2">以“皮囊”隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
+                            <div class="flex items-center justify-center gap-4 text-sm text-[var(--text-primary)] opacity-60">
+                                <span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[var(--accent-color)]"></div> 实验艺术</span>
                                 <span>2024</span>
                             </div>
                         </div>
@@ -582,33 +536,34 @@
                 </div>
                 
                 <div class="text-center mt-12">
-                    <a href="#" class="inline-block text-[#3666FA] opacity-60 hover:opacity-100 text-sm font-medium border-b border-[#3666FA] hover:border-white pb-0.5 transition-colors">查看全部作品 -></a>
+                    <a href="#" class="inline-block text-[var(--accent-color)] opacity-60 hover:opacity-100 text-sm font-medium border-b border-[var(--accent-color)] hover:border-[var(--text-primary)] pb-0.5 transition-colors">查看全部作品 -></a>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="reveal-up py-28 border-t border-gray-800">
+        <section id="contact" class="reveal-up py-28 border-t border-primary main-section">
             <div class="max-w-2xl mx-auto px-4 text-center">
                 <div class="mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">04. 联系我</h2>
-                    <div class="w-16 h-1 bg-[#3666FA] mx-auto rounded-full"></div>
-                    <p class="mt-4 text-white opacity-60">Get In Touch</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4">04. 联系我</h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] mx-auto rounded-full"></div>
+                    <p class="mt-4 text-[var(--text-primary)] opacity-60">Get In Touch</p>
                 </div>
                 
-                <p class="mt-4 text-white opacity-60 mb-6">我的数字名片</p>
+                <p class="mt-4 text-[var(--text-primary)] opacity-60 mb-6">我的数字名片</p>
                 
-                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-[#111] border border-gray-800 rounded-2xl shadow-2xl shadow-[#3666FA]/10 transition-shadow duration-300 hover:shadow-[#3666FA]/30" id="skeleton-contact">
+                <div class="mb-10 w-full max-w-lg mx-auto p-4 bg-secondary border border-primary rounded-2xl shadow-2xl shadow-[var(--shadow-color)] transition-shadow duration-300 hover:shadow-[var(--accent-color)]/30" id="skeleton-contact">
+                    <!--  -->
                     <img src="名片最终版.png" 
                                 alt="William Yang 数字名片" 
                                 class="w-full h-auto rounded-xl"
                                 onerror="this.src='https://placehold.co/600x300/161b22/3666FA?text=名片加载失败+请刷新'; this.onerror=null;">
                 </div>
                 
-                <p class="text-white opacity-80 text-lg mb-8">
+                <p class="text-[var(--text-primary)] opacity-80 text-lg mb-8">
                     欢迎通过上方名片中的信息（电话、邮件、Instagram）与我联系。期待您的合作邀约或艺术交流。
                 </p>
                 
-                <a href="mailto:yzs13968803946@qq.com" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-[#3666FA] rounded-full hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 shadow-lg shadow-[#3666FA]/30">
+                <a href="mailto:yzs13968803946@qq.com" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-[var(--accent-color)] rounded-full hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-all transform hover:-translate-y-1 shadow-lg shadow-[var(--accent-color)]/30">
                     或直接发送邮件
                 </a>
             </div>
@@ -616,12 +571,12 @@
 
     </main>
 
-    <footer class="bg-black border-t border-gray-800 py-12">
+    <footer class="border-t border-primary main-section py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0 flex items-center gap-2">
-                <span class="text-2xl font-bold text-white tracking-tight">Y.Z.S.</span>
+                <span class="text-2xl font-bold text-[var(--text-primary)] tracking-tight">Y.Z.S.</span>
             </div>
-            <div class="text-white opacity-60 text-sm">
+            <div class="text-[var(--text-primary)] opacity-60 text-sm">
                 &copy; 2025 Y.Z.S. Design. All rights reserved.
             </div>
         </div>
@@ -633,16 +588,17 @@
         </svg>
     </button>
 
+    <!-- Project Modals (Content remains unchanged) -->
     <div id="projectModal1" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal1')">&times;</span>
-            <h3 class="text-3xl font-bold text-white mb-6 text-center">《#01 43+1》</h3>
+            <h3 class="text-3xl font-bold text-[var(--text-primary)] mb-6 text-center">《#01 43+1》</h3>
             
-            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p1">
+            <div class="w-full image-container flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p1">
                 <img src="43+1.jpg" alt="43+1作品实物图" class="rounded-lg">
             </div>
 
-            <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
+            <div class="text-lg text-[var(--text-primary)] opacity-80 leading-relaxed space-y-6">
                 <p>
                     这件名为《#01 43+1》的作品，灵感来自于一个关于“力量与平衡”的身体瞬间。它捕捉了一只手高高举起榔头、即将敲下的一刻，我感受到身体内部的张力——那是一种在行动与克制之间的悬停。
                 </p>
@@ -650,19 +606,19 @@
                     我想捕捉这种“力量被凝固”的瞬间，于是选择用榔头与钉子来构建这个立体结构。榔头本应是主导的工具，但在这里，它却被定格在钉子的世界中——它失去了攻击性，反而被钉子们支撑着、包围着。
                 </p>
                 <p>
-                    我将所有物件喷涂成统一的<span class="text-white font-normal opacity-100">奶白色</span>，是想消解它们原本的功能属性，让它们从“工具”变成“形体”；而那些<span class="text-[#3666FA]">亮橙色</span>的细节——钉头与榔头的一面——则像是残余的能量痕迹，是力的轨迹、温度的提示。
+                    我将所有物件喷涂成统一的<span class="text-[var(--text-primary)] font-normal opacity-100">奶白色</span>，是想消解它们原本的功能属性，让它们从“工具”变成“形体”；而那些<span class="text-[var(--accent-color)]">亮橙色</span>的细节——钉头与榔头的一面——则像是残余的能量痕迹，是力的轨迹、温度的提示。
                 </p>
                 <p>
-                    整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又<span class="text-white font-normal opacity-100">稳固的平衡感</span>。这对我来说，像是身体与理性之间的关系：既有冲动，又有克制；既有重量，又有支撑。
+                    整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又<span class="text-[var(--text-primary)] font-normal opacity-100">稳固的平衡感</span>。这对我来说，像是身体与理性之间的关系：既有冲动，又有克制；既有重量，又有支撑。
                 </p>
-                <p class="text-white opacity-80">
+                <p class="text-[var(--text-primary)] opacity-80">
                     在这件作品里，我想呈现的不是一个动作，而是力量在时间中被暂停的状态。
                 </p>
             </div>
             <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">装置艺术</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">雕塑</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">概念艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">装置艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">雕塑</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">概念艺术</span>
             </div>
         </div>
     </div>
@@ -670,13 +626,13 @@
     <div id="projectModal2" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal2')">&times;</span>
-            <h3 class="text-3xl font-bold text-white mb-6 text-center">《#02 沉睡于皮下的记忆》</h3>
+            <h3 class="text-3xl font-bold text-[var(--text-primary)] mb-6 text-center">《#02 沉睡于皮下的记忆》</h3>
             
-            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p2">
+            <div class="w-full image-container flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p2">
                 <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆 #2 作品主图" class="rounded-lg">
             </div>
 
-            <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
+            <div class="text-lg text-[var(--text-primary)] opacity-80 leading-relaxed space-y-6">
                 <p>
                     《皮囊记忆 #2》，镜面被框入洁白的边界中，像一张被档案化的证据页。观者在镜中看到的倒影，与现实重叠在一起，形成一种被动的对视关系。
                 </p>
@@ -688,184 +644,183 @@
                 </p>
             </div>
             <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">概念艺术</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">装置</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">视觉传达</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">概念艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">装置</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">视觉传达</span>
             </div>
         </div>
     </div>
     
-    <!-- 新增作品 #3 模态弹窗 -->
     <div id="projectModal3" class="modal">
         <div class="modal-content relative">
             <span class="close-button" onclick="closeModal('projectModal3')">&times;</span>
-            <h3 class="text-3xl font-bold text-white mb-6 text-center">《#03 痛》</h3>
+            <h3 class="text-3xl font-bold text-[var(--text-primary)] mb-6 text-center">《#03 痛》</h3>
             
-            <div class="w-full image-container bg-gray-800 flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p3">
+            <div class="w-full image-container flex items-center justify-center rounded-lg mb-8" id="skeleton-modal-p3">
                 <img src="微信图片_20251216103209_82_508.jpg" alt="《痛》作品主图" class="rounded-lg">
             </div>
 
-            <div class="text-lg text-white opacity-80 leading-relaxed space-y-6">
+            <div class="text-lg text-[var(--text-primary)] opacity-80 leading-relaxed space-y-6">
                 <p>
-                    《痛》以<span class="text-white font-normal opacity-100">“皮囊”</span>隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。
+                    《痛》以<span class="text-[var(--text-primary)] font-normal opacity-100">“皮囊”</span>隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。
                 </p>
                 <p>
                     作品借鉴久保田華布对“残像记忆”的处理，以金属网与石膏的叠加象征被压缩的情绪与碎裂的自我形状。
                 </p>
                 <p>
-                    钢丝与石膏的质感碰撞、色彩的冷暖与对比，共同构成一段关于<span class="text-white font-normal opacity-100">规训、记忆与自我挣脱</span>的视觉叙事。
+                    钢丝与石膏的质感碰撞、色彩的冷暖与对比，共同构成一段关于<span class="text-[var(--text-primary)] font-normal opacity-100">规训、记忆与自我挣脱</span>的视觉叙事。
                 </p>
-                <p class="text-sm text-white opacity-60 mt-8 pt-4 border-t border-gray-700">
+                <p class="text-sm text-[var(--text-primary)] opacity-60 mt-8 pt-4 border-t border-[var(--border-color)]">
                     辅导老师：凌敬淇、田顺、吴越齐。
                 </p>
             </div>
             <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">实验艺术</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">残像记忆</span>
-                <span class="px-3 py-1 text-xs font-medium text-white opacity-60 bg-[#3666FA]/20 border border-white/60 rounded-full">雕塑</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">实验艺术</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">残像记忆</span>
+                <span class="px-3 py-1 text-xs font-medium text-[var(--text-primary)] opacity-60 bg-[var(--accent-color)]/20 border border-[var(--text-primary)]/60 rounded-full">雕塑</span>
             </div>
         </div>
     </div>
     
     <script>
-        // --- Modals Logic (for Project Modals) ---
-        // 设置所有 modal 的动画时长为 350ms
+        // --- Global Theme Variables & Paths ---
+        const DARK_LOGO_URL = "网页左上角yzslogo.png"; // 白色 Logo (用于深色背景)
+        const LIGHT_LOGO_URL = "白底黑标.png"; // 黑色 Logo (用于浅色背景)
+        const LIGHT_MODE_CLASS = 'light-mode';
         const MODAL_ANIMATION_DURATION = 350; 
+        const PILL_ANIMATION_DURATION = 400; 
+
+        // --- Theme Switching Logic ---
+        const body = document.body;
+        const mainLogo = document.getElementById('main-logo');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
 
         /**
-         * 打开项目详情弹窗 (Project Modals)
-         * - 立即设置 display: flex
-         * - 使用 requestAnimationFrame 确保 display 生效后，添加 .open 类触发 CSS 动画
+         * 设置主题，并更新 Body Class 和 Logo
          */
+        function setTheme(isLightMode) {
+            if (isLightMode) {
+                body.classList.add(LIGHT_MODE_CLASS);
+                if (mainLogo) mainLogo.src = LIGHT_LOGO_URL;
+                if (sunIcon) sunIcon.style.display = 'block';
+                if (moonIcon) moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove(LIGHT_MODE_CLASS);
+                if (mainLogo) mainLogo.src = DARK_LOGO_URL;
+                if (sunIcon) sunIcon.style.display = 'none';
+                if (moonIcon) moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        /**
+         * 切换主题
+         */
+        function toggleTheme() {
+            const isLightMode = body.classList.contains(LIGHT_MODE_CLASS);
+            setTheme(!isLightMode);
+        }
+
+        // 绑定事件监听器
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', toggleTheme);
+        }
+
+        // 检查本地存储中的偏好或默认使用深色模式
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            // 如果用户有偏好设置，或者默认使用深色模式
+            if (savedTheme === 'light') {
+                setTheme(true);
+            } else {
+                setTheme(false); // 默认深色
+            }
+        });
+
+
+        // --- Modals Logic (for Project Modals) ---
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (!modal) return;
             
             document.body.style.overflow = 'hidden'; 
-            modal.style.display = 'flex'; // 1. 立即显示 Modal 容器
+            modal.style.display = 'flex'; 
             
-            // 2. 使用 requestAnimationFrame 确保 display: flex 已经应用，然后添加 open 类
             requestAnimationFrame(() => {
-                modal.classList.add('open'); // 触发 CSS 动画 (opacity 0 -> 1)
+                modal.classList.add('open'); 
             });
         }
 
-        /**
-         * 关闭项目详情弹窗 (Project Modals)
-         * - 移除 .open 类触发 CSS 动画
-         * - 动画结束后隐藏 display: none 并恢复滚动
-         */
         function closeModal(modalId) {
             const modal = document.getElementById(modalId);
             if (!modal) return;
 
-            modal.classList.remove('open'); // 1. 触发 CSS 动画 (opacity 1 -> 0)
+            modal.classList.remove('open'); 
             
-            // 2. 延时隐藏 display: none 并恢复滚动
             setTimeout(() => {
-                // 确保在等待期间没有被重新打开
                 if (!modal.classList.contains('open')) { 
-                     modal.style.display = 'none'; // 隐藏 Modal 容器
+                     modal.style.display = 'none'; 
                 }
                 
-                // 仅在没有其他打开的 modal 时才恢复滚动
                 const anyOpen = document.querySelectorAll('.modal.open').length > 0;
                 if (!anyOpen) {
                     document.body.style.overflow = '';
                 }
-            }, MODAL_ANIMATION_DURATION + 50); // 稍微延长 50ms 确保动画结束
+            }, MODAL_ANIMATION_DURATION + 50); 
         }
 
         // 点击背景关闭逻辑
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(event) {
                 if (event.target === modal) {
-                    // 对于 Spline 提示弹窗，使用专门的关闭函数
-                    if (modal.id === 'splineTipModal') {
-                        closeSplineTip(true); // 视为滚动/背景关闭，不永久记录
-                    } else {
-                        closeModal(modal.id);
-                    }
+                    closeModal(modal.id);
                 }
             });
         });
 
-        // --- Spline Tip Two-Stage & Visibility Logic ---
+        // --- Spline Tip Two-Stage & Visibility Logic (更新为 is-visible Class) ---
         const splineTipPill = document.getElementById('splineTipPill');
         const splineTipModal = document.getElementById('splineTipModal');
         const splineHome = document.getElementById('spline-home');
         
-        // 胶囊动画时长
-        const PILL_ANIMATION_DURATION = 400; 
+        // 移除本地存储持久化逻辑，确保提示在重新加载后可见
+        let splineTipDismissedSession = false; 
 
-        // 使用 localStorage 检查用户是否已经永久关闭过提示
-        let splineTipDismissed = localStorage.getItem('splineTipDismissed') === 'true';
-        
-        // 初始设置胶囊状态
-        if (splineTipPill && splineTipDismissed) {
-             splineTipPill.style.display = 'none';
-        }
-
-        /**
-         * 阶段一：打开详细提示弹窗 (更新为新逻辑)
-         */
         function openSplineModal() {
-            // 弹窗打开时，胶囊应立即触发隐藏动画
-            if (splineTipPill) splineTipPill.classList.add('is-hidden'); 
+            if (splineTipPill) splineTipPill.classList.remove('is-visible'); // 隐藏胶囊
             
             if (splineTipModal) {
-                document.body.style.overflow = 'hidden'; // 阻止背景滚动
-                splineTipModal.style.display = 'flex'; // 1. 立即显示 Modal 容器
+                document.body.style.overflow = 'hidden'; 
+                splineTipModal.style.display = 'flex'; 
                 
                 requestAnimationFrame(() => {
-                    splineTipModal.classList.add('open'); // 触发 CSS 动画 (opacity 0 -> 1)
+                    splineTipModal.classList.add('open'); 
                 });
             }
         }
 
-        /**
-         * 统一关闭逻辑：关闭弹窗并（可选）永久隐藏胶囊
-         * @param {boolean} isScrolling true 表示由 IntersectionObserver 或背景点击触发
-         */
         function closeSplineTip(isScrolling = false) {
             
-            // 1. 关闭 Modal (如果开启)
-            let wasModalOpen = false;
             if (splineTipModal && splineTipModal.classList.contains('open')) {
-                wasModalOpen = true;
-                splineTipModal.classList.remove('open'); // 触发 fade-out 动画 (0.35s)
-            } else if (!isScrolling) {
-                // 如果 modal 没开，但用户点击了胶囊的关闭按钮 (视为永久关闭)
-                isScrolling = false; 
+                splineTipModal.classList.remove('open'); 
             }
             
-            // 2. 永久关闭标记
             if (!isScrolling) {
-                splineTipDismissed = true;
-                localStorage.setItem('splineTipDismissed', 'true');
+                // 如果是用户主动关闭（非滚动），则在本会话中忽略它
+                splineTipDismissedSession = true;
+                if (splineTipPill) splineTipPill.classList.remove('is-visible');
             }
             
-            // 3. 隐藏胶囊
-            if (splineTipPill) {
-                splineTipPill.classList.add('is-hidden');
-            }
-            
-            // 4. 延时隐藏 display: none 并恢复滚动
-            // 延迟时间取 Modal 动画和 Pill 动画的最长时间
-            const totalDelay = Math.max(MODAL_ANIMATION_DURATION, PILL_ANIMATION_DURATION) + 50; 
+            const totalDelay = MODAL_ANIMATION_DURATION + 50; 
 
             setTimeout(() => {
-                // 隐藏 Modal 容器
                 if (splineTipModal && !splineTipModal.classList.contains('open')) {
                      splineTipModal.style.display = 'none'; 
                 }
                 
-                // 隐藏胶囊 display: none
-                if (splineTipPill && splineTipPill.classList.contains('is-hidden')) {
-                     splineTipPill.style.display = 'none';
-                }
-                
-                // 仅在没有其他打开的 modal 时才恢复滚动
                 const anyOpen = document.querySelectorAll('.modal.open').length > 0;
                 if (!anyOpen) {
                     document.body.style.overflow = '';
@@ -873,60 +828,42 @@
             }, totalDelay);
         }
 
-        // --- Spline 3D Section 滚动可见性逻辑 (Intersection Observer) ---
+        // --- Spline 3D Section 滚动可见性逻辑 ---
         if (splineHome && splineTipPill) {
             
-            // Observer 关注 #spline-home 区域
             const splineObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const isVisible = entry.isIntersecting;
                     
-                    // 只有当 3D 区域可见 且 用户未永久关闭提示时，才显示胶囊
-                    if (isVisible && !splineTipDismissed) {
-                        splineTipPill.style.display = 'flex'; 
-                        requestAnimationFrame(() => {
-                            splineTipPill.classList.remove('is-hidden'); // 移除隐藏 class，触发 pop-in/显示
-                        });
+                    if (isVisible) {
+                        // 如果可见，且用户未在当前会话中关闭，且模态框未打开，则显示胶囊
+                        if (!splineTipDismissedSession && !splineTipModal.classList.contains('open')) {
+                            splineTipPill.classList.add('is-visible');
+                        }
                     } else {
-                        // 如果 3D 区域滚动出视图 或 已被永久关闭，则隐藏胶囊
-                        splineTipPill.classList.add('is-hidden');
+                        // 如果不可见，则隐藏胶囊
+                        splineTipPill.classList.remove('is-visible');
                         
-                        // 确保在隐藏动画结束后，将 display 设置为 none
-                        setTimeout(() => {
-                            // 仅在仍然是隐藏状态时才设置为 none
-                            if (splineTipPill.classList.contains('is-hidden')) {
-                                splineTipPill.style.display = 'none';
-                            }
-                        }, PILL_ANIMATION_DURATION); 
-                        
-                        // 确保在滚动消失时，弹窗平滑关闭
+                        // 如果模态框打开，则关闭它 (isScrolling=true)
                         if (splineTipModal.classList.contains('open')) {
-                            // 使用 closeSplineTip(true) 来触发动画和延迟滚动恢复，但不设永久关闭
                             closeSplineTip(true); 
                         }
                     }
                 });
             }, { 
-                threshold: 0.01, // 只要有一点点可见就触发
+                threshold: 0.01, 
                 rootMargin: '0px 0px 0px 0px' 
             }); 
 
             splineObserver.observe(splineHome);
         }
         
-        
-        // --- Scroll Reveal Logic (Intersection Observer) ---
-        const observerOptions = {
-            root: null, // viewport
-            rootMargin: '0px',
-            threshold: 0.1 // Trigger when 10% of the element is visible
-        };
-
+        // --- Scroll Reveal Logic ---
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // 只取消对 reveal-up 的观察，不取消对视差元素的观察
                     if (entry.target.classList.contains('reveal-up')) {
                          observer.unobserve(entry.target);
                     }
@@ -942,7 +879,7 @@
         const backToTopButton = document.getElementById('backToTop');
         
         function toggleBackToTop() {
-             if (window.scrollY > 500) { // Show button after scrolling 500px down
+             if (window.scrollY > 500) { 
                 backToTopButton.style.opacity = '1';
                 backToTopButton.style.transform = 'translateY(0)';
             } else {
@@ -953,12 +890,11 @@
 
         let scrollTimeout;
         window.addEventListener('scroll', () => {
-             // Throttling: 只在等待结束后执行一次切换逻辑
              if (!scrollTimeout) {
                  scrollTimeout = setTimeout(() => {
                      toggleBackToTop();
                      scrollTimeout = null;
-                 }, 100); // 100ms 检查一次
+                 }, 100); 
              }
         });
 
@@ -970,7 +906,6 @@
         });
         
         // --- 图片视差滚动逻辑 (Parallax Scroll) ---
-        
         const parallaxTargets = document.querySelectorAll('.parallax-target');
         
         function handleParallax() {
@@ -1009,7 +944,6 @@
         window.addEventListener('scroll', updateParallax);
         window.addEventListener('resize', updateParallax);
         
-        // 初始运行一次，确保页面加载时视差正确
         document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0); 
             updateParallax();
@@ -1019,8 +953,6 @@
             window.scrollTo(0, 0); 
             updateParallax();
         };
-
-        
     </script>
 </body>
 </html>
