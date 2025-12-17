@@ -265,8 +265,16 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
         
-        /* 回到顶部按钮保持强调色 */
+        /* 回到顶部按钮保持强调色 (更新为圆形) */
         #backToTop {
+            position: fixed; /* 确保它始终浮动在右下角 */
+            width: 56px; /* 固定的宽度 */
+            height: 56px; /* 固定的高度 */
+            display: flex; /* 确保图标居中 */
+            justify-content: center;
+            align-items: center;
+            border-radius: 9999px; /* 完美圆形 */
+
             background-color: var(--accent-color);
             color: var(--text-primary); /* 按钮图标颜色使用主题文本色，以适应浅色模式 */
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
