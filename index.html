@@ -143,7 +143,6 @@
             transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* 桌面端悬停效果 */
         @media (hover: hover) {
             .project-card:hover img {
                 filter: grayscale(0);
@@ -151,7 +150,6 @@
             }
         }
 
-        /* 移动端激活状态（通过 JS 切换类） */
         .mobile-active img {
             filter: grayscale(0) !important;
             transform: scale(1.03);
@@ -172,7 +170,7 @@
             background-color: var(--bg-primary); padding: 2.5rem; border-radius: 2rem; 
             border: 1px solid var(--border-color); transform: translateY(40px) scale(0.95);
             opacity: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto;
+            max-width: 750px; width: 90%; max-height: 85vh; overflow-y: auto;
         }
         .modal.open .modal-content { transform: translateY(0) scale(1); opacity: 1; }
 
@@ -225,7 +223,6 @@
         <div id="light-bg" class="bg-3d-wrapper">
             <iframe src='https://my.spline.design/logoanimation-fvINXe9ii7X6RB01oyEZEMvh/' frameborder='0' width='100%' height='100%'></iframe>
         </div>
-        <!-- 3D 提示胶囊 -->
         <div id="splineTipPill" onclick="openModal('splineTipModal')">
             <span class="text-xs font-bold tracking-widest">3D 互动指引</span>
         </div>
@@ -248,14 +245,15 @@
                         <div><h4 class="font-bold">YouTube</h4><p class="text-xs opacity-50">国际预览</p></div>
                     </a>
                     <a href="https://www.bilibili.com/video/BV13d2CBoENm" target="_blank" class="p-8 rounded-2xl bg-secondary border border-primary hover:border-[#3666FA]/50 transition-all flex items-center gap-5">
-                        <div class="text-blue-400"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.813 4.653h-.854c-.15 0-.293.06-.399.168l-3.62 3.69c-.035.034-.108.034-.143 0l-3.62-3.69a.565.565 0 00-.399-.168h-.854c-.316 0-.573.255-.573.57 0 .15.059.294.165.4l3.183 3.243c.036.035.036.094 0 .129l-3.183 3.243a.565.565 0 00-.165.4c0 .315.257.57.573.57h.854c.15 0 .293-.06.399-.168l3.62-3.69c.035-.034.108-.034.143 0l3.62 3.69c.106.108.249.168.399.168h.854c.316 0 .573-.255.573-.57a.565.565 0 00-.165-.4L14.63 9.064c-.036-.035-.036-.094 0-.129l3.183-3.243c.106-.106.165-.25.165-.4 0-.315-.257-.57-.573-.57z"/></svg></div>
+                        <!-- 图标已修改为字母 B -->
+                        <div class="text-blue-400 font-black text-4xl w-8 h-8 flex items-center justify-center leading-none">B</div>
                         <div><h4 class="font-bold">Bilibili</h4><p class="text-xs opacity-50">国内访问</p></div>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 02 关于我 (已移除边框) -->
+        <!-- 02 关于我 -->
         <section id="about" class="py-32 content-section">
             <div class="max-w-5xl mx-auto px-6">
                 <div class="reveal-up mb-20">
@@ -288,7 +286,7 @@
             </div>
         </section>
 
-        <!-- 03 作品展示 (已移除边框) -->
+        <!-- 03 作品展示 -->
         <section id="projects" class="py-32 bg-secondary/20 content-section">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-20 reveal-up">
@@ -325,7 +323,7 @@
                         </div>
                         <div class="pt-6 px-2">
                             <h3 class="font-black text-2xl mb-1">《#03 痛》</h3>
-                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mb-1">2025/12/4</p>
+                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mb-1">2025/12/04</p>
                             <p class="text-xs opacity-50 uppercase tracking-widest">实验艺术 / 2024</p>
                         </div>
                     </div>
@@ -333,7 +331,7 @@
             </div>
         </section>
 
-        <!-- 04 联系我 (已移除边框) -->
+        <!-- 04 联系我 -->
         <section id="contact" class="py-32 px-6 content-section">
             <div class="max-w-2xl mx-auto text-center reveal-up">
                 <h2 class="text-4xl font-black mb-6 tracking-tighter">04. 联系我</h2>
@@ -368,7 +366,7 @@
         </div>
     </div>
 
-    <!-- 作品弹窗 1, 2, 3 逻辑保持不变... -->
+    <!-- 作品 1 详情 -->
     <div id="projectModal1" class="modal">
         <div class="modal-content !max-w-3xl">
             <div class="flex justify-between items-start mb-8">
@@ -380,17 +378,20 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <div class="aspect-[16/9] bg-neutral-900 rounded-2xl overflow-hidden mb-10 border border-primary group">
+            <div class="aspect-[16/9] bg-neutral-900 rounded-2xl overflow-hidden mb-10 border border-primary">
                 <img src="43+1.jpg" class="w-full h-full object-cover">
             </div>
             <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
-                <p>作品《#01 43+1》的灵感来自于一个关于<b>“力量与平衡”</b>的身体瞬间。</p>
-                <p>整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又稳固的平衡感。</p>
+                <p>作品《#01 43+1》的灵感来自于一个关于<b>“力量与平衡”</b>的身体瞬间。它捕捉了一只手高高举起榔头、即将敲下的一刻，我感受到身体内部的张力——那是一种在行动与克制之间的悬停。</p>
+                <p>我想捕捉这种<b>“力量被凝固”</b>的瞬间，于是选择用榔头与钉子来构建这个立体结构。榔头本应是主导的工具，但在这里，它却被定格在钉子的世界中——它失去了攻击性，反而被钉子们支撑着、包围着。</p>
+                <p>我将所有物件喷涂成统一的<b>奶白色</b>，是想消解它们原本的功能属性，让它们从“工具”变成“形体”；而那些<b>亮橙色的细节</b>——钉头与榔头的一面——则像是残余的能量痕痕迹，是力的轨迹、温度的提示。</p>
+                <p>整体结构中，榔头的倾斜、钉子的密集与规律，制造出一种几乎要倒下却又稳固的平衡感。这对我来说，像是身体与理性之间的关系：既有冲动，又有克制；既有重量，又有支撑。在这件作品里，我想呈现的不是一个动作，而是<b>力量在时间中被暂停的状态</b>。</p>
             </div>
             <button onclick="closeModal('projectModal1')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-sm uppercase tracking-widest">Close Discovery</button>
         </div>
     </div>
 
+    <!-- 作品 2 详情 -->
     <div id="projectModal2" class="modal">
         <div class="modal-content !max-w-3xl">
             <div class="flex justify-between items-start mb-8">
@@ -407,11 +408,14 @@
             </div>
             <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
                 <p>《#2 皮囊记忆》，<b>镜面被框入洁白的边界中</b>，像一张被档案化的证据页。</p>
+                <p>观者在镜中看到的倒影，与现实重叠在一起，形成一种<b>被动的对视关系</b>。画框象征“被社会规训的目光”，而镜面是“自我反思的现场”。当观众靠近镜面时，他们既成为观看者，也成为被观看者。</p>
+                <p>作品编号“#2”与日期标注“2025/11/13”，让这件作品带有档案与实验的意味——仿佛是一段关于<b>“身体记忆”</b>的研究样本，也是一份艺术家在特定时间留下的存在证据。</p>
             </div>
             <button onclick="closeModal('projectModal2')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-sm uppercase tracking-widest">Close Discovery</button>
         </div>
     </div>
 
+    <!-- 作品 3 详情 -->
     <div id="projectModal3" class="modal">
         <div class="modal-content !max-w-3xl">
             <div class="flex justify-between items-start mb-8">
@@ -427,14 +431,18 @@
                 <img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover">
             </div>
             <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
-                <p>在作品《#03 痛》中，我以<b>“皮囊”</b>为核心意象，隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
+                <p>《#03 痛》以<b>“皮囊”</b>为核心意象，隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
+                <p>作品借鉴<b>久保田華布</b>对“残像记忆”的处理，以<b>金属网与石膏的叠加</b>象征被压缩的情绪与碎裂的自我形状。钢丝与石膏的质感碰撞、色彩的冷暖与对比，共同构成一段关于规训、记忆与自我挣脱的视觉叙事。</p>
+                <div class="pt-6 border-t border-primary/30 mt-8">
+                    <p class="text-xs opacity-50 font-bold uppercase tracking-widest mb-2">Mentor Credits / 辅导老师</p>
+                    <p class="text-sm font-semibold opacity-80">凌敬淇、田顺、吴越齐</p>
+                </div>
             </div>
             <button onclick="closeModal('projectModal3')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-sm uppercase tracking-widest">Close Discovery</button>
         </div>
     </div>
 
     <script>
-        // JS 逻辑完全保持不变，以确保导航高亮和交互正常运行
         const body = document.body;
         const themeBtn = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
