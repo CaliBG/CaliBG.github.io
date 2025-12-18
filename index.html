@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y.Z.S. Portfolio - 个人作品集</title>
+    <title>Y.Z.S. Portfolio</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
             scroll-behavior: smooth;
         }
         
-        /* --- 3D 背景切换 --- */
+        /* --- 3D 背景 --- */
         .spline-hero-container {
             position: relative;
             height: 100vh; 
@@ -59,14 +59,6 @@
         .light-mode #dark-bg { opacity: 0; z-index: 1; pointer-events: none; }
         .light-mode #light-bg { opacity: 1; z-index: 2; pointer-events: auto; }
 
-        .spline-overlay {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 10;
-            pointer-events: none; display: flex; flex-direction: column; justify-content: flex-end; 
-        }
-        .spline-overlay .bg-gradient-to-t {
-            background: linear-gradient(to top, var(--bg-primary), transparent);
-        }
-        
         /* --- 导航栏 --- */
         .glass-nav {
             background: var(--nav-bg-color); 
@@ -124,20 +116,7 @@
             box-shadow: 0 4px 12px rgba(54, 102, 250, 0.3);
         }
 
-        /* --- 关于我：模块样式 --- */
-        .about-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 2.5rem;
-            border-radius: 2rem;
-            transition: all 0.4s ease;
-        }
-        .about-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-5px);
-        }
-
-        /* --- 弹窗样式：强化平滑过渡 --- */
+        /* --- 弹窗基础 --- */
         .modal {
             position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; 
             background-color: rgba(0,0,0,0); backdrop-filter: blur(0px); opacity: 0;
@@ -145,14 +124,14 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .modal.open {
-            display: flex; opacity: 1; background-color: rgba(0,0,0,0.9); 
-            backdrop-filter: blur(15px); pointer-events: auto; 
+            display: flex; opacity: 1; background-color: rgba(0,0,0,0.92); 
+            backdrop-filter: blur(20px); pointer-events: auto; 
         }
         .modal-content {
-            background-color: var(--bg-primary); padding: 2.5rem; border-radius: 1.5rem; 
+            background-color: var(--bg-primary); padding: 2.5rem; border-radius: 2rem; 
             border: 1px solid var(--border-color); transform: translateY(40px) scale(0.95);
             opacity: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto;
+            max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto;
         }
         .modal.open .modal-content { transform: translateY(0) scale(1); opacity: 1; }
 
@@ -176,9 +155,8 @@
     <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-20">
-                <a href="#" class="flex items-center gap-3 group">
-                    <img id="main-logo" src="网页左上角yzslogo.png" alt="Logo" class="h-9 w-auto transition-transform group-hover:rotate-6">
-                    <span class="font-extrabold text-xl tracking-tighter hidden sm:block">Y.Z.S.</span>
+                <a href="#" class="flex items-center gap-3">
+                    <img id="main-logo" src="网页左上角yzslogo.png" alt="Logo" class="h-9 w-auto transition-transform hover:rotate-6">
                 </a>
                 <button id="theme-toggle" class="p-2.5 rounded-xl hover:bg-white/10 transition-colors">
                     <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-width="2.5"/></svg>
@@ -206,12 +184,8 @@
         <div id="light-bg" class="bg-3d-wrapper">
             <iframe src='https://my.spline.design/logoanimation-fvINXe9ii7X6RB01oyEZEMvh/' frameborder='0' width='100%' height='100%'></iframe>
         </div>
-        <!-- 3D 提示胶囊 -->
         <div id="splineTipPill" onclick="openModal('splineTipModal')">
             <span class="text-xs font-bold tracking-widest">3D 互动指引</span>
-        </div>
-        <div class="spline-overlay">
-            <div class="h-32 bg-gradient-to-t w-full"></div>
         </div>
     </section>
 
@@ -239,27 +213,12 @@
         <!-- 02 关于我 -->
         <section id="about" class="py-32 border-t border-primary content-section">
             <div class="max-w-5xl mx-auto px-6">
-                <div class="reveal-up mb-20">
+                <div class="reveal-up">
                     <h2 class="text-3xl font-black mb-12 border-l-8 border-[#3666FA] pl-6 tracking-tight">02. 关于我</h2>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="about-card md:col-span-2">
-                            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-[#3666FA] mb-6">Personal Message / 个人寄语</h3>
-                            <p class="text-base leading-relaxed opacity-80">
-                                我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。有时候我在创作，有时候我在沉思——两者的界限其实很模糊。如果你在寻找一个认真做梦的人，那大概就是我。我们拒绝多余的修辞，只谈存在本身。
-                            </p>
-                        </div>
-                        <div class="about-card">
-                            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-[#3666FA] mb-6">YZS Brand / 品牌简介</h3>
-                            <p class="text-base leading-relaxed opacity-80">
-                                Yet Zero Sense（YZS）是年轻灵魂的留白区，一个探索“无我”与“存在”边界的青年视觉品牌。我们在感知过剩的时代，重获零感。
-                            </p>
-                        </div>
-                        <div class="about-card">
-                            <h3 class="text-xs font-black uppercase tracking-[0.3em] text-[#3666FA] mb-6">Philosophy / 核心理念</h3>
-                            <p class="text-base leading-relaxed opacity-80">
-                                YZS 不提供答案，只提供空白。我们设计物，也设计“无物”。让生活回到“零感”——那个一切重新开始的地方。
-                            </p>
+                        <div class="p-10 rounded-[2.5rem] bg-secondary border border-primary md:col-span-2">
+                            <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#3666FA] mb-6">Personal Statement</h3>
+                            <p class="text-base leading-relaxed opacity-80 italic">“我是一名热爱设计与视觉的美术生，喜欢用细腻的线条表达思考。我相信艺术的力量不在于高冷的展览，而在于生活被放大的温度。拒绝多余的修辞，只谈存在本身。”</p>
                         </div>
                     </div>
                 </div>
@@ -267,44 +226,41 @@
         </section>
 
         <!-- 03 作品展示 -->
-        <section id="projects" class="py-32 border-t border-primary bg-secondary/20 content-section">
+        <section id="projects" class="py-32 border-t border-primary bg-secondary/10 content-section">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-20 reveal-up">
                     <h2 class="text-4xl font-black mb-4 tracking-tighter">03. 作品展示</h2>
-                    <p class="opacity-40 text-sm">Selected Creative Works</p>
+                    <p class="opacity-40 text-sm tracking-widest uppercase">Collections</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                     <!-- 作品 1 -->
-                    <div class="project-card rounded-3xl overflow-hidden reveal-up group cursor-pointer p-0 bg-transparent border-0" onclick="openModal('projectModal1')">
-                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-3xl border border-primary group-hover:border-[#3666FA] transition-all">
-                            <img src="43+1.jpg" alt="43+1" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="project-card reveal-up cursor-pointer group" onclick="openModal('projectModal1')">
+                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2.5rem] border border-primary transition-all duration-500 group-hover:border-[#3666FA]/50 group-hover:-translate-y-2">
+                            <img src="43+1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                         </div>
-                        <div class="pt-6">
-                            <h3 class="font-black text-2xl mb-1">《#01 43+1》</h3>
-                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mb-1">2025/10/26</p>
-                            <p class="text-xs opacity-50 uppercase tracking-widest">装置艺术 / 2025</p>
+                        <div class="pt-8 px-4">
+                            <h3 class="font-black text-2xl tracking-tighter">《#01 43+1》</h3>
+                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mt-2 uppercase">Installation / 2025.10</p>
                         </div>
                     </div>
                     <!-- 作品 2 -->
-                    <div class="project-card rounded-3xl overflow-hidden reveal-up group cursor-pointer p-0 bg-transparent border-0" style="transition-delay: 0.1s" onclick="openModal('projectModal2')">
-                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-3xl border border-primary group-hover:border-[#3666FA] transition-all">
-                            <img src="微信图片_20251204154523_63_508.jpg" alt="皮囊记忆" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="project-card reveal-up cursor-pointer group" onclick="openModal('projectModal2')">
+                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2.5rem] border border-primary transition-all duration-500 group-hover:border-[#3666FA]/50 group-hover:-translate-y-2">
+                            <img src="微信图片_20251204154523_63_508.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                         </div>
-                        <div class="pt-6">
-                            <h3 class="font-black text-2xl mb-1">《#2 皮囊记忆》</h3>
-                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mb-1">2025/11/13</p>
-                            <p class="text-xs opacity-50 uppercase tracking-widest">概念艺术 / 2025</p>
+                        <div class="pt-8 px-4">
+                            <h3 class="font-black text-2xl tracking-tighter">《#2 皮囊记忆》</h3>
+                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mt-2 uppercase">Archive / 2025.11</p>
                         </div>
                     </div>
                     <!-- 作品 3 -->
-                    <div class="project-card rounded-3xl overflow-hidden reveal-up group cursor-pointer p-0 bg-transparent border-0" style="transition-delay: 0.2s" onclick="openModal('projectModal3')">
-                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-3xl border border-primary group-hover:border-[#3666FA] transition-all">
-                            <img src="微信图片_20251216103209_82_508.jpg" alt="痛" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <div class="project-card reveal-up cursor-pointer group" onclick="openModal('projectModal3')">
+                        <div class="aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2.5rem] border border-primary transition-all duration-500 group-hover:border-[#3666FA]/50 group-hover:-translate-y-2">
+                            <img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
                         </div>
-                        <div class="pt-6">
-                            <h3 class="font-black text-2xl mb-1">《#03 痛》</h3>
-                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mb-1">2025/12/4</p>
-                            <p class="text-xs opacity-50 uppercase tracking-widest">实验艺术 / 2024</p>
+                        <div class="pt-8 px-4">
+                            <h3 class="font-black text-2xl tracking-tighter">《#03 痛》</h3>
+                            <p class="text-[10px] text-[#3666FA] font-bold tracking-widest mt-2 uppercase">Experimental / 2024.12</p>
                         </div>
                     </div>
                 </div>
@@ -314,40 +270,90 @@
         <!-- 04 联系我 -->
         <section id="contact" class="py-32 px-6 border-t border-primary content-section">
             <div class="max-w-2xl mx-auto text-center reveal-up">
-                <h2 class="text-4xl font-black mb-12 tracking-tighter">04. 联系我</h2>
-                <div class="mb-14 p-4 bg-secondary border border-primary rounded-3xl shadow-2xl overflow-hidden">
-                    <img src="名片最终版.png" alt="名片" class="w-full h-auto rounded-2xl">
+                <h2 class="text-4xl font-black mb-6 tracking-tighter">04. 联系我</h2>
+                
+                <!-- 引导文本 -->
+                <p class="text-sm opacity-60 leading-relaxed mb-12 max-w-lg mx-auto">
+                    欢迎通过下方名片中的信息（电话、邮件、Instagram）与我联系。期待您的合作邀约或艺术交流。
+                </p>
+                
+                <!-- 名片展示 -->
+                <div class="p-2 bg-secondary border border-primary rounded-[3rem] shadow-3xl mb-12 group transition-transform hover:scale-[1.01]">
+                    <img src="名片最终版.png" class="w-full h-auto rounded-[2.5rem]" alt="Contact Card">
                 </div>
-                <a href="mailto:yzs13968803946@qq.com" class="inline-flex bg-[#3666FA] text-white px-12 py-5 rounded-full font-black text-lg hover:scale-105 transition-all shadow-xl shadow-blue-500/25">发送邮件</a>
+                
+                <!-- 快捷动作 -->
+                <a href="mailto:yzs13968803946@qq.com" class="inline-flex bg-[#3666FA] text-white px-12 py-5 rounded-full font-black text-lg hover:scale-105 transition-all shadow-xl shadow-blue-500/30">发送邮件</a>
             </div>
         </section>
     </main>
 
     <!-- 弹窗合集 -->
+    
+    <!-- 3D 提示 -->
     <div id="splineTipModal" class="modal">
-        <div class="modal-content">
-            <h3 class="text-2xl font-black mb-6 text-center">3D 互动指南</h3>
-            <div class="space-y-6 mb-8 text-sm">
-                <div class="flex items-start gap-4 p-4 bg-secondary rounded-xl border border-primary">
-                    <span class="text-[#3666FA] font-bold whitespace-nowrap">💻 电脑端:</span>
-                    <p class="opacity-70">通过鼠标<span class="font-bold text-current">左键</span>旋转视角，<span class="font-bold text-current">右键</span>平移场景，滚轮缩放。</p>
+        <div class="modal-content text-center">
+            <h3 class="text-2xl font-black mb-8">3D 交互指南</h3>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="p-6 bg-secondary rounded-2xl border border-primary">
+                    <p class="text-[#3666FA] font-black text-xs mb-2">PC 端</p>
+                    <p class="text-xs opacity-70">左键旋转 / 右键平移 / 滚轮缩放</p>
                 </div>
-                <div class="flex items-start gap-4 p-4 bg-secondary rounded-xl border border-primary">
-                    <span class="text-[#3666FA] font-bold whitespace-nowrap">📱 移动端:</span>
-                    <p class="opacity-70">单指旋转视角，<span class="font-bold text-current">两指捏合</span>进行缩放，<span class="font-bold text-current">三指滑动</span>可进行拖拽平移。</p>
+                <div class="p-6 bg-secondary rounded-2xl border border-primary">
+                    <p class="text-[#3666FA] font-black text-xs mb-2">移动端</p>
+                    <p class="text-xs opacity-70">单指旋转 / 两指缩放 / 三指平移</p>
                 </div>
             </div>
-            <button onclick="closeModal('splineTipModal')" class="w-full py-4 bg-[#3666FA] text-white rounded-xl font-black">进入探索</button>
+            <button onclick="closeModal('splineTipModal')" class="w-full py-4 bg-[#3666FA] text-white rounded-xl font-black">开启旅程</button>
         </div>
     </div>
 
-    <!-- 作品详情弹窗（Modal 1, 2, 3）略... 结构已在之前代码中完整定义 -->
-    <div id="projectModal1" class="modal"><div class="modal-content"><h3 class="text-2xl font-black mb-4">《#01 43+1》</h3><p class="mb-4">2025/10/26</p><div class="aspect-video bg-neutral-900 rounded-xl overflow-hidden mb-6"><img src="43+1.jpg" class="w-full h-full object-cover"></div><p class="opacity-80">内容详见作品介绍...</p><button onclick="closeModal('projectModal1')" class="mt-8 text-[#3666FA] font-bold">关闭</button></div></div>
-    <div id="projectModal2" class="modal"><div class="modal-content"><h3 class="text-2xl font-black mb-4">《#2 皮囊记忆》</h3><p class="mb-4">2025/11/13</p><div class="aspect-video bg-neutral-900 rounded-xl overflow-hidden mb-6"><img src="微信图片_20251204154523_63_508.jpg" class="w-full h-full object-cover"></div><p class="opacity-80">内容详见作品介绍...</p><button onclick="closeModal('projectModal2')" class="mt-8 text-[#3666FA] font-bold">关闭</button></div></div>
-    <div id="projectModal3" class="modal"><div class="modal-content"><h3 class="text-2xl font-black mb-4">《#03 痛》</h3><p class="mb-4">2025/12/4</p><div class="aspect-video bg-neutral-900 rounded-xl overflow-hidden mb-6"><img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover"></div><p class="opacity-80">内容详见作品介绍...</p><button onclick="closeModal('projectModal3')" class="mt-8 text-[#3666FA] font-bold">关闭</button></div></div>
+    <!-- 作品详情弹窗已保留原逻辑，仅在此略过展示以节省空间但功能完备 -->
+    <div id="projectModal1" class="modal"><div class="modal-content !max-w-3xl">
+        <div class="flex justify-between items-start mb-8">
+            <div><h3 class="text-3xl font-black tracking-tighter">《#01 43+1》</h3><p class="text-[#3666FA] font-bold text-xs tracking-widest mt-2 uppercase">Project Insight</p></div>
+            <button onclick="closeModal('projectModal1')" class="p-2 rounded-full hover:bg-neutral-800 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="aspect-video bg-neutral-900 rounded-2xl overflow-hidden mb-8 border border-primary"><img src="43+1.jpg" class="w-full h-full object-cover"></div>
+        <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
+            <p>作品灵感来自于一个关于<b>“力量与平衡”</b>的身体瞬间。它捕捉了一只手高高举起榔头、即将敲下的一刻。</p>
+            <p>榔头本应是主导的工具，但在这里，它却被定格在钉子的世界中。我将物件喷涂成<b>奶白色</b>以消解功能属性。</p>
+        </div>
+        <button onclick="closeModal('projectModal1')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-xs tracking-widest uppercase">Close Discovery</button>
+    </div></div>
+
+    <div id="projectModal2" class="modal"><div class="modal-content !max-w-3xl">
+        <div class="flex justify-between items-start mb-8">
+            <div><h3 class="text-3xl font-black tracking-tighter">《#2 皮囊记忆》</h3><p class="text-[#3666FA] font-bold text-xs tracking-widest mt-2 uppercase">Archive</p></div>
+            <button onclick="closeModal('projectModal2')" class="p-2 rounded-full hover:bg-neutral-800 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="aspect-video bg-neutral-900 rounded-2xl overflow-hidden mb-8 border border-primary"><img src="微信图片_20251204154523_63_508.jpg" class="w-full h-full object-cover"></div>
+        <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
+            <p>《#2 皮囊记忆》，<b>镜面被框入洁白的边界中</b>，像一张被档案化的证据页。</p>
+            <p>画框象征<b>“被社会规训的目光”</b>，而镜面是<b>“自我反思的现场”</b>。当观众靠近镜面时，他们既成为观看者，也成为被观看者。</p>
+        </div>
+        <button onclick="closeModal('projectModal2')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-xs tracking-widest uppercase">Close Discovery</button>
+    </div></div>
+
+    <div id="projectModal3" class="modal"><div class="modal-content !max-w-3xl">
+        <div class="flex justify-between items-start mb-8">
+            <div><h3 class="text-3xl font-black tracking-tighter">《#03 痛》</h3><p class="text-[#3666FA] font-bold text-xs tracking-widest mt-2 uppercase">Experimental</p></div>
+            <button onclick="closeModal('projectModal3')" class="p-2 rounded-full hover:bg-neutral-800 transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="aspect-video bg-neutral-900 rounded-2xl overflow-hidden mb-8 border border-primary"><img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover"></div>
+        <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
+            <p>《#03 痛》以<b>“皮囊”</b>隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
+            <p>作品借鉴<b>久保田華布</b>对“残像记忆”的处理，以金属网与石膏的叠加象征被压缩的情绪与碎裂的自我形状。</p>
+            <div class="pt-6 border-t border-primary mt-6">
+                <p class="text-[10px] font-black uppercase tracking-widest text-[#3666FA] mb-2">Mentors / 辅导老师</p>
+                <p class="text-sm opacity-60">凌敬淇、田顺、吴越齐</p>
+            </div>
+        </div>
+        <button onclick="closeModal('projectModal3')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-xs tracking-widest uppercase">Close Discovery</button>
+    </div></div>
 
     <script>
-        // 主题管理
+        // 全局状态与主题
         const body = document.body;
         const themeBtn = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
@@ -367,61 +373,41 @@
         // 弹窗逻辑
         function openModal(id) {
             const m = document.getElementById(id);
-            if(m) { 
-                m.style.display = 'flex'; 
-                setTimeout(() => m.classList.add('open'), 10); 
-                body.style.overflow = 'hidden'; 
-            }
+            if(m) { m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10); body.style.overflow = 'hidden'; }
         }
         function closeModal(id) {
             const m = document.getElementById(id);
-            if(m) { 
-                m.classList.remove('open'); 
-                setTimeout(() => { 
-                    m.style.display = 'none'; 
-                    body.style.overflow = ''; 
-                }, 500); 
-            }
+            if(m) { m.classList.remove('open'); setTimeout(() => { m.style.display = 'none'; body.style.overflow = ''; }, 500); }
         }
 
-        // 状态栏与 3D 提示胶囊跟踪
+        // 滚动交互
         const statusBar = document.getElementById('dynamic-status-bar');
         const splineTipPill = document.getElementById('splineTipPill');
-        const splineHome = document.getElementById('spline-home');
         const statusItems = document.querySelectorAll('.status-item');
         const sections = document.querySelectorAll('.content-section');
 
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // 处理首页 3D 相关显示
                 if (entry.target.id === 'spline-home') {
                     if (entry.isIntersecting) {
                         statusBar.classList.remove('visible');
-                        // 首页可见时显示 3D 提示胶囊
                         if(splineTipPill) splineTipPill.classList.add('is-visible');
                     } else {
                         statusBar.classList.add('visible');
-                        // 离开首页时隐藏提示胶囊
                         if(splineTipPill) splineTipPill.classList.remove('is-visible');
                     }
                 }
-                // 处理状态栏高亮
                 if (entry.isIntersecting) {
-                    statusItems.forEach(item => {
-                        item.classList.toggle('active', item.id === `nav-${entry.target.id}`);
-                    });
+                    statusItems.forEach(item => { item.classList.toggle('active', item.id === `nav-${entry.target.id}`); });
                 }
             });
         }, { threshold: 0.1, rootMargin: "-10% 0px -40% 0px" });
 
-        scrollObserver.observe(splineHome);
+        scrollObserver.observe(document.getElementById('spline-home'));
         sections.forEach(s => scrollObserver.observe(s));
 
-        // 滚动揭露
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if(e.isIntersecting) e.target.classList.add('visible');
-            });
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
     </script>
