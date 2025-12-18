@@ -394,16 +394,32 @@
         </div>
     </div>
 
-    <!-- 作品 3 详情 -->
+    <!-- 作品 3 详情：痛 -->
     <div id="projectModal3" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-start mb-6">
-                <div><h3 class="text-3xl font-black">《#03 痛》</h3><p class="text-[#3666FA] font-bold text-xs mt-2">EXPERIMENTAL / 2024.12.04</p></div>
-                <button onclick="closeModal('projectModal3')" class="p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <div class="modal-content !max-w-3xl">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h3 class="text-3xl font-black tracking-tighter">《#03 痛》</h3>
+                    <p class="text-[#3666FA] font-bold text-xs tracking-[0.3em] mt-2">EXPERIMENTAL / 2024.12.04</p>
+                </div>
+                <button onclick="closeModal('projectModal3')" class="p-2 rounded-full bg-secondary hover:bg-neutral-800 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
-            <div class="aspect-video bg-neutral-900 rounded-2xl overflow-hidden mb-8 border border-primary"><img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover"></div>
-            <div class="space-y-4 opacity-80 leading-relaxed"><p>实验艺术。探讨疼痛作为一种真实感，如何在视觉表达中转化为抽象的张力。并非关于苦难，而是关于感知力的复苏。</p></div>
-            <button onclick="closeModal('projectModal3')" class="mt-10 w-full py-4 border border-primary hover:bg-neutral-800 transition-all rounded-xl font-bold">关闭</button>
+            <div class="aspect-[16/9] bg-neutral-900 rounded-2xl overflow-hidden mb-10 border border-primary group">
+                <img src="微信图片_20251216103209_82_508.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s]">
+            </div>
+            <div class="space-y-6 text-base leading-[1.8] opacity-90 text-justify">
+                <p>在作品《#03 痛》中，我以<b>“皮囊”</b>为核心意象，隐喻当代个体在社交滤镜与社会规训下被捆束、塑形的状态。</p>
+                <p>创作过程中，我借鉴了艺术家<b>久保田華布</b>对“残像记忆”的处理手法，通过<b>金属网与石膏</b>的层叠嵌套，象征那些被生活压缩的情绪与逐渐碎裂的自我形状。</p>
+                <p>这种<b>钢丝与石膏</b>的质感碰撞，代表了坚硬规训与脆弱本质之间的角力。色彩的冷暖交织与明暗对比，共同构成了一段关于规训、记忆与自我挣脱的视觉叙事。</p>
+                
+                <div class="pt-8 border-t border-primary mt-10">
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-[#3666FA] mb-4">Mentors / 辅导老师</p>
+                    <p class="text-sm opacity-60 font-medium">凌敬淇、田顺、吴越齐</p>
+                </div>
+            </div>
+            <button onclick="closeModal('projectModal3')" class="mt-12 w-full py-5 bg-secondary hover:bg-neutral-800 border border-primary transition-all rounded-2xl font-black text-sm uppercase tracking-widest">Close Discovery</button>
         </div>
     </div>
 
